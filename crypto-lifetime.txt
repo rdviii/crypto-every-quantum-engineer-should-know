@@ -1,0 +1,1582 @@
+Jens Eisert <jense@zedat.fu-berlin.de>, Stephanie Wehner
+<steph@locc.la>, Axel Dahlberg <E.A.Dahlberg@tudelft.nl>, Sang-il Oum
+<sangil@ibs.re.kr>, renner@itp.phys.ethz.ch, Hans.Briegel@uibk.ac.at,
+annapappa@gmail.com, Jonathan Dowling <jdowling@lsu.edu>,
+shiho.moriai@nict.go.jp, Masahiro Takeoka <takeoka@nict.go.jp>,
+aono@nict.go.jp, ddp@electric-loft.org, ファーバーデイビッド Ｊ
+<farber@keio.jp>, Sara Ayman Metwalli <sara@sfc.wide.ad.jp>, Takahiko
+Satoh <satoh@sfc.wide.ad.jp>, Takaaki Matsuo <kaaki@sfc.wide.ad.jp>,
+pandaman64@gmail.com, rum@sfc.wide.ad.jp, Shota Nagayama
+<kurosagi@sfc.wide.ad.jp>, zomi@sfc.wide.ad.jp, Michal Hajdusek
+<hajdusek.michal@gmail.com>, cocori@sfc.wide.ad.jp,
+shingy@sfc.wide.ad.jp, dave@sfc.wide.ad.jp, sayyor.yusupov@keio.jp
+
+*** should include shigeya and koluke ***
+
+Renato, Jens, Anna, Sang-il, Axel, Hans, Stephanie,
+Jon, Moriai-san, Aono-san, Takeoka-san, Satoh, Takaaki, Darrell,
+Dave, dave, Sara, rum, Shota, pandaman, zomi, Michal, cocori, shingy,
+sayo,
+
+[Document status:
+Okay, first drafty draft.  Not enough on TLS,
+nothing really on post-quantum crypto, not enough on bitcoin, not
+enough on quantum attacks in symmetric crypto.  It'll have to do.]
+
+Following up on Renato's crypto lifetime question from the Network
+Games, Tropical Topology and Quantum Communication Workshop...
+
+First off, Jens, thanks for inviting me, it was a great but too-short
+trip.  Wish I could have been there for the whole week!  I learned a
+bunch in a short period of time, especially from Sang-il and Renato.
+I'm sure I would have learned so much more if I could have been there
+earlier.
+
+Renato asked, paraphrasing, about why we change the cryptographic keys
+used during long communication sessions, and how often they _ought_ to
+be changed.  I waved my hands a little bit, but I wasn't completely
+satisfied with my own answer.  It turned out to be a good opportunity
+for me to dig into a little background I'd been meaning to go through.
+It also proved to be a *remarkably* hard question to answer from
+googling up pages, including cryptography research papers and the
+_extensive_ mailing list archives from development of key Internet
+protocols.  I fell down a pretty serious rabbit hole here, and haven't
+found my way out yet.
+
+I'm also bringing in one of Japan's most senior cryptographers and one
+of the designers of the IPsec Internet Key Exchange, though you should
+blame me for errors, not them.  I'm also bringing in about half a
+dozen other people I've talked to about this in the meantime
+(including Dave Farber, grandfather of the Internet and head of Keio's
+Cyber Civilization Center), and the 2/3 of my group that raised their
+hands when I asked who was interested, and I'm still probably
+forgetting somebody.  All of you will find some things here you think
+of as banal, and hopefully some things that make you say, "I didn't
+know that (and it's interesting)!"
+
+The target audience for this is primarily quantum computing
+researchers who are familiar with Shor's algorithm, Grover's algorithm
+and QKD, since those are among the first things you learn, but who
+have only a very rough idea of what it means to actually encrypt data
+and to use encryption in a real-world setting.
+
+FYI, I think I'd like to ultimately publish this somewhere, either
+formally or informally.  Would love to have any or all of you sign on
+as coauthors.  Parts of this might eventually make their way into a
+second edition of my book.  (n.b.: no, I'm not un-self-aware enough to
+think this is yet in anything approximating publishable state, even as
+a blog post or series of thereof.)
+
+There are two fundamental reasons for periodic rekeying:
+
+1. Having a long string of data encrypted with the same key increases
+the ability of an attacker to find the key.
+2. As a practical matter, reducing the amount of data that is exposed
+in the event that a key is broken is good stewardship of your data.
+
+So changing the key "often" makes it both harder and less valuable for
+an attacker to find a key.  That's the tl;dr.  Turning it into
+concrete, numeric recommendations is hard, but it looks like rekeying
+every half hour is pretty good, if your key bandwidth isn't high
+enough to do full one-time pad.
+
+The above I knew off the top of my head, but I'm not a cryptographer
+and had more or less taken the need for changing the keys (known as
+rekeying) on faith.  So, let's dig a little deeper...there won't be
+any _new_ knowledge in this, but I hope it helps bring together some
+information and organizes it to both save you the googling and
+calculating I've done and to provide a clear picture.
+
+I used to work on a box known as an IPsec gateway, but I was the OS
+guy, not the cryptographer; Darrell Piper, Dan Harkins and Dave
+Kashtan did most of the crypto work.  I am also a board member of the
+WIDE Project, which through its KAME Project created the Racoon
+software that was an important early implementation of the key
+exchange protocol for IPsec, with much of that work done by Shoichi
+Sakane.  Much of what I know about IPsec and other security was just
+incidental radiation from them, or gained from the security-oriented
+papers we had to read when I did my master's at USC back before the
+Englightenment.
+
+I'm afraid this has gotten longer than I originally intended, so I
+hope it's all useful.  It's so long, a table of contents is in order:
+
+1. Brief, mostly non-mathematical intro to cryptography and its
+terminology, in the context of encrypted communications.
+2. General ideas behind cryptanalysis and the importance of limiting
+data volume, since that's the topic that started this conversation.
+3. How these ideas play out in IPsec, one of the Internet's key
+security protocols.
+4. How these ideas play out in TLS/SSL.
+5. Quantum and crypto.
+6. Post-quantum crypto.
+7. ACT NOW and order the above package, and as a FREE bonus, Ronco
+(well, Rodco) will send you a few thoughts on Bitcoin and its
+vulnerability to the development of quantum computers!
+8. References
+
+
+1. Encrypted Communications
+
+An encrypted conversation involves, at the macro level, three phases:
+
+	1. Authentication: proving that you are who you say you are
+	2. Key generation: creating the keys used for bulk data encryption
+	3. Encryption/sending/decryption of the user's valuable bulk data
+
+That's a bit of an oversimplification, as we'll see below when we talk
+about IPsec, but good enough for now.
+
+You probably all know that there are two major kinds of cryptography
+-- symmetric key and asymmetric key, also known as public key.  Due to
+the high costs of computation for public key, bulk data encryption is
+done using symmetric key.  Symmetric encryption comes in two kinds,
+block ciphers and stream ciphers.  These days pretty much everything
+seems to be block, but I'm not sure why.
+
+Some additional terminology:
+
+* cleartext: data that isn't encrypted and isn't really intended to be
+  (sometimes confused with the below, even by me)
+* plaintext: the original, unencrypted message
+* ciphertext: the encrypted message
+* integrity: the data hasn't been tampered with
+* confidentiality or privacy: the data hasn't been disclosed to anyone unauthorized
+* session keys: the keys used for one communication session
+* forward secrecy: keeping your data secret in the future, esp. by
+  building a crypytosystem that doesn't reuse keys
+* rekeying: changing the keys used in the middle of a session
+* subkeys: keys used for a portion of an encryption process, derived
+  from a subset of the bits of the session key
+* cryptoperiod: the time that a specific key is authorized for use
+
+Attacks on encrypted communications generally fall into one of three
+categories:
+
+* unknown plaintext: the hardest problem; how do you recognize when
+  you've found the message?  With many but not all systems, failure
+  will leave only unintelligible, random data, while success will
+  produce words from the dictionary or other recognizable text.
+* known plaintext: when an attacker knows what the plaintext
+  corresponding to a particular ciphertext is, and attempts to find
+  the key; not uncommon given the regularity of communications such as
+  web browsing or email
+* chosen plaintext: when the attacker can control the text to be
+  encrypted, but obviously not the key; rarer than known plaintext,
+  but can happen with small devices that a person may "own" but not
+  always completely control, or if the attacker partially controls
+  some subset of resources, such as a related web server, or has
+  compromised one or more hosts behind an encryption gateway
+
+We also need these definitions:
+
+* brute force/exhaustive search: checking every possible key, which of
+  course is 2^n for an n-bit key, resulting in an expected hit time of
+  half that number of trials; if you have a method that will find a
+  key in substantially less than 2^{n-1} trials, you have "broken" the
+  cipher, even if your attack isn't necessarily practical in the short
+  run.
+* pentesting (penetration testing)
+
+And three mathematical definitions I know for algebra on the real
+numbers, but I'm a little fuzzy on in the bitwise, cryptographic
+context:
+
+* linear function: I think in this context, f(x,y) is a linear
+  function of some bits if it involves only a linear addition of
+  the inputs, and f(0,0) = 0 (origin is preserved).  Multiplication
+  (AND) is disallowed?  Importantly, f(x1 + x2) = f(x1) + f(x2).
+* affine function: same as a linear function, but an offset is
+  allowed, such that f(0,0) = 1 (origin isn't necessarily preserved)
+  (equivalent to a translation in a real space R^n).
+* nonlinear function: A nonlinear function is one in which $f(x+y) \ne f(x) + f(y)$ for some values $x$ and $y$. I'm definitely fuzzy here...multiplication and
+  arbitrary mappings are allowed?
+
+
+Let's go phase by phase:
+
+1.1 Authentication
+
+The authentication phase can be accomplished using a pre-shared secret
+key and symmetric encryption of some message and response, or it can
+be done via asymmetric, public-key cryptography.
+
+The best-known and most-used form of public key crypto is RSA, developed by Rivest, Shamir and Adelman (but also previously discovered by Cocks, of a British intelligence agency):
+
+	1. Pick two large primes, $p$ and $q$, let $n = pq$.
+	2. Calculate $\phi(p,q) = (p-1)(q-1)$.
+	3. Pick $e$, prime relative to $\phi(p,q)$.
+	4. Calculate $d$, s.t. $de = 1 \bmod \phi(p,q)$,
+	   which we can call the inverse of $e$ modulo $\phi(p,q)$.
+
+The tuple $\langle n,e\rangle$ is now your public key, and $d$ is your private key.
+You can publish $\langle n,e\rangle$ any way you like, including in the New York
+Times. To send you a message $m$, I calculate the ciphertext $c$,
+
+	$c = m^e \bmod n$
+
+and send $c$ to you.  You can recover the message $m$ by
+
+    	$m = c^d \bmod n$
+
+That's all there is to it!  Except that it's expensive, so we don't
+use it for every message.  If I send you "Hi, Bob, it's Tuesday, let's
+use 42 as our key," using your public key and you reply, "Tuesday is
+beautiful, Alice, and 42 is fine," using my public key, we confirm
+that we are definitely Bob and Alice, known as authentication --
+assuming, of course, that you trust that the key <n,e> that you are
+holding really and truly belongs to me, and I haven't leaked it out
+somehow!
+
+As you might guess from the publication of $n$, RSA is the one that's
+vulnerable to factoring larger integers, and hence of interest to
+spooks once Shor's algorithm came about.
+
+Current EU recommendations are for 3072-bit RSA keys, recently (2018)
+upgraded from 2048, for "near-term protection" (up to ten years).
+They recommend an extraordinary 15360 bits for "long-term protection"
+(thirty to fifty years). [Cloudflare, Keylength.com, Ecrypt, Lenstra]
+
+[See https://en.wikipedia.org/wiki/Primality_test for how hard it is
+to find primes big enough.]
+
+[called ECRYPT-CSA 2018, via Shigeya]
+
+1.2 Key generation
+
+The other algorithm we talk about a lot as being both important and
+vulnerable to Shor's factoring algorithm is Diffie-Hellman key
+exchange, which is used for creating the session key we will use for
+bulk data encryption.  It's important that every session have its own
+separate encryption key; we don't want multiple conversations sharing
+the same key, for a lot of obvious reasons.
+
+D-H works as follows:
+
+	1. Alice and Bob publicly agree on a modulus $p$ and a base $g$ (in cleartext is okay)
+	2. Alice and Bob each pick a secret random number $a$ and $b$
+	3. Alice calculates $A = g^a \bmod p$,
+	   Bob calculates $B = g^b \bmod p$
+	4. Alice sends Bob $A$, Bob sends Alice $B$ (in cleartext is okay)
+	5. Alice calculates $s = B^a \bmod p$,
+	   Bob calculates $s = A^b \bmod p$
+
+Both Alice and Bob now have the same secret $s$, which they can use as
+an encryption key.
+
+Note that, as-is, D-H is vulnerable to a man-in-the-middle attack, and
+so must be coupled with some form of authentication so that Alice and
+Bob each know that the other is who they say they are.
+
+1.3 Bulk data encryption
+
+D-H and RSA are pretty easy to understand, and known to be vulnerable
+to quantum computers, hence attract a lot of attention. The workhorse
+symmetric block ciphers for bulk encryption are actually much more
+complex mathematically, and hence harder to understand, but ultimately
+can be executed efficiently on modern microprocessors and dedicated
+chips.
+
+A block cipher takes the data to be encrypted, and breaks it into
+fixed-size chunks called blocks.  If the last block isn't full, it is
+filled out with meaningless data.  We also take a key, and using the
+key perform mathematical operations on the data block.  In a symmetric
+system, by definition, the decryption key is the same as the
+encryption key.  Generally, the output block is the same size as the
+input block.  There is no requirement that the block and key are the
+same size.
+
+Ideally, the output block (the ciphertext) will look completely
+random: about 50% zeroes and 50% ones, regardless of input, and with
+no detectable pattern.  That is, its entropy will be very high.  Of
+course, it cannot be completely random, as it must be possible for the
+data to be decrypted by someone holding the appropriate key.  A good
+cipher, however, will provide few clues to an attacker.  A single
+bit's difference in either the key or the original plaintext should
+result in about half of the ciphertext bits being flipped, so that
+being "close" offers no guidance on a next step.
+
+Thus, a symmetric key system's security is often linked to its key
+size; with $k$ key bits, it should require, on average, $2^{k-1}$
+trial decryptions to find the key and to be able to decrypt the
+message.  We will discuss this further when we get to cryptanalysis.
+
+Many encryption algorithms have been designed over the years, but two
+in particular are too important to ignore, so we will examine them:
+DES, the Data Encryption Standard, which is still in use in modified
+form but is primarily of historical interest now, and AES, the
+Advanced Encryption Standard, which is used for most communications
+today.
+
+1.3.1 DES (the Data Encryption Standard)
+
+DES, the Data Encryption Standard, was designed by IBM in the 1970s,
+consulting with the NSA.  DES is a type of cipher known as an
+iterative block cipher, which breaks data into to blocks and repeats a
+set of operations on them.  The operations in DES are called a Feistel
+network, after the inventor.
+
+DES uses a 56-bit key, though products exported from the U.S. were
+limited to using 40 meaningful key bits [wikipedia/40-bit-encryption].
+It was later upgraded to triple-DES, using three 56-bit key pieces and
+repeating DES three times, giving up to 168 bits of protection.  But
+it's not just the key size that matters in a block cipher.  The block
+size itself matters a great deal, as we'll see below.  For DES, that
+block size is only 64 bits.
+
+DES operates in sixteen rounds, each of which uses a 48-bit subkey
+generated from the original 56-bit key using a key scheduling
+algorithm.  In each round, half of the block is tweaked and half
+initially left alone, then XORed with the tweaked half.  The two
+halves are swapped before the next round.
+
+The "tweaking" of the right half of the block is done by first
+expanding the 32 bits into 48 by replicating half of the bits, XORing
+with the 48-bit subkey, then dividing it into 6-bit chunks and pushing
+each chunk through one of eight substitution boxes, or S boxes.  Each
+S box turns 6 bits into 4, using a lookup table defined as part of the
+algorithm (that is, this operation is not key-dependent).  The S boxes
+are nonlinear, which is the source of the true security of DES; if the
+S boxes were linear, breaking DES would be easy (or so I am told).
+
+Decrypting DES is exactly the same operation as encrypting, except
+that the subkeys are used in reverse order.
+
+Slightly more formally, the sequence of operations in a DES encryption
+is:
+
+1. Apply initial permutation (IP) (a fixed operation)
+2. For i = 1 to 16 do
+   1. divide the block into two 32-bit halves
+   2. expand the left half to 48 bits (a fixed operation)
+   3. calculate subkey i
+      1. split key into two 28-bit halves
+      2. rotate each half 1 or 2 bits (a fixed operation according to
+         the key schedule)
+      3. select a subset of 48 bits (a fixed operation according to
+         the schedule)
+   4. XOR subkey i with the left half of the block
+   5. split into 8 six-bit pieces
+   6. push each 6-bit piece through a $6\rightarrow 4$ S-box
+   7. permute and recombine the pieces (a fixed operation)
+   8. XOR the left half with the right half of the block
+   9. swap halves of the block
+3. Apply the final permutation (FP) (a fixed operation)
+
+The $6 \rightarrow 4$ S boxes are obviously inherently non-reversible,
+but the earlier expansion guarantees that ultimately no information is
+lost as the block passes through the entire network.
+
+The success of cryptanalysis is often measured in terms of the number
+of rounds it can break in a multi-round cipher like DES.  e.g., if DES
+were six rounds instead of sixteen, we could do yea much.  Various
+attacks have been able to penetrate DES to different depths.  Of
+course, the more straightforward approach is sheer brute force; as
+early as 1977, Diffie and Hellman published a critique in which they
+argued that brute force stood at the edge of feasible, and indeed in
+1999, a special-purpose machine named Deep Crack, built by the
+Electronic Freedom Foundation, cracked a DES key.  Further advances
+have made it possible even for dedicated hobbyists to crack.
+
+Triple-DES (also called 3DES) has several modes of operation, but is
+usually used with three independent 56-bit keys, $K1$, $K2$, and $K3$,
+with encryption performed as $C = E_{K3}(D_{K2}(E_{K1}(P)))$ where $P$
+is the plaintext, $E$ and $D$ are the encryption and decryption
+operations, and $C$ is the ciphertext.
+
+DES was withdrawn as a standard in 2005, after having been replaced by
+AES in 2001, although the U.S. government still allows 3DES until 2030
+for sensitive information.
+
+1.3.2 AES
+
+AES, the Advanced Encryption Standard, has replaced DES.  It is a type
+of block cipher known as a substitution-permutation cipher.  AES uses
+a block size of 128 bits, and a key size of 128, 192 or 256 bits
+(which also affects the number of rounds of
+substitution-permutation).
+
+<<I really _should_ include a description of AES here in more detail,
+but this is already too long.>>
+
+1.3.3 Limitations of Block Ciphers
+
+One obvious problem with the most straightforward application of a
+block cipher is that it's deterministic.  If you just apply the
+transform to each block independently, it's easy to implement; this is
+known as electronic code book (EBC) mode.  BUT: If you see the same
+ciphertext c in two different places in the message stream, you know
+that the two input blocks were the same!  This leaks a huge amount of
+information to a sophisticated attacker, and is considered
+unacceptable.
+
+One answer to this is to make the encryption slightly less
+deterministic by XORing in the ciphertext of the _previous_ block into
+the current one before performing the encryption.  This is cipher
+block chaining (CBC) mode, the standard mode of operation.  (There are
+at least two more modes that I know nothing about.)  CBC has the
+undesirable side effect of requiring encryption to be done serially,
+but attacks can be parallelized.  Nevertheless, it's the most commonly
+used mode.
+
+2. Cryptanalysis
+
+The general idea of trying to decode messages that are encrypted is
+known as cryptanalysis.  Some of the planet's smartest people have
+worked on this for all of their lifetimes, building on work in
+progress since well before we were born, so my summary here is
+inevitably going to be superficial and perhaps wrong.  Comments
+welcome; there is a lot of _bad_ information about cryptography on the
+web, and I'd prefer to be corrected and make mine _good_ information
+for the web.
+
+(Somewhere, right now, maybe even as I type, employees of one or more
+of the world's major intelligence agencies are snickering at how naive
+my presentation here is.  We don't know how much they really know, but
+we do know that e.g. the RSA public key cryptosystem and the technique
+of differential analysis were known to U.S. agencies for years,
+perhaps decades, before they became public.)
+
+https://en.wikipedia.org/wiki/Advanced_Encryption_Standard#Known_attacks
+says, "For cryptographers, a cryptographic "break" is anything faster
+than a brute-force attack – i.e., performing one trial decryption for
+each possible key in sequence (see Cryptanalysis). A break can thus
+include results that are infeasible with current technology."
+The page then goes on to list quite a number of attacks on AES, none
+considered practical yet.
+
+Given how long people have been working on cryptography, naturally
+there are many techniques for attacking the ciphers.  Here I'll
+mention just a couple of the modern techniques are known for what we
+might call "honest" attacks on block cipher cryptography, granting the
+assumption that the algorithm has no flaws and ignoring side channel
+attacks (such as measuring the power consumed during encryption) and
+attacks on infrastructure, people, etc. (some of which are known as
+"black bag", or burglary, attacks, and some of which are "rubber hose"
+attacks, extracting information from humans by coercion or torture).
+
+The older one of the two is differential cryptanalysis, apparently
+discovered indepedently at least three times, publicly by Biham and
+Shamir in the late 1980s, in the mid-70s by IBM (where the goal of
+defending against the technique drove DES design decisions), and
+earlier by NSA.
+https://en.wikipedia.org/wiki/Differential_cryptanalysis
+The second is linear crypanalysis, discovered by Mitsuru Matsui in
+1990.
+https://en.wikipedia.org/wiki/Linear_cryptanalysis
+
+(Other techniques that I know nothing about include integral,
+algebraic, and biclique.)
+
+But before talking about those two in any detail, there's a more
+straightforward technique that leaks information about the plaintext,
+if not the key itself: the birthday paradox.
+
+2.1 The Birthday Paradox
+
+(Also could be called the pigeonhole principle or the hash collision
+problem.)
+
+Modern ciphers are designed so that the ciphertext (output of the
+encryption) looks random; we can say that the ciphertext has very high
+entropy.  If the block size is $n$ bits, each of the $2^n$ possible
+bit combinations should be an equally likely result of encrypting a
+data block.  (The encryption is deterministic, but the output looks
+random.)
+
+If we monitor a long stream of encrypted data, there is some
+probability that we will find two blocks that have the same
+ciphertext.  We call that a _collision_.  If the two blocks were
+encrypted with the same key, we gain information about the plaintext.
+
+(Side question: How can you _have_ birthday paradox collisions of the
+ciphertext?  Wouldn't that mean that the encryption process is lossy,
+and that it would be impossible to reliably *decrypt* that ciphertext
+back to both original blocks?
+
+Answer: there is more information involved in both the encryption and
+decryption than just that specific block.  This is the cipher block
+chaining mentioned at the end of Sec. 1.)
+
+In CBC mode, what you gain is the XOR of two plaintext blocks.  If you
+get to choose which two, this could be incredibly valuable
+information; given that it's just two random blocks, it's less so, but
+not unimportant.  As it happens, if block numbers i and j have the
+same ciphertext c[i] = c[j], then you get the XOR of the plaintext of
+blocks i-1 and j-1.
+
+I spent quite a bit of time working through the math of the birthday
+paradox, only to come back to one of the first sources I found: the
+2016 SWEET32 paper by Bhargavan and Leurent.  Sec. 2.2 of that paper
+has a compact description of the commonly-quoted square root limit, as
+well as why and how much to be conservative relative to that value.
+
+If the block size is $n$ bits, there are $N = 2^n$ possible
+ciphertexts, and if the number of blocks encrypted is the square root
+of that number, $2^{n/2}$, the probability of at least one collision
+is above 39%, which arises in the limit as the expression
+$1-1/e^{1/2}$.  (See the appendix of these notes for some example
+calculations of this and the following to play around with.)
+
+Assuming you consider a 39% chance of disclosing some information to
+be an unacceptably large probability, when should you rekey?  That's
+the first-level answer to our ultimate question of when to rekey using
+QKD, which is of course back where we started this conversation.  Say,
+for example, we want the probability of an attacker recovering a
+plaintext block using the birthday attack to be less than (for
+example) one in a billion.
+
+If we have some power of two $D = 2^d$ ciphertext blocks, then the
+expected number of collisions is approximately $2^{2d-n-1}$.  For our
+one-in-a-billion probability, using $log_2(10^9) \approx 30$, we need
+to set up our session lifetime such that $2d-n-1 < -30$, or $d <
+(n-29)/2$.
+
+Since DES has only a 64-bit block, we should set $d \le 17$.  That's a
+startingly small number: $D = 2^17$ blocks and each block is eight
+bytes, so we should limit the use of a single key to one megabyte!
+An impractically small size.
+
+If, on the other hand, you are okay with a disclosure probability of
+one in a million, we can raise that by a factor of a thousand and
+change keys once every gigabyte instead.  But if you are trying to
+protect a 40Gbps link -- a common backbone bandwidth today, and coming
+to the home in the foreseeable future -- that still means changing
+keys once every 200msec or so!
+
+Ah, but AES uses $n = 128$, a block size twice as large.  Now we only
+need $d \le 49$ for that one-in-a-billion probability.  $D = 2^49$
+times our block size of 16 bytes equals 8 terabytes, about 1,600
+seconds on our 40Gbps link.  So change the keys at least once every
+half hour, and you're good.
+
+Keep in mind a few points:
+1. what's disclosed here is not the key but is plaintext-related, but
+   not even pure plaintext; however, the insanely smart and devious
+   cryptanalysts can do amazing things with small amounts of data;
+2. this depends only on the block size of a block cipher, not on the
+   key length;
+3. part of this arises due to the CBC (cipher bloock chain) mode, but
+   ECB (electronic code book) mode is worse; there are other modes
+   that I haven't looked at closely; and
+4. given that there are still other attacks, minimizing the amount of
+   data under any given encryption key is still good practice.
+
+So let's look at a couple of the cryptanalysis techniques.
+
+2.2 Differential Cryptanalysis
+
+Biham and Shamir wrote a seminal paper, then an easy-to-read book on
+their rediscovery of differential cryptanalysis.  The goal of DC is to
+recover the key used for a session, so it is potentially far more
+serious than the birthday attack.
+
+The book says, "An interesting feature of the new attack is that it
+can be applied with the same complexity and success probability even
+if the key is frequently changed and thus the collected ciphertexts
+are derived from many different keys."  That's pretty alarming.  This
+appears in a paragraph discussing chosen plaintext, so it may be
+restricted to that case.  I infer from this that rather than needing
+the cumulative accretion of information, each trial is independent.
+
+The attack works with either _chosen_ plaintext (in which the attacker
+says, "Please encrypt this message for me, and give me the
+ciphertext,") or _known_ plaintext (in which the attacker knows that
+the message is a repetition of "HEILHILTER", as figured prominently in
+the cracking the Enigma machine in WWII; modern HTTPS connections and
+SMTP (email) connections have enough predictability in their content
+to provide a similar fulcrum for such a lever; see Sec. 2.x of these
+notes).  There is a substantial difference in the complexity of the
+two attacks (see Tab. 2.1 in the book).  Known plaintext takes *waaay*
+more trials to succeed.
+
+The key idea is the construction of _differentials_ (hence the name)
+from specific S boxes.  Take two possible inputs to an S box, X1 and
+X2.  We can assume the subkey has been XORed into both X1 and X2
+already.  Y1 and Y2 are the corresponding outputs of the S box.  We
+know that if X1 = X2, then Y1 = Y2 and also X1 + X2 = 0 (again, here
+'+' is addition modulo two, or XOR).
+
+For the total encryption algorithm, changing one bit in the input
+should result in about half the output bits changing.  The S box
+should be similar; small changes in the input should mean large
+changes in the output.  In fact, the S box is small enough that we can
+exhaustively analyze its inputs.  We also know some rules that were
+chosen during the design phase, for example, changing _one_ bit in the
+six-bit input should result in changes to at _two_ bits in the
+four-bit output.
+
+So a differential table for each S box is constructed by listing all
+2^6 possible XORs X1 + X2, and collecting the stats on Y1 + Y2.  From
+the differences found here, we can work backwards to find with "high"
+probability (slightly higher than completely random, at any rate) some
+characteristics of the outputs of the *previous* round.
+
+The overall attack is performed by encrypting a bunch of
+randomly-chosen *pairs* of plaintexts (chosen as a pair; first a
+completely random one, then a second by XORing in a specific value)
+and comparing their ciphertexts until we find an output pair of
+ciphertexts that fit comfortably with the difference tables we have
+pre-computed for the X boxes.  Repeat until we have built up some
+statistics about the right set of bits in the output, and from that we
+can take a probabilistic guess at the subkey in the last round.  Based
+on that guess, we can narrow down the set of subkeys for the
+next-to-last round, rinse and repeat.  It's still a computationally
+intensive, tedious process, but much less than brute force.  Roughly,
+the probability of getting the ciphertext pairs we need is
+proportional to 1/p_D, where p_D is the differential probability in
+the table we are looking for, which may be quite small.
+(This seems to me that keeping a history of things you've already
+tried would increase the probability of finding a pair you like, so
+I'm still puzzled by the assertion above that this works even if the
+key is being changed frequently.)
+
+Ultimately, this attack is considered practical against ordinary DES.
+Biham and Shamir estimated (p. 8, p. 61) that DES and DES-like
+systems, even with the full sixteen rounds, could be broken using
+$2^{43}$ to $2^{47}$ chosen plaintext/ciphertext pairs.  With 8-byte
+blocks, that's encryption of 64 terabytes up to a petabyte.  If the
+system under attack can encrypt a 40Gbps link at line rate, that's
+only a few hours up to a couple of days of data.
+
+Triple-DES would be much, much longer, but 3-DES is still considered
+obsolete due to the birthday paradox attack above.  AES is stronger
+against DC, so this attack is of less help against
+properly-implemented, modern systems.
+
+I know this is a very rough explanation; I have only a wobbly
+understanding of the process myself!  The differential tables are
+pretty straightforward, once you understand them, but working from
+there to a full-on attack is a big jump.
+
+2.3 Linear Cryptanalysis
+
+LC is a known plaintext attack, developed by Mitsuru Matsui in
+1990 after being inspired by differential cryptanalysis.  The key(!)
+idea is to build a linear approximation of an S box, allowing you to
+calculate possible keys in reverse more quickly.
+
+If a cipher is good, every individual bit of the output should have a
+50% probability of being 0 and a 50% probability of being 1.
+Likewise, there should be no obvious relationship between the input
+and output bits (e.g., "If the third input bit is 1, the seventh
+output bit is 0.")  However, it is possible that some _combinations_
+of bits don't appear with equal probability. For example, the bit
+string composed of the first and third input bits and the second and
+fourth output bits should have all sixteen combinations 0000, 0001,
+..., 1111 with equal probability, but perhaps there is a bias.  If P_i
+is the ith input plaintext bit and C_i is the ith output ciphertext
+bit,
+
+P_1 + P_3 + C_2 + C_4 = 0
+
+more than 50% of the time (where '+' is modulo 2 addition, or XOR,
+here).
+
+Such a combination is a _linear_ combination of bits.  It is known (by
+whom?) that if the S-boxes in our cipher are fully linear, then the
+cipher can be easily broken, so the S-boxes are always nonlinear, but
+some bias such as this may be discoverable.
+
+The basic idea of LC, then, is to find such sets of bits that exhibit
+some bias and use some algebra to recover a few bits of the subkey
+used in the last round of the cipher, rinse and repeat.  The trick is
+to find the right relationships showing a detectable bias, as was done
+with differential analysis.  This is done by examining the math of the
+S-boxes in detail; as far as I can tell, this phase of the operation
+is done by very smart humans.
+
+If you can find a combination with a bias of $\epsilon$, then you need
+$1/\epsion^2$ plaintext-ciphertext pairs to find some bits of the
+subkey.
+
+This is done by taking multiple expressions like the above, combining
+them using Matsui's "Piling Up Principle" where you track the biases
+multiplied together to make a linear approximation of the nonlinear
+S-box.
+
+With this linear approximation, it is possible to find correlations
+between the output of the _next-to-last_ round of the cipher and the
+original input qubits, from which it is possible to recover
+information about the _subkey_ used in the last round of the cipher.
+
+Ultimately, this doesn't give you complete information about the key
+or the plaintext, but substantially reduces the work needed to find
+the full key by guiding a search, rather than just testing keys at
+random.
+
+Linear cryptanalysis is considered to be a very general technique, but
+I don't see extensive attempts to apply it to AES.  Indeed, AES (which
+was developed in the 1990s from the proposed cipher known as Rijndael)
+was developed specifically with the idea of not being vulnerable to
+either DC or LC.
+
+I found Heys' tutorial to be clear and helpful in understanding LC.
+
+2.4: Known and chosen plaintexts in real systems
+
+(Parts of this will make more sense after getting through the below.
+Maybe this section should be moved.)
+
+Modern HTTPS connections and SMTP (email) connections have a lot of
+predictability in their content, with commands like 'HELO' and
+'HTTP/1.1'.  Thus, it's probably reasonable to consider attacks on TLS
+to be chosen-plaintext attacks.
+
+Given the existence of cross-site scripting attacks,
+I can set up a website that tells you first, "Go fetch
+https://google.com/1234".  I watch your browser do that and capture
+the ciphertext, then my website says, "Now go fetch
+https://google.com/1235".  I capture that ciphertext as well, and
+compare the two ciphertexts.  The success of such an attack requires a
+lot of assumptions about which parts of the entire process I can
+observe and which I can control, but using the principle of being
+conservative on security, assuming an attacker can force the choice of
+plaintext passed between two nodes through an encrypted connection is
+not unreasonable in today's richly interwoven distributed systems.
+
+But especially for IPsec, there is another big vulnerability: one
+Security Association may carry data encrypted for a _bunch_ of
+machines.  So if an attacker manages to install a program on only one
+laptop (say, via email, or while you're sitting at Starbucks), they
+can cause your system to send out arbitrarily chosen packets that will
+cross the tunnel, so they can execute a chosen plaintext attack pretty
+easily.  Since IPsec encrypts the whole packet, they may not be able
+to tell immediately which packets were your laptop's and which my
+laptop's, but that distinction is a relatively minor overhead.
+
+Also, for every IP packet from my laptop to the email server passing
+through the IPsec tunnel, the IP header portion is going to be exactly
+the same, and its position in the encrypted stream is very easy to
+identify.  This led to some of the decisions around the use of CBC, I
+believe; I'm not aware of any deeper features intended to further
+obscure the location of such predictable data.
+
+In short, as a defender, you should work on the assumption that a
+noticeable fraction of your plaintext is known under benign
+circumstances, and that it's not all that hard for an attacker to
+mount a chosen plaintext attack.
+
+2.5:
+
+Some of the references I used for this section:
+
+The Best Thing (TM):
+https://sweet32.info/
+https://sweet32.info/SWEET32_CCS16.pdf
+
+https://danielmiessler.com/study/birthday_attack/
+http://mathworld.wolfram.com/BirthdayAttack.html
+
+1. Howard M. Heys, "A tutorial on linear and differential
+cryptanalysis", undated but probably 1999ish?
+http://www.engr.mun.ca/~howard/Research/Papers/ldc_tutorial.html
+
+2. Abdalla and Bellare,
+https://link.springer.com/chapter/10.1007/3-540-44448-3_42
+http://cseweb.ucsd.edu/~mihir/papers/rekey.html
+found via
+http://cseweb.ucsd.edu/~mihir/ 
+
+That paper talks about differential/linear cryptanalysis and about the
+birthday paradox, saying block size $k$ needs to be rekeyed every
+$2^{k/2}$ blocks.
+
+Bellare et al, A concrete security treatment of symmetric encryption:
+analysis of the DES modes of operation
+abstract from STOC 1997
+https://ieeexplore.ieee.org/abstract/document/646128
+full paper at
+http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.117.4734&rep=rep1&type=pdf
+Focuses on DES, which was in the process of being superceded by AES
+even in 1997, but the content of the paper is valuable with respect to
+CBC.  I found the paper a tough read when trying to figure out how to
+apply the equations.
+
+
+3. IPsec and the IETF
+
+Here we want to answer three questions:
+
+1. What are the technical mechanisms in place for rekeying and
+   effective use of encryption in the Internet standard security
+   protocol IPsec?
+2. What was known, at the time these protocols were developed, about
+   the best practices for rekeying?
+3. What are best practices today?
+
+The Internet Engineering Task Force (IETF) is where protocol
+specifications for the Internet come from.  There is an entire Area
+within IETF (the largest group, equivalent to a division of APS, I
+would guess) dedicated to security, which charters many different
+working groups.  Security is *MUCH, MUCH MORE* than cryptography, but
+an important area of work is developing the network protocols that
+allow real systems to use the cryptographic techniques discovered by
+the mathematicians.  Moreover, theorists are inevitably naive about
+how much work it is to actually use their ideas.
+https://trac.ietf.org/trac/sec/wiki
+
+One of the most important means of securing your communications is
+IPsec, which builds a "tunnel" inside of which ordinary IP packets can
+be carried transparent to their origin and destination (meaning your
+laptop and the server don't have to be be configured to handle the
+encryption; they deal in unmodified, unencrypted IP packets) but
+protected as they transit public networks.
+
+IPsec is complex and has been updated many times.  The Wikipedia page
+on it (which might be an easier entry point than the IETF indices,
+which are organized chronologically) lists over 40 standards-track
+documents, probably totaling over a thousand pages, some of which are
+outdated and some of which are still current.
+https://en.wikipedia.org/wiki/IPsec
+
+Those documents are what are known as RFCs, or Request for Comments
+documents.  They have different levels of authority, ranging from
+Experimental and Informational to Standard.  Reaching Standard can
+take decades and numerous iterations as the working groups gradually
+converge on what works in the real world, intersecting with what
+people will actually implement and use, but protocols are often de
+facto standards long before reaching that platinum frequent flyer
+status.
+
+If you really want to dig into the key exchange protocol, RFC 7296
+(Oct. 2014) is the most modern reference.  Unless you're actually
+manually configuring or implementing the stuff, you probably won't
+care about the differences between it and the older versions.
+https://tools.ietf.org/html/rfc7296
+
+But you might want to start with RFC 4301 (also a proposed standard),
+which is titled, "Security Architecture for the Internet Protocol."
+
+IPsec has a couple of modes, but let's stick to what's called tunnel
+mode.  Two boxes, known as gateways, build one or more Security
+Associations (SAs). An SA describes which packets passing between the
+gateways are to be encrypted and how.  Those that are encrypted are
+encrypted in their entirety (packet headers and all), and sent as the
+payload of another IP packet, to be decrypted at the far end.  Tunnel
+mode is most often used to connect together via the Internet two
+networks (e.g., two offices of the same company) that are each
+considered to be relatively secure networks.  The packets between
+computers in one network and those in the other network are encrypted
+only during their transit from gateway to gateway.  Of course, these
+days, much (most?) data is also encrypted by the end hosts, especially
+for the two major applications of web and email, so much of the
+traffic in the tunnel will be double-encrypted.
+
+The first SA created is the IKE SA itself, used only to carry the
+messages that govern the tunnel.  The first exchange of messages
+negotiates some security parameters, and carries random nonces used to
+"add freshness" to the cryptographic exchange and the parameters to be
+used for the Diffie-Hellman key exchange.  I believe this is where the
+preferred choice for the bulk encryption (2-DES v. AES v. whatever) is
+also negotiated.  Since we have not yet established the tunnel, these
+messages are necessarily sent as plaintext.
+
+A block of material called SKEYSEED is calculated independently by
+both ends using the nonces generated by both ends and the
+shared secret generated by the Diffie-Hellman exchange in the INIT.
+Building SKEYSEED involves the use of a pseudorandom function (PRF)
+also agreed upon...in the first exchange?  I'm having trouble tracking
+where that's chosen.
+
+SKEYSEED is used first to generate a key for the next message
+exchange, and then later to make keys for the Child SAs (below).
+
+Next, there is an encrypted exchange that is used to authenticate the
+parties.  The authentication may be via an RSA digital signature, a
+shared (symmetric) key message integrity code, or a DSS digital
+signature.  In all three methods, each party signs a block of data
+using the secret, in a fashion that can be verified by the partner.
+(This could again be vulnerable to Shor's algorithm if it uses one of
+the public key methods, but keep in mind the messages containing this
+information are also encrypted; however, as we are just now
+authenticating, it's _possible_ that, up to this point, the partner at
+the other end of this connection is not who they claim to be!)
+
+The IKE SA is used to create Child SAs, which carry the actual
+traffic.  The keys used for the Child SAs, therefore, are the obvious
+target for traffic-based attacks, though the real prize is the keys
+for the IKE SA.  I'm having a hard time imagining how to mount an
+effective attack against the IKE SA.
+
+The key material for the Child SA is generated via a complex mechanism
+involving a new nonce and the PRF previously specified.  The initiator
+of the creation may also, optionally, specify that an entirely new
+Diffie-Hellman exchange be performed.  I'm very unclear on how often
+that option is used in practice.
+
+Each SA, whether IKE or Child, can (and should) have a lifetime.  That
+lifetime can be specified in either seconds or in bytes that have been
+encrypted as they pass through the tunnel.  Once the lifetime has
+expired, the two gateways must create a new Child SA with new keys.
+This ultimately is the heart of what we're looking for here: what is
+that recommended lifetime today, and what should it be in the light of
+quantum computing?
+
+This is the question that has proven to be so hard to answer, and that
+has led me wandering all across the web.  Probably the most relevant
+source is, naturally, the mailing list where most of the design work
+is documented.
+
+One early, relevant message
+(https://mailarchive.ietf.org/arch/msg/ipsec/_dSgUvW6WiUFvw5aoyu7rJo5Kgc)
+from 08 March 1995 carries the quote:
+
+	"I think 2^32 is a better bound than 2^43, at least for certain modes
+	of DES. For instance, after 2^32 blocks in CBC mode, you expect to see
+	two identical ciphertext blocks, say c[i] and c[j]; the difference
+	between their predecessors will match the difference between the
+	corresponding plaintext blocks, i.e.,
+
+	p[i] xor p[j] = c[i-1] xor c[j-1]
+
+	Information thus starts to leak after 2^32 blocks (square root of the
+	message space). I would recommend 2^32 blocks as the limit for the
+	lifetime of a key, and that takes care of the 2^43/2^47 attacks as
+	well."
+
+referring, although not by name, to both the birthday paradox and the
+differential cryptanalysis limits discussed above.  Keep in mind that
+at 2^32 blocks, we are at a 39% probability of there being at least
+one ciphertext collision revealing some information.
+
+Searching the archives for "birthday" also turned up some relevant
+messages, e.g. the relatively recent (21 April 2015) message
+https://mailarchive.ietf.org/arch/msg/ipsec/T1woQuwh1Ccoz6fWWFDBETBllaY
+quoting the earlier message
+https://mailarchive.ietf.org/arch/msg/ipsec/De46HNR1h4lGXZnxlIVpNSfs5p0:
+
+	"> I think the main problem with 3DES is not that it is significantly slower
+	> than AES, but that it has blocksize of 64 bits, that is considered
+	> loo small for high-speed networks, when the possibility of birthday attack
+	> leads to necessity to frequently rekey.
+
+	It’s hard to make that case. The blocksize is 64 bits. So it’s prudent
+	to not use more than, say, a billion blocks. A billion blocks is 64
+	Gb. There are very few real tunnels that run that kind of throughput
+	in under a minute. OTOH it’s no problem at all to run a CreateChildSA
+	every minute, or even every five seconds. So I think there are very
+	few cases that *can’t* use 3DES."
+
+This is interesting, particularly given its newness.  The author (Yoav
+Nir, one of the long-time leaders of the IPsec community) considers
+3DES + very frequent rekeying to be sufficient, at least for some use
+cases, and it's important for backwards compatibility.  However, in a
+slightly earlier (2012) exchange on the mailing list, David McGrew
+(another key IPsec person) and Nir covered the same issue, with McGrew
+arguing that no more than 50 megabytes should be encrypted with the
+same key even using 3DES, due to the birthday paradox.  McGrew went so
+far as to write up a 16-page analysis posted on the Cryptology
+preprint server (see references).
+
+Chip Elliott was the first to modify IPsec to work with QKD, as far as
+I'm aware.  Shota Nagayama drafted and implemented a more formal
+protocol modification for his bachelor's thesis, back in 2010, but we
+failed to push that from Internet Draft to RFC.
+
+4. TLS/SSL and cryptography
+
+Here we want to answer the same three questions we had above:
+
+1. What are the technical mechanisms in place for rekeying and
+   effective use of encryption?
+2. What was known, at the time these protocols were developed, about
+   the best practices for rekeying?
+3. What are best practices today?
+
+but this section will be much shorter, as I know so much less about
+TLS.
+
+The current standard for Transport Layer Security, or TLS, is RFC5246,
+published in 2008 and updated with various tidbits by almost a dozen
+newer RFCs.  It specifies version 1.2 of the protocol.  The main
+document itself is only 100 pages, not bad for something so complex
+and important.
+
+...oh, what is TLS?  It's the protocol that HTTPS runs over.  It's the
+successor to SSL, the Secure Sockets Layer, which was the first way to
+encrypt web browsing.  TLS originally builds on top of a reliable
+transport protocol, such as TCP, though a later adaptation (RFC6347)
+lets it run over a datagram protocol.  We'll only worry about running
+it over TCP here.  TLS provides privacy, by encrypting all of your web
+browsing traffic for a particular connection.  It also provides data
+integrity, using a MAC (message authentication code) when necessary.
+(IPsec also does both, but we ignored that above.)
+
+TLS consists of one primary protocol: the TLS Record Protocol.  On top
+of the TLS Record Protocol sit four protocols, one of which (the
+application data protocol) is used for the bulk data encryption, and
+the TLS Handshake Protocol, which utilizes public key cryptography to
+establish identity, securely creates a shared secret to be used for
+the bulk data encryption, and makes sure that this part of the process
+can't be modified by an attacker.  A third one of interest to us is
+the change cipher spec protocol.
+
+One attack this RFC points out is
+http://www.openssl.org/~bodo/tls-cbc.txt, which (among other things)
+describes a flaw in how TLS Record Protocol records are concatenated.
+Originally, TLS kept the ciphertext of the last block of a record to
+use as the initialization vector (IV) of the first block of a new
+record, but this allows an attacker who can adaptively choose
+plaintexts to more completely choose the text being encrypted.  The
+fix is straightforward (toss in an extra block of nonsense data before
+starting the new record), and current versions of TLS aren't
+vulnerable.
+
+One startling and potentially useful document is RFC7457, "Summarizing
+Known Attacks on Transport Layer Security (TLS) and Datagram TLS
+(DTLS)".  It details a couple of dozen attacks on TLS, most having to do
+with protocol implementation issues such as failing to correctly
+verify all of the information you are given.  Some of them leak
+information or allow a connection to be take over, others allow an
+attacker to downgrade the security negotiation so that a later attack
+on the cipher has a higher chance of success.
+
+A record in the record layer has a maximum size of 16KB (2^14).
+
+There is, as best I can tell, no official limit on the key lifetime or
+on the number of bytes that can be pushed through a single TLS except
+the limit on record sequence numbers of $2^64}-1$.  Combined with the
+max record size, that's 2^78 bytes, or 256 exabytes, which is a bloody
+lot of data.  So, if the lifetime of a session needs to be limited, it
+has to be done by breaking the connection and renegotiating.
+Apparently, adding a key renegotiate feature is being considered for
+TLS 1.3.
+
+Luykx and Paterson wrote up a short (8 page) summary recommending
+limits for TLS with different cryptosystems. (My copy is dated
+Aug. 2017, but the paper was referred to in Apr. 2016.)
+http://www.isg.rhul.ac.uk/~kp/TLS-AEbounds.pdf
+Unfortunately, that paper has good references but doesn't go through
+the complete reasoning, so going one level deeper in the reading is
+really necessary.
+
+In April 2016, Mozilla moved to limit the length of a connection,
+based on those results:
+https://bugzilla.mozilla.org/show_bug.cgi?id=1268745
+They set AES-CBC to about 2^34.5, or about 24 billion records, about
+400 terabytes max.  That should give a probability of 2^{-57} of
+"ciphertext integrity [being] breached", though I'm a little unclear
+on exactly what that means here -- is this just birthday bound leaking
+some plaintext, or is this compromise of the entire session key?
+Figuring that out will take more digging, since they express things
+differently than most of the resources I used above.
+
+Alan Mink and Sheila Frankel worked on integrating TLS with QKD, a
+full decade ago.
+
+<<add more here on chains of trust for certificates, how rekeying is
+handled, and how we make sure that an attacker can't cause a downgrade
+of security relative to what both ends really want.>>
+
+5. Attacking classical cryptography using quantum computers
+
+5.1 Shor 'Nuff
+
+Obviously, the main thing we're talking about here is Shor's
+algorithm.  I have not been privy to the conversations of
+cryptographers in creating post-quantum crypto, though we'll take a
+short look at that below.  But there are very few people in the world
+who understand better than I do what it takes to actually run the full
+version of Shor's algorithm on a potentially real machine.
+
+A full implementation of Shor's algorithm consists of two quantum
+phases: modular exponentiation, followed by the quantum Fourier
+transform.  (I'm assuming you're familiar with the main ideas behind
+Shor, how it uses interference to build patterns in the quantum
+register that can reveal the period of a function that allows us to
+find the factors of a large semi-prime number.)
+
+The key insight may be the behavior of the QFT, but the bulk of the
+execution time will be in the modular exponentiation phase.  This is
+actually one of the areas that I worked on in my Ph.D. thesis.
+https://arxiv.org/abs/quant-ph/0607065
+Some of the important parts of this were published in Physical Review
+A.
+
+In my thesis there is a plot that I think is useful, which we updated
+and published in our Communications of the ACM article:
+https://m-cacm.acm.org/magazines/2013/10/168172-a-blueprint-for-building-a-quantum-computer/fulltext
+
+We worked out detailed performance estimates, including hardware
+requirements and quantum error correction, in some of our papers:
+https://journals.aps.org/prx/abstract/10.1103/PhysRevX.2.031007
+and
+https://www.worldscientific.com/doi/abs/10.1142/S0219749910006435
+https://arxiv.org/abs/0906.2686
+
+There were other, contemporary important papers on how to implement
+Shor, including Fowler et al., https://arxiv.org/abs/quant-ph/0402196
+who discussed Shor on a linear array, a few months ahead of my own
+Phys. Rev. A paper on the same topic.
+
+We both built on important, early work by Vedral, Barenco and Ekert
+(VBE) and by Beckman, Chari, Devabhaktuni and Preskill (BCDP).
+https://arxiv.org/abs/quant-ph/9511018
+https://journals.aps.org/pra/abstract/10.1103/PhysRevA.54.147
+https://arxiv.org/abs/quant-ph/9602016
+https://journals.aps.org/pra/abstract/10.1103/PhysRevA.54.1034
+
+btw, if you are looking to broaden your reading on implementations of
+Shor’s algorithm, the following are useful:
+
+Pavlidis and Gizopoulous found an efficient division algorithm,
+accelerating the math.
+https://arxiv.org/abs/1207.0511
+https://dl.acm.org/citation.cfm?id=2638682.2638690
+
+Roetteler, Steinwandt focused on the applicability of Shor's algorithm
+to elliptic curve. I like the paper, except I think their survey of
+related research could have been better.
+https://arxiv.org/abs/1306.1161
+and Roetteler, Naehrig, Svore, Lauter:
+https://arxiv.org/abs/1706.06752
+
+Gidney and Ekera submitted to the arXiv a paper on factoring a
+2048-bit number using 20 million noisy quibits.  In this paper, one of
+their techniques is arithmetic "windowing" which is essentially
+identical to one of the techniques I proposed in my 2005 Phys. Rev. A
+paper.  https://arxiv.org/abs/1905.09749
+
+May and Schliper also recently uploaded a paper on period finding with
+a single qubit.
+https://arxiv.org/abs/1905.10074
+
+Ekeraa and Hastad also proposed a new period-finding algorithm
+variant, in 2017.
+https://link.springer.com/chapter/10.1007/978-3-319-59879-6_20
+https://arxiv.org/abs/1702.00249
+
+Smolin, Smith, Vargo wrote something of a warning about inferring too
+much from very simple demonstrations on a few qubits.
+https://www.nature.com/articles/nature12290
+
+Here is one early paper on how to assess errors in Shor’s algorithm,
+by Miquel, Paz and Perazzo:
+https://arxiv.org/abs/quant-ph/9601021
+https://journals.aps.org/pra/abstract/10.1103/PhysRevA.54.2605
+
+Chuang et al., also published an early examination of decoherence in
+factoring.
+https://science.sciencemag.org/content/270/5242/1633
+
+Among random things, there is Dridi and Alghassi,
+factoring on D-Wave; I don’t think much of this paper.
+https://www.nature.com/articles/srep43048
+
+That's more than enough for now, since it isn't really the focus of
+what we're after here, anyway.
+
+5.2 Grover's amplifier
+
+I wonder how hard it would be to set up amplitude amplification for
+the bias in linear cryptanalysis?  The bias we are looking for is
+certainly small.
+
+Turns out people have addressed that question:
+https://arxiv.org/abs/1510.05836
+https://link.springer.com/article/10.1007/s11128-015-0983-3
+https://link.springer.com/chapter/10.1007/978-3-662-48683-2_5
+
+One new one I hadn't seen before:
+Bernstein, Biasse, Mosca on low-resource quantum factoring, using
+Grover's algorithm and NFS:
+https://research.tue.nl/en/publications/a-low-resource-quantum-factoring-algorithm
+https://cr.yp.to/papers/grovernfs-20170419.pdf
+
+6. Post-quantum cryptography
+
+<<somebody besides me should write this.  Moriai-san?  Aono-san?  Jon?>>
+
+Post-quantum cryptography is the attempt to find a public key
+cryptosystem that is resistant to quantum computing, Shor's algorithm
+in particular.
+
+There is enough interest in this that the Wikipedia pages are
+essentially extensive catalogs:
+https://en.wikipedia.org/wiki/Post-quantum_cryptography
+https://en.wikipedia.org/wiki/Post-Quantum_Cryptography_Standardization
+
+An official-looking site:
+https://csrc.nist.gov/projects/post-quantum-cryptography/post-quantum-cryptography-standardization
+
+One recent blog posting of some use:
+https://blog.trailofbits.com/2018/10/22/a-guide-to-post-quantum-cryptography/
+
+A very recent blog posting on teaching crypto in the post-quantum
+crypto age:
+https://news.ncsu.edu/2019/06/teaching-next-generation-cryptosystems/
+which builds on a conference presentation on the course they created:
+https://dl.acm.org/citation.cfm?id=3317994
+which goes into a lot of detail on crypto hardware.
+
+A survey from a decade ago:
+https://www.nist.gov/publications/quantum-resistant-public-key-cryptography-survey?pub_id=901595
+
+Also in 2009, there was a book, which I'm sure is almost entirely
+outdated by now:
+https://www.springer.com/jp/book/9783540887010
+
+7. Bitcoin and Quantum Computers
+
+<<someone needs to take this one on, too...>>
+
+I promised those of you who stuck around some things on bitcoin and
+quantum.  Here are just a few random links, not stuff I have studied
+seriously.  There has been a bunch in the news lately, and I don't
+have time right now to sort out what's what.
+
+Quantum attacks on Bitcoin:
+https://driveinsider.com/the-quantum-attack-on-bitcoin/
+
+https://www.bitcoinmarketjournal.com/how-many-people-use-bitcoin/
+found via
+https://twitter.com/yayayday/status/1140214798367543297
+says 32M Bitcoin wallets, 34% are active users, 7M active.
+
+Marco Tomamichel with some data on level of vulnerability across the
+entire bitcoin universe:
+https://twitter.com/marcotomamichel/status/1138431744103686144
+June 11, 2019
+and follow-ups, including
+https://twitter.com/marcotomamichel/status/1138438446622470144
+
+
+
+-----
+
+Publish this eventually?
+
+Ars Technica?
+Quanta Magazine?
+
+===================
+
+8. References:
+
+Most important reference:
+
+https://sweet32.info/
+
+8.1 IPsec:
+
+https://en.wikipedia.org/wiki/Internet_Security_Association_and_Key_Management_Protocol#Implementation
+https://en.wikipedia.org/wiki/Internet_Key_Exchange
+https://tools.ietf.org/html/rfc7296 (IKEv2)
+https://en.wikipedia.org/wiki/IPsec
+https://trac.ietf.org/trac/sec/wiki (Security Area)
+https://tools.ietf.org/html/rfc2407 (ddp)
+https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Cipher_Block_Chaining_(CBC)
+https://tools.ietf.org/html/rfc3602 (Frankel)
+
+Additional IKE references:
+
+ISAKMP:
+https://en.wikipedia.org/wiki/Internet_Security_Association_and_Key_Management_Protocol
+http://www.racoon2.wide.ad.jp/w/
+http://www.kame.net/racoon/
+<our URL>
+
+AES-CBC use in IPsec:
+https://tools.ietf.org/html/rfc3602
+
+NIST key length recommendations:
+https://www.keylength.com/en/4/
+https://www.keylength.com/en/
+
+Lenstra, Verheul, Selecting Cryptographic Key Sizes, J. Cryptology
+(2001),. 14:255-293
+https://infoscience.epfl.ch/record/164526/files/NPDF-22.pdf
+
+IP Security Maintenance and Extensions (ipsecme) Working Group
+https://datatracker.ietf.org/wg/ipsecme/about/
+
+IPsec mailing list archives:
+https://mailarchive.ietf.org/arch/browse/ipsec/
+Searching that for "lifetime" resulted in (as of 2019/6/19) 1,018
+email messages, the oldest of which was from July, 1993, and doesn't
+seem relevant.
+
+
+8.2 General crypto:
+
+https://en.wikipedia.org/wiki/Advanced_Encryption_Standard 
+https://brilliant.org/wiki/rsa-encryption/
+https://en.wikipedia.org/wiki/RSA_(cryptosystem)
+https://en.wikipedia.org/wiki/Forward_secrecy
+
+And of course the books
+
+Schneier, Applied Cryptography
+https://www.schneier.com/books/applied_cryptography/
+Schneier, Ferguson, Kohno, Cryptography Engineering
+https://www.schneier.com/books/cryptography_engineering/
+Menezes, van Oorschot, Vanstone, Handbook of Applied Cryptography
+http://cacr.uwaterloo.ca/hac/
+
+8.3 Cryptanalysis:
+
+https://en.wikipedia.org/wiki/Differential_cryptanalysis
+https://en.wikipedia.org/wiki/Linear_cryptanalysis
+https://www.cs.rit.edu/~ib/Classes/CS482-705_Winter10-11/Slides/crypto_lc.pdf
+http://www.engr.mun.ca/~howard/Research/Papers/ldc_tutorial.html
+http://www.ciphersbyritter.com/RES/LINANA.HTM (a lit survey on LC;
+rather ad hoc)
+
+8.4 Key lifetime & length:
+
+https://www.cryptomathic.com/news-events/blog/exploring-the-lifecycle-of-a-cryptographic-key-
+https://searchsecurity.techtarget.com/definition/cryptoperiod
+https://www.keylength.com/en/4/
+https://arxiv.org/abs/quant-ph/0306078
+https://royalsocietypublishing.org/doi/10.1098/rspa.2004.1372
+https://www.physics.utoronto.ca/research/quantum-optics/cqiqc_events/jean-christian-boileau-tba
+https://learningnetwork.cisco.com/thread/25765
+http://cseweb.ucsd.edu/~mihir/
+http://mathworld.wolfram.com/BirthdayAttack.html
+https://danielmiessler.com/study/birthday_attack/
+https://www.sciencedirect.com/topics/computer-science/birthday-attack
+(a collection of links to other books and materials mentioning the
+birthday attack; some are relevant here, others less so)
+https://www.keylength.com/en/compare/
+https://infoscience.epfl.ch/record/164526/files/NPDF-22.pdf (Lenstra)
+https://mailarchive.ietf.org/arch/msg/ipsec/T1woQuwh1Ccoz6fWWFDBETBllaY
+(brief but good discussion of rekeying lifetime)
+https://en.wikipedia.org/wiki/Key_size (not very well written)
+https://www.keylength.com/en/3/ (includes relative strength of algos)
+https://blog.cloudflare.com/why-are-some-keys-small/ (good article)
+https://www.ecrypt.eu.org/csa/documents/D5.4-FinalAlgKeySizeProt.pdf
+(2018 recommendations, 574 references)
+https://link.springer.com/chapter/10.1007/3-540-44448-3_42 (Abdalla & Bellare)
+
+https://eprint.iacr.org/2012/623 Cryptology eprint by David McGrew,
+discussed in messages such as
+https://mailarchive.ietf.org/arch/msg/ipsec/7V6ry4le7eU3v283uF5D3Y9lCsU
+and
+https://mailarchive.ietf.org/arch/msg/ipsec/fQciMNrxTdsM3CNTAP0F4CKjjtc
+The former of those also discusses biclique attacks on AES.
+
+8.5 Crypto law:
+
+http://www.cryptolaw.org/cls2.htm (country-by-country crypto export
+status as of 2013)
+https://en.wikipedia.org/wiki/40-bit_encryption (the U.S. had a 40-bit
+limit in 1990s; not clear to me when it was relaxed)
+
+8.6 Bitcoin:
+
+https://driveinsider.com/the-quantum-attack-on-bitcoin/
+https://www.bitcoinmarketjournal.com/how-many-people-use-bitcoin/
+https://arxiv.org/abs/1710.10377
+https://cointelegraph.com/news/quantum-computing-vs-blockchain-impact-on-cryptography (not very accurate)
+
+8.7 Others:
+
+https://ieeexplore.ieee.org/xpl/mostRecentIssue.jsp?punumber=5208
+(38th FOCS)
+https://cloud.google.com/security/encryption-at-rest/default-encryption/
+(describes some of Google's current practices and planned upgrades wrt
+encryption)
+https://info.townsendsecurity.com/km-trends
+https://en.wikipedia.org/wiki/Key_management
+https://www.theregister.co.uk/2019/06/26/amd_epyc_key_security_flaw/
+
+U.S. presidential candidate Andrew Yang has a policy on quantum
+computing and encryption standards!
+https://www.yang2020.com/policies/quantum-computing/
+
+https://blogs.technet.microsoft.com/secguide/2014/04/07/why-were-not-recommending-fips-mode-anymore/
+https://en.wikipedia.org/wiki/FIPS_140-2
+
+Mozilla moved to limit the lifetime of TLS connections in 2016:
+https://bugzilla.mozilla.org/show_bug.cgi?id=1268745
+(found via SWEET32)
+
+This was based in part on a paper by Luykx and Paterson, apparently,
+though the PDF is dated later than the Mozilla web page above.
+Atul Luykx and Kenneth G. Paterson
+Limits on Authenticated Encryption Use in TLS
+
+Following their seminal paper on the technique, Biham & Shamir
+published an entire book on the topic:
+Biham & Shamir, Differential Cryptanalysis of the Data Encryption
+Standard, Springer 1993.
+
+Diffie & Hellman analyzed direct, brute force attacks on DES, and
+found them to be feasible, all the way back in 1977.
+https://ieeexplore.ieee.org/abstract/document/1646525
+
+Weak PRNGs, including Microsoft's, and RSA/NSA elliptic curve
+generator:
+https://en.wikipedia.org/wiki/Random_number_generator_attack
+
+=====
+
+Appendix:
+
+A. Some Mathematica tinkering
+
+Some ad hoc Mathematica code for dinking around with some of the
+numbers:
+
+NoCollisionProbability[n_, D_] := N[Factorial[D]/Factorial[D - n]/D^n]
+
+NoCollisionProbability[23, 365]
+0.492703
+
+NoCollisionProbability[2^10, 2^20]
+0.606728
+
+Stirling[n_] := Sqrt[2*\[Pi]*n]*(n/E)^n
+
+NoCollisionProbabilityApprox[n_, D_] := 
+ N[Stirling[D]/Stirling[D - n]/D^n]
+
+NoCollisionProbabilityApprox[2^10, 2^20]
+0.6067282267199
+
+NoCollisionProbabilityApprox[2^12, 2^24]
+0.606580027339
+
+(That last example took several minutes on my laptop.  Be very careful
+running the above code with larger numbers, it's very easy to start a
+computation that won't complete in your lifetime, and Mathematica
+isn't as friendly about stopping computations in a reasonable state as
+one might like.)
+
+A good analysis of the birthday bound appears in Sec. 2.2 of the
+SWEET32 paper by Bhargavan and Leurent.
+
+The square root limit as $n$ and $d$ grow large:
+
+N[Sqrt[E]]
+1.64827
+
+N[1 - 1/Sqrt[E]]
+0.393469
+
+=======
+
+B. Some notes for my students
+
+This might seem very far from linear algebra, but the terms "linear"
+and "affine" show up in linear cryptanalysis, with a special meaning
+derived from the same concepts we saw in class.
+
+We saw a hint of the relationship between graph theory and linear
+algebra.  In the Ritter literature survey, Buttyan and Vajda are cited
+as describing one important aspect of linear cryptanalysis as a graph
+problem that would take about a terabyte of memory.  That was out of
+the question when they wrote their paper in 1995, but 1TB of RAM is no
+big deal today.  I wonder if that is still a valid idea, and if anyone
+has followed up on it?
+
+---
+
+comments/observations from AQUAcamp
+
+must understand layered communication protocols to follow this!
+
+Aono: lattice crypto is very attractive because a) it reduces to
+shortest vector or other problems, and b) implementation is easy,
+basically a martix times a vector.
+
+learning w/ errors As + e = t mod q
+candidate for post-quantum crypto
+
+(n.b.: cocori created a ipynb, but misunderstood the size of the
+matrix necessary)
+
+biclique is best attack against AES
+(but Aono-san says it's not practical)
+
+Markus Grassl, Martin Roetteler on AES via Grover:
+https://arxiv.org/abs/1512.04965
+requires tremendous resources.
+Only 3-7,000 logical qubits, but up to 2^151 T gates?!?
+
+Jogenfors (the QKD hacker?) on bitcoin:
+https://arxiv.org/abs/1604.01383
+
+-----
+
+Should consider, in addition to Internet security:
+
+* Internet security-oriented encryption
+  - IPsec
+  - TLS/SSL
+  - ssh
+  - DNSSEC
+  - BGPsec
+* WLAN
+  - WEP
+  - WPA
+* 5G
+
+https://news.yahoo.com/exclusive-russia-carried-out-a-stunning-breach-of-fbi-communications-system-escalating-the-spy-game-on-us-soil-090024212.html?soc_src=community&soc_trk=tw
+
+Darrell says IKEv1 is believed to be stronger post-quantum than IKEv2,
+but he hasn't told me why yet.
+
+See Pirandola and Hoi-Kwong Lo for recent QKD reviews.
+
+https://csrc.nist.gov/projects/post-quantum-cryptography
+
+On Sept. 20, it was all over the news that Google is rumored to be
+claiming quantum supremacy:
+https://www.cnet.com/news/google-reportedly-attains-quantum-supremacy/
+
+https://twitter.com/susurrusus/status/1142196496739291137?s=19
+and substantial follow-on conversation, starting in part from some
+misguided post-quantum cryptocurrency:
+https://twitter.com/mochimocrypto/status/1175134812862058496
+https://twitter.com/mochimocrypto/status/1175891543233708032
+based on WOTS+.
+What are WOTS+ and XMSS?  I assume DSA is digital signature algorithm.
+https://twitter.com/mochimocrypto/status/1175135848259624960
+replied to by Biercuk
+https://twitter.com/MJBiercuk/status/1175394127841615872
+https://twitter.com/jfitzsimons/status/1175919991322886145
+
+https://blog.cloudflare.com/towards-post-quantum-cryptography-in-tls/amp/?__twitter_impression=true
+https://medium.com/altcoin-magazine/quantum-resistant-blockchain-and-cryptocurrency-the-full-analysis-in-seven-parts-part-6-769973d3decf
+https://twitter.com/jtga_d/status/1175898478712635392
+
+Might get either John Schanck or Douglas Stebila (recommended by Joe
+Fitzsimons) to review this.
+https://www.douglas.stebila.ca/
+jschanck@uwaterloo.ca
+
+New paper on AES and Grover
+https://arxiv.org/abs/1910.01700
+https://arxiv.org/pdf/1910.01700.pdf
+
+Good info on status of DES/3-DES at
+https://en.wikipedia.org/wiki/Data_Encryption_Standard
+
+Supplementary material listing all of the S-boxes, permutations and
+functions at
+https://en.wikipedia.org/wiki/DES_supplementary_material
+
+Need to talk about confusion and diffusion, thanks to Shannon.
+https://en.wikipedia.org/wiki/Confusion_and_diffusion
+
+Perlner survey of post-quantum crypto
+
+pentesting (penetration testing)?
+
+My QuantumInternet tweetstorm:
+https://twitter.com/rdviii/status/854443142304497665?s=19
+
+PQC:
+https://www.scientificamerican.com/article/new-encryption-system-protects-data-from-quantum-computers/
+
+PUF (for making a key):
+https://en.wikipedia.org/wiki/Physical_unclonable_function
+
+A quantum PUF:
+https://phys.org/news/2019-10-cryptography-secret-keys.html
+
+https://www.schneier.com/blog/archives/2019/10/factoring_2048-.html
+
+Shannon's a mathematical theory of cryptography
