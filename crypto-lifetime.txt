@@ -189,7 +189,7 @@ context:
 * affine function: same as a linear function, but an offset is
   allowed, such that f(0,0) = 1 (origin isn't necessarily preserved)
   (equivalent to a translation in a real space R^n).
-* nonlinear function: A nonlinear function is one in which $f(x+y) \ne f(x) + f(y)$ for some values $x$ and $y$. I'm definitely fuzzy here...multiplication and
+* nonlinear function: A nonlinear function is one in which $f(x+y) \ne f(x) + f(y)$ for some values $x$ and $y$. An affine function is one type of nonlinear function. I'm definitely fuzzy here...multiplication and
   arbitrary mappings are allowed?
 
 
@@ -336,8 +336,9 @@ with the 48-bit subkey, then dividing it into 6-bit chunks and pushing
 each chunk through one of eight substitution boxes, or S boxes.  Each
 S box turns 6 bits into 4, using a lookup table defined as part of the
 algorithm (that is, this operation is not key-dependent).  The S boxes
-are nonlinear, which is the source of the true security of DES; if the
-S boxes were linear, breaking DES would be easy (or so I am told).
+are nonlinear (but not affine), which is the source of the true
+security of DES; if the S boxes were linear, breaking DES would be
+easy (or so I am told).
 
 Decrypting DES is exactly the same operation as encrypting, except
 that the subkeys are used in reverse order.
@@ -390,14 +391,36 @@ for sensitive information.
 
 1.3.2 AES
 
-AES, the Advanced Encryption Standard, has replaced DES.  It is a type
-of block cipher known as a substitution-permutation cipher.  AES uses
-a block size of 128 bits, and a key size of 128, 192 or 256 bits
-(which also affects the number of rounds of
-substitution-permutation).
+AES, the Advanced Encryption Standard, has replaced DES.  It is a type of block cipher known as a substitution-permutation cipher.  AES uses a block size of 128 bits, and a key size of 128, 192 or 256 bits. The key size affects the number of rounds of substitution-permutation, requiring 10, 12 or 14, respectively.
 
-<<I really _should_ include a description of AES here in more detail,
-but this is already too long.>>
+AES began life in 1997 when NIST announced a competition for a successor to DES, due to the problems with DES described earlier and later. Two Belgian cryptographers, Vincent Rijmen and Joan Daemen, submitted a proposal they dubbed Rijndael, which ultimately beat out fourteen other serious competitors to become, with some modifications, the Advanced Encryption Standard, published as the standard in 2001.
+
+A substitution-permutation network, as you might guess, alternates substituting new bits for old ones with permuting (rearranging) the bits, conducted over a series of rounds. DES has some characteristics of a substitution-permutation network, but is not purely so. A well-designed s-p net will maximize Shannon's confusion (or the avalanche effect) and diffusion, which we will see shortly.
+
+AES begins by laying out the sixteen bytes in a $4\times 4$ array in column major form:the first byte in the upper left, then the next byte below it, with the fifth byte returning to the tp of the second column. Most operations work on rows, however, increasing the mixing of the bytes.
+
+First, in the KeyExpansion phase, the round keys are created from the original key.
+
+Next, the appropriate number of rounds is performed. Each round consists of the following steps:
+
+SubBytes
+ShiftRows
+MixColumns
+AddRoundKey
+In the first round, AddRoundKey is performed before the other operations as well as after. In the last round, the MixColumns step is omitted.
+
+The S box in SubBytes is a single, byte-level, fixed operation, $1:1$, unlike the DES S boxes, which are more complex and vary depending on the position within the block. The AES S box is nonlinear ($f(x+y) \ne f(x)+f(y)$) and was designed specifically to defeat both linear and differential cryptanalysis (which we will see later), but should you not trust the specific values they can be modified. The S box can be implemented as a straightforward 256-byte lookup table, with the input byte as the index, or as a simple bitwise matrix multiplication.
+
+The ShiftRows operation rotates all rows but the first. The MixColumns operation is more complex, executed as a matrix multiplication using modulo-two integer arithmetic. These two operations maximize the diffusion of the original data. The AddRoundKey is a simple XOR of the 128-bit round key into the block.
+
+AES is easily implemented in either software or hardware. Some modern CPUs include special instructions to accelerate AES encryption, and even for those that don't, heavily optimized assembly language is achievable.  In the absence of special hardware, encrypting each 128-bit block of data requires several hundred CPU instructions. For example, my Mac laptop, with a 2.2GHz Intel Core i7 processor, encrypts AES-CBC at the following rates:
+
+
+
+128-bit key: 1.25 Gbps for 16-byte chunks, 1.44 Gbps for 8192-byte chunks
+192-bit key: 1.06 Gbps for 16-byte chunks, 1.18 Gbps for 8192-byte chunks
+256-bit key: 912 Mbps for 16-byte chunks, 1.01 Gbps for 8192-byte chunks
+Despite two decades of effort, there are no known attacks on AES that allow recovery of the key in substantially less time than brute force; the best attacks roughly halve that cost, at the cost of requiring tremendous amounts of storage.
 
 1.3.3 Limitations of Block Ciphers
 
@@ -418,6 +441,10 @@ at least two more modes that I know nothing about.)  CBC has the
 undesirable side effect of requiring encryption to be done serially,
 but attacks can be parallelized.  Nevertheless, it's the most commonly
 used mode.
+
+1.4 Notes and References
+
+To be added.
 
 2. Cryptanalysis
 
@@ -454,6 +481,8 @@ attacks (such as measuring the power consumed during encryption) and
 attacks on infrastructure, people, etc. (some of which are known as
 "black bag", or burglary, attacks, and some of which are "rubber hose"
 attacks, extracting information from humans by coercion or torture).
+David Kahn referred to these latter attacks as "practical
+cryptanalysis" in his classic book, _The Codebreakers_.
 
 The older one of the two is differential cryptanalysis, apparently
 discovered indepedently at least three times, publicly by Biham and
@@ -468,14 +497,143 @@ https://en.wikipedia.org/wiki/Linear_cryptanalysis
 (Other techniques that I know nothing about include integral,
 algebraic, and biclique.)
 
-But before talking about those two in any detail, there's a more
+Before talking about those two in any detail, there's a more
 straightforward technique that leaks information about the plaintext,
-if not the key itself: the birthday paradox.
+if not the key itself: the birthday paradox.  But before we get into
+the cryptanalysis itself, let's look a little bit at how the designers
+built defenses into the block ciphers.
 
-2.1 The Birthday Paradox
+2.1 Playing Defense
 
-(Also could be called the pigeonhole principle or the hash collision
-problem.)
+* confusion/avalanche effect
+* diffusion
+* entropy
+
+2.1.1 Entropy
+
+The single most important concept in cryptography -- indeed, in all of
+information theory, and inarguably one of the most important in all of
+computer science -- is Claude Shannon's _entropy_.  The entropy is,
+roughly, the amount of disorder in a sequence of data, or the amount
+of information that must be transmitted to reconstruct the data.  When
+the entropy of a cleartext message is high, it is hard to predict the
+next symbol (bit or byte or letter or floating point number); purely
+random data has very high entropy.  When it is low, the cleartext has
+a skewed probability distribution such that, e.g., the letter 'e' or
+the number 0 is more common than other values.
+
+Of course, because encryption tries to hide information, encrypted
+data looks as random as possible: it has very high entropy.  Thus, an
+easy way to automate a test to see if we have successfully decrypted a
+message is to calculate the entropy of our provisionally decrypted
+plaintext; low entropy indicates a high probability that we have (at
+least partially) succeeded.
+
+The entropy is defined as
+$H_{2}(X)=-\sum_{i=1}^{N} \frac{\operatorname{count}_{i}}{N} \log
+_{2}\left(\frac{\operatorname{count}_{i}}{N}\right)$
+where $\operatorname{count}_i$ is the number of times that the $i$th
+value appeared in our data, and $N$ is the number of different values
+that show up in our data sequence.
+
+From the fantastic website RosettaCode.org, we have a simple example
+in Python of calculating the entropy in bits per byte:
+
+import math
+from collections import Counter
+
+def entropy(s):
+    p, lns = Counter(s), float(len(s))
+    return -sum( count/lns * math.log(count/lns, 2) for count in p.values())
+
+entropy("1223334444")
+
+(This function can actually calculate entropy of strings of other
+types besides characters, as well.)
+
+Note that this definition of entropy does not take into account any
+long-range structure; it is purely based on the overall probability of
+the appearance of a given set of symbols.  Thus, to this function, the
+strings 0101...01 and 000...01...111 have a bit-level entropy just as
+high as a string composed of exactly 50/50 randomly chosen 0s and 1s,
+although by applying a little intelligence we can easily reconstruct
+the former but not the latter (at least, not exactly).  Many lossless
+data compression programs operate on stateful _sequences_ of data to
+predict the next symbol.  For example, the common Unix utilities gzip
+and compress use the Lempel-Ziv algorithm, which builds a dictionary
+of sequences as it goes, so that repetitive data and long runs are
+compressed effectively; this is especially good at sequences such as
+0101...01 or 000...01...111.
+
+(Taking still further advantage of brainpower, the ultimate in
+compression is measured using the _Kolmogorov complexity_: the length
+of the shortest program that will reproduce the sequence.  This has
+very low complexity for anything highly regular, as well as seemingly
+irregular sequences such as the output of a pseudo-random number
+generator or the digits of $\pi$.  I am not aware of any automated
+form for calculating the Kolmogorov complexity of an arbitrary
+sequence of data.)
+
+Many other tests for randomness are important and are used to validate
+experimentally how completely an encryption system hides its data.  If
+any pattern at all shows up in the ciphertext, that can be leveraged
+in an attack, and is an indication that the encryption scheme is
+poor.
+
+This, obviously, is one of the motivations for the substitution phase
+in a substitution-permutation network; with permutation only the
+entropy of the original cleartext is preserved in the ciphertext, and
+in some cases reveals a great deal about the original data.
+
+2.1.2 Diffusion, Confusion and the Avalanche Effect
+
+Claude Shannon, in his seminal article on the mathematics of
+cryptography, defined two concepts he called _diffusion_ and
+_confusion_.  In diffusion, information from the original plaintext
+message is spread across more than one symbol in the output
+ciphertext; the farther the information spreads, the better.  Shannon
+defined _confusion_ as making "the relation between...[the ciphertext]
+$E$ and the...[key] $K$ a very complex and involved one."
+
+Feistel, who designed DES, called diffusion the _avalanche effect_.
+Webster and Tavares defined the _strict avalanche criterion_ (SAC),
+requiring that changing a single input bit flips each of the output
+bits with 50% probability.
+
+_The Handbook of Applied Cryptography_ says the following (p. 20 in my
+edition):
+
+"A substitution in a round is said to add _confusion_ to the
+encryption process whereas a transposition [permutation] is said to
+add _diffusion_. Confusion is intended to make the relationship
+between the key and the ciphertext as complex as possible.  Diffusion
+refers to rearranging or spreading out the bits in the message so that
+any redundancy in the plaintext is spread out over the ciphertext."
+
+I haven't seen it written quite this directly (but then, I'm not that
+well read in crypto), but I think it's fair to say that confusion is
+achieved by the nonlinearity of the S-boxes.
+
+These two concepts don't seem to figure prominently in the
+cryptography books and papers I have been reading, but it seems to me
+that they ultimately underly much of the process of cryptanalysis:
+spreading data broadly reduces the relationship exhibited by two
+ciphertexts even when the plaintexts are closely related, expanding
+the search space; and the nonlinearity means that even a large set of
+straightforward equations is not enough to simply and mathematically
+relate the input and output.
+
+2.2 The Birthday Paradox
+
+(Also called the pigeonhole principle or the hash collision problem.)
+
+You're probably familiar with the basic idea of the birthday paradox:
+If you have $n$ people in a room, what's the probability of two of
+them sharing a birthday?  More concretely, how many people have to be
+in the room before the probability of two sharing a birthday exceeds
+50%?  It's a surprisingly small number, but it's not a true paradox in
+the logical sense.  (This is also called the pigeonhole principle or
+hash collision probability.)
 
 Modern ciphers are designed so that the ciphertext (output of the
 encryption) looks random; we can say that the ciphertext has very high
@@ -495,15 +653,15 @@ and that it would be impossible to reliably *decrypt* that ciphertext
 back to both original blocks?
 
 Answer: there is more information involved in both the encryption and
-decryption than just that specific block.  This is the cipher block
-chaining mentioned at the end of Sec. 1.)
+decryption than just that specific block and the key.  This is the
+cipher block chaining mentioned at the end of Sec. 1.)
 
 In CBC mode, what you gain is the XOR of two plaintext blocks.  If you
 get to choose which two, this could be incredibly valuable
 information; given that it's just two random blocks, it's less so, but
-not unimportant.  As it happens, if block numbers i and j have the
-same ciphertext c[i] = c[j], then you get the XOR of the plaintext of
-blocks i-1 and j-1.
+not unimportant.  As it happens, if block numbers $i$ and $j$ have the
+same ciphertext $c[i] = c[j]$, then you get the XOR of the plaintext of
+blocks $i-1$ and $j-1$.
 
 I spent quite a bit of time working through the math of the birthday
 paradox, only to come back to one of the first sources I found: the
@@ -533,7 +691,7 @@ to set up our session lifetime such that $2d-n-1 < -30$, or $d <
 (n-29)/2$.
 
 Since DES has only a 64-bit block, we should set $d \le 17$.  That's a
-startingly small number: $D = 2^17$ blocks and each block is eight
+startlingly small number: $D = 2^{17}$ blocks and each block is eight
 bytes, so we should limit the use of a single key to one megabyte!
 An impractically small size.
 
@@ -545,7 +703,7 @@ to the home in the foreseeable future -- that still means changing
 keys once every 200msec or so!
 
 Ah, but AES uses $n = 128$, a block size twice as large.  Now we only
-need $d \le 49$ for that one-in-a-billion probability.  $D = 2^49$
+need $d \le 49$ for that one-in-a-billion probability.  $D = 2^{49}$
 times our block size of 16 bytes equals 8 terabytes, about 1,600
 seconds on our 40Gbps link.  So change the keys at least once every
 half hour, and you're good.
@@ -556,7 +714,7 @@ Keep in mind a few points:
    cryptanalysts can do amazing things with small amounts of data;
 2. this depends only on the block size of a block cipher, not on the
    key length;
-3. part of this arises due to the CBC (cipher bloock chain) mode, but
+3. part of this arises due to the CBC (cipher block chain) mode, but
    ECB (electronic code book) mode is worse; there are other modes
    that I haven't looked at closely; and
 4. given that there are still other attacks, minimizing the amount of
@@ -564,7 +722,7 @@ Keep in mind a few points:
 
 So let's look at a couple of the cryptanalysis techniques.
 
-2.2 Differential Cryptanalysis
+2.3 Differential Cryptanalysis
 
 Biham and Shamir wrote a seminal paper, then an easy-to-read book on
 their rediscovery of differential cryptanalysis.  The goal of DC is to
@@ -583,19 +741,20 @@ The attack works with either _chosen_ plaintext (in which the attacker
 says, "Please encrypt this message for me, and give me the
 ciphertext,") or _known_ plaintext (in which the attacker knows that
 the message is a repetition of "HEILHILTER", as figured prominently in
-the cracking the Enigma machine in WWII; modern HTTPS connections and
+the cracking ofo the Enigma machine in WWII; modern HTTPS connections and
 SMTP (email) connections have enough predictability in their content
 to provide a similar fulcrum for such a lever; see Sec. 2.x of these
 notes).  There is a substantial difference in the complexity of the
 two attacks (see Tab. 2.1 in the book).  Known plaintext takes *waaay*
 more trials to succeed.
 
+
 The key idea is the construction of _differentials_ (hence the name)
-from specific S boxes.  Take two possible inputs to an S box, X1 and
-X2.  We can assume the subkey has been XORed into both X1 and X2
-already.  Y1 and Y2 are the corresponding outputs of the S box.  We
-know that if X1 = X2, then Y1 = Y2 and also X1 + X2 = 0 (again, here
-'+' is addition modulo two, or XOR).
+from specific S boxes.  Take two possible inputs to an S box, $X_1$
+and $X_2$.  We can assume the subkey has been XORed into both $X_1$
+and $X_2$ already.  $Y1$ and $Y2$ are the corresponding outputs of the
+S box.  We know that if $X_1 = X_2$, then $Y_1 = Y_2$ and also $X_1 +
+X_2 = 0$ (again, here '+' is addition modulo two, or XOR).
 
 For the total encryption algorithm, changing one bit in the input
 should result in about half the output bits changing.  The S box
@@ -607,24 +766,24 @@ six-bit input should result in changes to at _two_ bits in the
 four-bit output.
 
 So a differential table for each S box is constructed by listing all
-2^6 possible XORs X1 + X2, and collecting the stats on Y1 + Y2.  From
-the differences found here, we can work backwards to find with "high"
-probability (slightly higher than completely random, at any rate) some
-characteristics of the outputs of the *previous* round.
+$2^6$ possible XORs $X_1 + X_2$, and collecting the stats on $Y_1 +
+Y_2$.  From the differences found here, we can work backwards to find
+with "high" probability (slightly higher than completely random, at
+any rate) some characteristics of the outputs of the *previous* round.
 
 The overall attack is performed by encrypting a bunch of
 randomly-chosen *pairs* of plaintexts (chosen as a pair; first a
 completely random one, then a second by XORing in a specific value)
 and comparing their ciphertexts until we find an output pair of
 ciphertexts that fit comfortably with the difference tables we have
-pre-computed for the X boxes.  Repeat until we have built up some
+pre-computed for the S boxes.  Repeat until we have built up some
 statistics about the right set of bits in the output, and from that we
 can take a probabilistic guess at the subkey in the last round.  Based
 on that guess, we can narrow down the set of subkeys for the
 next-to-last round, rinse and repeat.  It's still a computationally
 intensive, tedious process, but much less than brute force.  Roughly,
 the probability of getting the ciphertext pairs we need is
-proportional to 1/p_D, where p_D is the differential probability in
+proportional to $1/p_D$, where $p_D$ is the differential probability in
 the table we are looking for, which may be quite small.
 (This seems to me that keeping a history of things you've already
 tried would increase the probability of finding a pair you like, so
@@ -649,12 +808,13 @@ understanding of the process myself!  The differential tables are
 pretty straightforward, once you understand them, but working from
 there to a full-on attack is a big jump.
 
-2.3 Linear Cryptanalysis
+2.4 Linear Cryptanalysis
 
-LC is a known plaintext attack, developed by Mitsuru Matsui in
-1990 after being inspired by differential cryptanalysis.  The key(!)
-idea is to build a linear approximation of an S box, allowing you to
-calculate possible keys in reverse more quickly.
+Linear cryptanalysis (LC) is a known plaintext attack, developed by
+Mitsuru Matsui in 1990 after being inspired by differential
+cryptanalysis.  The key(!)  idea is to build a linear approximation of
+an S box, allowing you to calculate possible keys in reverse more
+quickly.
 
 If a cipher is good, every individual bit of the output should have a
 50% probability of being 0 and a 50% probability of being 1.
@@ -664,19 +824,20 @@ output bit is 0.")  However, it is possible that some _combinations_
 of bits don't appear with equal probability. For example, the bit
 string composed of the first and third input bits and the second and
 fourth output bits should have all sixteen combinations 0000, 0001,
-..., 1111 with equal probability, but perhaps there is a bias.  If P_i
-is the ith input plaintext bit and C_i is the ith output ciphertext
-bit,
+..., 1111 with equal probability, but perhaps there is a bias.  If $P_i$
+is the $i$th input plaintext bit and $C_i$ is the $i$th output ciphertext
+bit, we can construct an equation like
 
-P_1 + P_3 + C_2 + C_4 = 0
+$L = P_1 + P_3 + C_2 + C_4$
 
-more than 50% of the time (where '+' is modulo 2 addition, or XOR,
-here).
+(where '+' is modulo 2 addition, or XOR, here).  We say that such a
+combination has a bias if the probability of $L$ being 0 is noticeably
+different from 50%.
 
 Such a combination is a _linear_ combination of bits.  It is known (by
 whom?) that if the S-boxes in our cipher are fully linear, then the
-cipher can be easily broken, so the S-boxes are always nonlinear, but
-some bias such as this may be discoverable.
+cipher can be easily broken.  Therefore, designers always use
+nonlinear S-boxes, but some bias such as this may be discoverable.
 
 The basic idea of LC, then, is to find such sets of bits that exhibit
 some bias and use some algebra to recover a few bits of the subkey
@@ -687,7 +848,7 @@ S-boxes in detail; as far as I can tell, this phase of the operation
 is done by very smart humans.
 
 If you can find a combination with a bias of $\epsilon$, then you need
-$1/\epsion^2$ plaintext-ciphertext pairs to find some bits of the
+$1/\epsilon^2$ plaintext-ciphertext pairs to find some bits of the
 subkey.
 
 This is done by taking multiple expressions like the above, combining
@@ -713,12 +874,12 @@ either DC or LC.
 
 I found Heys' tutorial to be clear and helpful in understanding LC.
 
-2.4: Known and chosen plaintexts in real systems
+2.5: Known and chosen plaintexts in real systems
 
 (Parts of this will make more sense after getting through the below.
 Maybe this section should be moved.)
 
-Modern HTTPS connections and SMTP (email) connections have a lot of
+Modern HTTPS (web) and SMTP (email) connections have a lot of
 predictability in their content, with commands like 'HELO' and
 'HTTP/1.1'.  Thus, it's probably reasonable to consider attacks on TLS
 to be chosen-plaintext attacks.
@@ -757,7 +918,7 @@ noticeable fraction of your plaintext is known under benign
 circumstances, and that it's not all that hard for an attacker to
 mount a chosen plaintext attack.
 
-2.5:
+2.6:
 
 Some of the references I used for this section:
 
@@ -1313,6 +1474,7 @@ Schneier, Ferguson, Kohno, Cryptography Engineering
 https://www.schneier.com/books/cryptography_engineering/
 Menezes, van Oorschot, Vanstone, Handbook of Applied Cryptography
 http://cacr.uwaterloo.ca/hac/
+(all chapters are available as free PDF downloads)
 
 8.3 Cryptanalysis:
 
@@ -1401,6 +1563,7 @@ Following their seminal paper on the technique, Biham & Shamir
 published an entire book on the topic:
 Biham & Shamir, Differential Cryptanalysis of the Data Encryption
 Standard, Springer 1993.
+http://www.cs.technion.ac.il/~biham/Reports/differential-cryptanalysis-of-the-data-encryption-standard-biham-shamir-authors-latex-version.pdf
 
 Diffie & Hellman analyzed direct, brute force attacks on DES, and
 found them to be feasible, all the way back in 1977.
@@ -1511,7 +1674,7 @@ Should consider, in addition to Internet security:
 * WLAN
   - WEP
   - WPA
-* 5G
+* 3G-5G
 
 https://news.yahoo.com/exclusive-russia-carried-out-a-stunning-breach-of-fbi-communications-system-escalating-the-spy-game-on-us-soil-090024212.html?soc_src=community&soc_trk=tw
 
@@ -1580,3 +1743,409 @@ https://phys.org/news/2019-10-cryptography-secret-keys.html
 https://www.schneier.com/blog/archives/2019/10/factoring_2048-.html
 
 Shannon's a mathematical theory of cryptography
+https://www.iacr.org/museum/shannon45.html
+
+Prof. Consheng DING's course on Cryptography and Security
+https://home.cse.ust.hk/faculty/cding/CSIT571/
+slides on confusion & diffusion
+https://www.cse.ust.hk/faculty/cding/CSIT571/SLIDES/confdiffu.pdf
+
+Shannon 1949 paper:
+Shannon, Claude. "Communication Theory of Secrecy Systems", Bell System Technical Journal, vol. 28(4), page 656–715, 1949.
+http://netlab.cs.ucla.edu/wiki/files/shannon1949.pdf
+
+Scott Aaronson, certified RNG
+https://arxiv.org/abs/1612.05903
+also Mahadev, Vazirani, Vidick
+https://arxiv.org/abs/1804.00640
+https://www.quantamagazine.org/how-to-turn-a-quantum-computer-into-the-ultimate-randomness-generator-20190619/
+
+
+More on PQC:
+https://blog.cloudflare.com/the-tls-post-quantum-experiment/
+https://www.johndcook.com/blog/2019/10/23/quantum-supremacy-and-pqc/
+
+Program "ent" on Linux distros?
+
+Wow, entropy calculation in a bazillion languages:
+http://rosettacode.org/wiki/Entropy
+
+import math
+from collections import Counter
+
+def entropy(s):
+    p, lns = Counter(s), float(len(s))
+    return -sum( count/lns * math.log(count/lns, 2) for count in p.values())
+
+entropy("1223334444")
+
+=============================
+
+Run on battery, 10/30:
+
+VanMetedneysMBP:what-crypto rdv$ openssl speed
+Doing mdc2 for 3s on 16 size blocks: 3269132 mdc2's in 2.99s
+Doing mdc2 for 3s on 64 size blocks: 876412 mdc2's in 3.00s
+Doing mdc2 for 3s on 256 size blocks: 224903 mdc2's in 3.00s
+Doing mdc2 for 3s on 1024 size blocks: 56808 mdc2's in 3.00s
+Doing mdc2 for 3s on 8192 size blocks: 7145 mdc2's in 2.99s
+Doing md4 for 3s on 16 size blocks: 15913709 md4's in 3.00s
+Doing md4 for 3s on 64 size blocks: 10944053 md4's in 2.99s
+Doing md4 for 3s on 256 size blocks: 6174163 md4's in 2.99s
+Doing md4 for 3s on 1024 size blocks: 2243828 md4's in 3.00s
+Doing md4 for 3s on 8192 size blocks: 320567 md4's in 3.00s
+Doing md5 for 3s on 16 size blocks: 13281992 md5's in 3.00s
+Doing md5 for 3s on 64 size blocks: 10051176 md5's in 3.00s
+Doing md5 for 3s on 256 size blocks: 5492455 md5's in 3.00s
+Doing md5 for 3s on 1024 size blocks: 1914918 md5's in 3.00s
+Doing md5 for 3s on 8192 size blocks: 282452 md5's in 2.99s
+Doing hmac(md5) for 3s on 16 size blocks: 12379214 hmac(md5)'s in 3.00s
+Doing hmac(md5) for 3s on 64 size blocks: 9300850 hmac(md5)'s in 3.00s
+Doing hmac(md5) for 3s on 256 size blocks: 5332434 hmac(md5)'s in 3.01s
+Doing hmac(md5) for 3s on 1024 size blocks: 1903841 hmac(md5)'s in 2.99s
+Doing hmac(md5) for 3s on 8192 size blocks: 285053 hmac(md5)'s in 3.00s
+Doing sha1 for 3s on 16 size blocks: 15194088 sha1's in 3.00s
+Doing sha1 for 3s on 64 size blocks: 11467843 sha1's in 3.00s
+Doing sha1 for 3s on 256 size blocks: 6788008 sha1's in 2.99s
+Doing sha1 for 3s on 1024 size blocks: 2652441 sha1's in 3.00s
+Doing sha1 for 3s on 8192 size blocks: 395370 sha1's in 3.00s
+Doing sha256 for 3s on 16 size blocks: 17701259 sha256's in 3.00s
+Doing sha256 for 3s on 64 size blocks: 9589067 sha256's in 2.99s
+Doing sha256 for 3s on 256 size blocks: 4492836 sha256's in 3.00s
+Doing sha256 for 3s on 1024 size blocks: 1372811 sha256's in 2.99s
+Doing sha256 for 3s on 8192 size blocks: 185328 sha256's in 3.00s
+Doing sha512 for 3s on 16 size blocks: 11992919 sha512's in 3.00s
+Doing sha512 for 3s on 64 size blocks: 11759327 sha512's in 3.00s
+Doing sha512 for 3s on 256 size blocks: 4895150 sha512's in 2.99s
+Doing sha512 for 3s on 1024 size blocks: 1797904 sha512's in 3.00s
+Doing sha512 for 3s on 8192 size blocks: 267826 sha512's in 3.00s
+Doing whirlpool for 3s on 16 size blocks: 8194016 whirlpool's in 3.00s
+Doing whirlpool for 3s on 64 size blocks: 4385938 whirlpool's in 2.99s
+Doing whirlpool for 3s on 256 size blocks: 1746529 whirlpool's in 2.99s
+Doing whirlpool for 3s on 1024 size blocks: 530664 whirlpool's in 3.00s
+Doing whirlpool for 3s on 8192 size blocks: 71206 whirlpool's in 3.00s
+Doing rmd160 for 3s on 16 size blocks: 7831461 rmd160's in 3.00s
+Doing rmd160 for 3s on 64 size blocks: 4582251 rmd160's in 2.99s
+Doing rmd160 for 3s on 256 size blocks: 2085955 rmd160's in 3.00s
+Doing rmd160 for 3s on 1024 size blocks: 658382 rmd160's in 3.00s
+Doing rmd160 for 3s on 8192 size blocks: 89699 rmd160's in 3.00s
+Doing rc4 for 3s on 16 size blocks: 147178841 rc4's in 3.00s
+Doing rc4 for 3s on 64 size blocks: 39947185 rc4's in 3.00s
+Doing rc4 for 3s on 256 size blocks: 10038183 rc4's in 3.00s
+Doing rc4 for 3s on 1024 size blocks: 2541336 rc4's in 3.00s
+Doing rc4 for 3s on 8192 size blocks: 318930 rc4's in 3.00s
+Doing des cbc for 3s on 16 size blocks: 16737820 des cbc's in 3.00s
+Doing des cbc for 3s on 64 size blocks: 4263544 des cbc's in 2.99s
+Doing des cbc for 3s on 256 size blocks: 1079074 des cbc's in 3.00s
+Doing des cbc for 3s on 1024 size blocks: 270286 des cbc's in 3.00s
+Doing des cbc for 3s on 8192 size blocks: 33767 des cbc's in 3.00s
+Doing des ede3 for 3s on 16 size blocks: 6480362 des ede3's in 3.00s
+Doing des ede3 for 3s on 64 size blocks: 1647195 des ede3's in 3.00s
+Doing des ede3 for 3s on 256 size blocks: 410494 des ede3's in 3.00s
+Doing des ede3 for 3s on 1024 size blocks: 102971 des ede3's in 3.00s
+Doing des ede3 for 3s on 8192 size blocks: 12733 des ede3's in 3.00s
+Doing aes-128 cbc for 3s on 16 size blocks: 29392770 aes-128 cbc's in 3.00s
+Doing aes-128 cbc for 3s on 64 size blocks: 8005053 aes-128 cbc's in 2.99s
+Doing aes-128 cbc for 3s on 256 size blocks: 2022753 aes-128 cbc's in 3.00s
+Doing aes-128 cbc for 3s on 1024 size blocks: 521883 aes-128 cbc's in 3.00s
+Doing aes-128 cbc for 3s on 8192 size blocks: 65725 aes-128 cbc's in 3.00s
+Doing aes-192 cbc for 3s on 16 size blocks: 24767679 aes-192 cbc's in 3.00s
+Doing aes-192 cbc for 3s on 64 size blocks: 6660982 aes-192 cbc's in 3.00s
+Doing aes-192 cbc for 3s on 256 size blocks: 1717962 aes-192 cbc's in 3.00s
+Doing aes-192 cbc for 3s on 1024 size blocks: 437476 aes-192 cbc's in 3.00s
+Doing aes-192 cbc for 3s on 8192 size blocks: 54041 aes-192 cbc's in 3.00s
+Doing aes-256 cbc for 3s on 16 size blocks: 21373898 aes-256 cbc's in 3.00s
+Doing aes-256 cbc for 3s on 64 size blocks: 5798699 aes-256 cbc's in 3.00s
+Doing aes-256 cbc for 3s on 256 size blocks: 1457112 aes-256 cbc's in 3.00s
+Doing aes-256 cbc for 3s on 1024 size blocks: 358944 aes-256 cbc's in 3.00s
+Doing aes-256 cbc for 3s on 8192 size blocks: 46453 aes-256 cbc's in 3.00s
+Doing aes-128 ige for 3s on 16 size blocks: 29310580 aes-128 ige's in 3.00s
+Doing aes-128 ige for 3s on 64 size blocks: 7706103 aes-128 ige's in 3.00s
+Doing aes-128 ige for 3s on 256 size blocks: 1912179 aes-128 ige's in 3.00s
+Doing aes-128 ige for 3s on 1024 size blocks: 484092 aes-128 ige's in 3.00s
+Doing aes-128 ige for 3s on 8192 size blocks: 60676 aes-128 ige's in 3.00s
+Doing aes-192 ige for 3s on 16 size blocks: 25157305 aes-192 ige's in 3.00s
+Doing aes-192 ige for 3s on 64 size blocks: 6389211 aes-192 ige's in 3.00s
+Doing aes-192 ige for 3s on 256 size blocks: 1612926 aes-192 ige's in 3.00s
+Doing aes-192 ige for 3s on 1024 size blocks: 407802 aes-192 ige's in 3.00s
+Doing aes-192 ige for 3s on 8192 size blocks: 51005 aes-192 ige's in 3.00s
+Doing aes-256 ige for 3s on 16 size blocks: 21622758 aes-256 ige's in 3.00s
+Doing aes-256 ige for 3s on 64 size blocks: 5567261 aes-256 ige's in 2.99s
+Doing aes-256 ige for 3s on 256 size blocks: 1405116 aes-256 ige's in 3.01s
+Doing aes-256 ige for 3s on 1024 size blocks: 346643 aes-256 ige's in 2.99s
+Doing aes-256 ige for 3s on 8192 size blocks: 42047 aes-256 ige's in 2.99s
+Doing ghash for 3s on 16 size blocks: 293141598 ghash's in 3.00s
+Doing ghash for 3s on 64 size blocks: 275376555 ghash's in 2.99s
+Doing ghash for 3s on 256 size blocks: 107889947 ghash's in 3.00s
+Doing ghash for 3s on 1024 size blocks: 29614410 ghash's in 2.98s
+Doing ghash for 3s on 8192 size blocks: 3639297 ghash's in 2.99s
+Doing camellia-128 cbc for 3s on 16 size blocks: 22221376 camellia-128 cbc's in 3.01s
+Doing camellia-128 cbc for 3s on 64 size blocks: 9161466 camellia-128 cbc's in 3.00s
+Doing camellia-128 cbc for 3s on 256 size blocks: 2581860 camellia-128 cbc's in 2.99s
+Doing camellia-128 cbc for 3s on 1024 size blocks: 681034 camellia-128 cbc's in 3.00s
+Doing camellia-128 cbc for 3s on 8192 size blocks: 84919 camellia-128 cbc's in 3.00s
+Doing camellia-192 cbc for 3s on 16 size blocks: 21323655 camellia-192 cbc's in 3.00s
+Doing camellia-192 cbc for 3s on 64 size blocks: 7070729 camellia-192 cbc's in 3.00s
+Doing camellia-192 cbc for 3s on 256 size blocks: 1898937 camellia-192 cbc's in 2.99s
+Doing camellia-192 cbc for 3s on 1024 size blocks: 496149 camellia-192 cbc's in 3.00s
+Doing camellia-192 cbc for 3s on 8192 size blocks: 63676 camellia-192 cbc's in 2.99s
+Doing camellia-256 cbc for 3s on 16 size blocks: 20392955 camellia-256 cbc's in 3.00s
+Doing camellia-256 cbc for 3s on 64 size blocks: 6837414 camellia-256 cbc's in 2.99s
+Doing camellia-256 cbc for 3s on 256 size blocks: ^@1897179 camellia-256 cbc's in 2.99s
+Doing camellia-256 cbc for 3s on 1024 size blocks: 492045 camellia-256 cbc's in 2.98s
+Doing camellia-256 cbc for 3s on 8192 size blocks: 58736 camellia-256 cbc's in 2.98s
+Doing idea cbc for 3s on 16 size blocks: 17488707 idea cbc's in 3.00s
+Doing idea cbc for 3s on 64 size blocks: 4025928 idea cbc's in 2.96s
+Doing idea cbc for 3s on 256 size blocks: 1112768 idea cbc's in 2.98s
+Doing idea cbc for 3s on 1024 size blocks: 286779 idea cbc's in 2.99s
+Doing idea cbc for 3s on 8192 size blocks: 35635 idea cbc's in 2.99s
+Doing seed cbc for 3s on 16 size blocks: 17660765 seed cbc's in 2.98s
+Doing seed cbc for 3s on 64 size blocks: 4533929 seed cbc's in 3.00s
+Doing seed cbc for 3s on 256 size blocks: 1134251 seed cbc's in 2.99s
+Doing seed cbc for 3s on 1024 size blocks: 280526 seed cbc's in 2.99s
+Doing seed cbc for 3s on 8192 size blocks: 35611 seed cbc's in 3.00s
+Doing rc2 cbc for 3s on 16 size blocks: 10085165 rc2 cbc's in 2.99s
+Doing rc2 cbc for 3s on 64 size blocks: 2469228 rc2 cbc's in 2.98s
+Doing rc2 cbc for 3s on 256 size blocks: 624907 rc2 cbc's in 2.98s
+Doing rc2 cbc for 3s on 1024 size blocks: 162685 rc2 cbc's in 2.99s
+Doing rc2 cbc for 3s on 8192 size blocks: 20256 rc2 cbc's in 3.00s
+Doing blowfish cbc for 3s on 16 size blocks: 24689244 blowfish cbc's in 2.99s
+Doing blowfish cbc for 3s on 64 size blocks: 6359842 blowfish cbc's in 3.00s
+Doing blowfish cbc for 3s on 256 size blocks: 1679425 blowfish cbc's in 3.00s
+Doing blowfish cbc for 3s on 1024 size blocks: 419156 blowfish cbc's in 3.00s
+Doing blowfish cbc for 3s on 8192 size blocks: 50507 blowfish cbc's in 2.99s
+Doing cast cbc for 3s on 16 size blocks: 25855056 cast cbc's in 3.00s
+Doing cast cbc for 3s on 64 size blocks: 6664686 cast cbc's in 2.99s
+Doing cast cbc for 3s on 256 size blocks: 1629534 cast cbc's in 3.00s
+Doing cast cbc for 3s on 1024 size blocks: 418633 cast cbc's in 3.00s
+Doing cast cbc for 3s on 8192 size blocks: 52421 cast cbc's in 2.99s
+Doing 512 bit private rsa's for 10s: 226983 512 bit private RSA's in 9.99s
+Doing 512 bit public rsa's for 10s: 2755836 512 bit public RSA's in 9.93s
+Doing 1024 bit private rsa's for 10s: 112814 1024 bit private RSA's in 9.99s
+Doing 1024 bit public rsa's for 10s: 1460729 1024 bit public RSA's in 9.97s
+Doing 2048 bit private rsa's for 10s: 17128 2048 bit private RSA's in 9.96s
+Doing 2048 bit public rsa's for 10s: 573071 2048 bit public RSA's in 9.98s
+Doing 4096 bit private rsa's for 10s: 2738 4096 bit private RSA's in 9.98s
+Doing 4096 bit public rsa's for 10s: 171360 4096 bit public RSA's in 9.96s
+Doing 512 bit sign dsa's for 10s: 219734 512 bit DSA signs in 9.98s
+Doing 512 bit verify dsa's for 10s: 292994 512 bit DSA verify in 9.98s
+Doing 1024 bit sign dsa's for 10s: 119931 1024 bit DSA signs in 9.98s
+Doing 1024 bit verify dsa's for 10s: 138893 1024 bit DSA verify in 9.97s
+Doing 2048 bit sign dsa's for 10s: 45063 2048 bit DSA signs in 9.98s
+Doing 2048 bit verify dsa's for 10s: 50192 2048 bit DSA verify in 9.98s
+Doing 160 bit sign ecdsa's for 10s: 175494 160 bit ECDSA signs in 9.97s 
+Doing 160 bit verify ecdsa's for 10s: 54783 160 bit ECDSA verify in 9.98s
+Doing 192 bit sign ecdsa's for 10s: 162277 192 bit ECDSA signs in 9.99s 
+Doing 192 bit verify ecdsa's for 10s: 45273 192 bit ECDSA verify in 9.97s
+Doing 224 bit sign ecdsa's for 10s: 117692 224 bit ECDSA signs in 9.97s 
+Doing 224 bit verify ecdsa's for 10s: 34452 224 bit ECDSA verify in 9.98s
+Doing 256 bit sign ecdsa's for 10s: 276147 256 bit ECDSA signs in 9.98s 
+Doing 256 bit verify ecdsa's for 10s: 138536 256 bit ECDSA verify in 9.97s
+Doing 384 bit sign ecdsa's for 10s: 57823 384 bit ECDSA signs in 9.98s 
+Doing 384 bit verify ecdsa's for 10s: 14624 384 bit ECDSA verify in 9.99s
+Doing 521 bit sign ecdsa's for 10s: 28064 521 bit ECDSA signs in 9.98s 
+Doing 521 bit verify ecdsa's for 10s: 7125 521 bit ECDSA verify in 9.99s
+Doing 163 bit sign ecdsa's for 10s: 62212 163 bit ECDSA signs in 9.99s 
+Doing 163 bit verify ecdsa's for 10s: 29351 163 bit ECDSA verify in 9.98s
+Doing 233 bit sign ecdsa's for 10s: 32219 233 bit ECDSA signs in 9.99s 
+Doing 233 bit verify ecdsa's for 10s: 22655 233 bit ECDSA verify in 9.99s
+Doing 283 bit sign ecdsa's for 10s: 22249 283 bit ECDSA signs in 9.99s 
+Doing 283 bit verify ecdsa's for 10s: 13129 283 bit ECDSA verify in 9.99s
+Doing 409 bit sign ecdsa's for 10s: 9775 409 bit ECDSA signs in 9.98s 
+Doing 409 bit verify ecdsa's for 10s: 8376 409 bit ECDSA verify in 9.99s
+Doing 571 bit sign ecdsa's for 10s: 4856 571 bit ECDSA signs in 9.99s 
+Doing 571 bit verify ecdsa's for 10s: 3653 571 bit ECDSA verify in 9.98s
+Doing 163 bit sign ecdsa's for 10s: 61897 163 bit ECDSA signs in 9.98s 
+Doing 163 bit verify ecdsa's for 10s: 28038 163 bit ECDSA verify in 9.99s
+Doing 233 bit sign ecdsa's for 10s: 32212 233 bit ECDSA signs in 9.99s 
+Doing 233 bit verify ecdsa's for 10s: 21874 233 bit ECDSA verify in 9.99s
+Doing 283 bit sign ecdsa's for 10s: 22119 283 bit ECDSA signs in 9.99s 
+Doing 283 bit verify ecdsa's for 10s: 12022 283 bit ECDSA verify in 9.97s
+Doing 409 bit sign ecdsa's for 10s: 9851 409 bit ECDSA signs in 9.98s 
+Doing 409 bit verify ecdsa's for 10s: 7826 409 bit ECDSA verify in 9.99s
+Doing 571 bit sign ecdsa's for 10s: 4730 571 bit ECDSA signs in 9.98s 
+Doing 571 bit verify ecdsa's for 10s: 3394 571 bit ECDSA verify in 9.99s
+Doing 160 bit  ecdh's for 10s: 65467 160-bit ECDH ops in 9.97s
+Doing 192 bit  ecdh's for 10s: 53417 192-bit ECDH ops in 9.97s
+Doing 224 bit  ecdh's for 10s: 40923 224-bit ECDH ops in 9.98s
+Doing 256 bit  ecdh's for 10s: 213202 256-bit ECDH ops in 9.98s
+Doing 384 bit  ecdh's for 10s: 17258 384-bit ECDH ops in 9.99s
+Doing 521 bit  ecdh's for 10s: 8544 521-bit ECDH ops in 9.98s
+Doing 163 bit  ecdh's for 10s: 59866 163-bit ECDH ops in 9.99s
+Doing 233 bit  ecdh's for 10s: 47039 233-bit ECDH ops in 9.98s
+Doing 283 bit  ecdh's for 10s: 26741 283-bit ECDH ops in 9.97s
+Doing 409 bit  ecdh's for 10s: 17323 409-bit ECDH ops in 9.98s
+Doing 571 bit  ecdh's for 10s: 7582 571-bit ECDH ops in 9.99s
+Doing 163 bit  ecdh's for 10s: 56840 163-bit ECDH ops in 9.98s
+Doing 233 bit  ecdh's for 10s: 45098 233-bit ECDH ops in 9.99s
+Doing 283 bit  ecdh's for 10s: 25454 283-bit ECDH ops in 9.99s
+Doing 409 bit  ecdh's for 10s: 16178 409-bit ECDH ops in 9.98s
+Doing 571 bit  ecdh's for 10s: 7069 571-bit ECDH ops in 9.99s
+OpenSSL 1.0.2o  27 Mar 2018
+built on: reproducible build, date unspecified
+options:bn(64,64) rc4(ptr,int) des(idx,cisc,16,int) aes(partial) idea(int) blowfish(idx) 
+compiler: x86_64-apple-darwin13.4.0-clang -D_FORTIFY_SOURCE=2 -mmacosx-version-min=10.9 -march=core2 -mtune=haswell -mssse3 -ftree-vectorize -fPIC -fPIE -fstack-protector-strong -O2 -pipe -I/Users/rdv/miniconda3/include -fdebug-prefix-map=/opt/concourse/worker/volumes/live/bd542585-3c4a-4331-50c6-ca5f117e0b9d/volume/openssl_1522162661576/work=/usr/local/src/conda/openssl-1.0.2o -fdebug-prefix-map=/Users/rdv/miniconda3=/usr/local/src/conda-prefix -I. -I.. -I../include  -fPIC -fno-common -DOPENSSL_PIC -DOPENSSL_THREADS -D_REENTRANT -DDSO_DLFCN -DHAVE_DLFCN_H -arch x86_64 -O3 -DL_ENDIAN -Wall -DOPENSSL_IA32_SSE2 -DOPENSSL_BN_ASM_MONT -DOPENSSL_BN_ASM_MONT5 -DOPENSSL_BN_ASM_GF2m -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DMD5_ASM -DAES_ASM -DVPAES_ASM -DBSAES_ASM -DWHIRLPOOL_ASM -DGHASH_ASM -DECP_NISTZ256_ASM
+The 'numbers' are in 1000s of bytes per second processed.
+type             16 bytes     64 bytes    256 bytes   1024 bytes   8192 bytes
+md2                  0.00         0.00         0.00         0.00         0.00 
+mdc2             17493.68k    18696.79k    19191.72k    19390.46k    19575.87k
+md4              84873.11k   234253.98k   528623.99k   765893.29k   875361.62k
+md5              70837.29k   214425.09k   468689.49k   653625.34k   773861.80k
+hmac(md5)        66022.47k   198418.13k   453522.63k   652017.79k   778384.73k
+sha1             81035.14k   244647.32k   581180.62k   905366.53k  1079623.68k
+rmd160           41767.79k    98081.63k   178001.49k   224727.72k   244938.07k
+rc4             784953.82k   852206.61k   856591.62k   867442.69k   870891.52k
+des cbc          89268.37k    91259.80k    92080.98k    92257.62k    92206.42k
+des ede3         34561.93k    35140.16k    35028.82k    35147.43k    34769.58k
+idea cbc         93273.10k    87047.09k    95593.49k    98214.61k    97632.75k
+seed cbc         94822.90k    96723.82k    97113.13k    96073.12k    97241.77k
+rc2 cbc          53967.44k    53030.40k    53683.29k    55715.53k    55312.38k
+rc5-32/12 cbc        0.00         0.00         0.00         0.00         0.00 
+blowfish cbc    132116.36k   135676.63k   143310.93k   143071.91k   138379.04k
+cast cbc        137893.63k   142655.49k   139053.57k   142893.40k   143623.02k
+aes-128 cbc     156761.44k   171345.62k   172608.26k   178136.06k   179473.07k
+aes-192 cbc     132094.29k   142100.95k   146599.42k   149325.14k   147567.96k
+aes-256 cbc     113994.12k   123705.58k   124340.22k   122519.55k   126847.66k
+camellia-128 cbc   118120.27k   195444.61k   221055.57k   232459.61k   231885.48k
+camellia-192 cbc   113726.16k   150842.22k   162584.57k   169352.19k   174459.46k
+camellia-256 cbc   108762.43k   146352.67k   162434.05k   169078.55k   161464.87k
+sha256           94406.71k   205250.93k   383388.67k   470153.33k   506068.99k
+sha512           63962.23k   250865.64k   419116.52k   613684.57k   731343.53k
+whirlpool        43701.42k    93879.61k   149535.59k   181133.31k   194439.85k
+aes-128 ige     156323.09k   164396.86k   163172.61k   165236.74k   165685.93k
+aes-192 ige     134172.29k   136303.17k   137636.35k   139196.42k   139277.65k
+aes-256 ige     115321.38k   119165.45k   119504.88k   118716.53k   115200.34k
+ghash          1563421.86k  5894347.67k  9206608.81k 10176226.79k  9970943.49k
+                  sign    verify    sign/s verify/s
+rsa  512 bits 0.000044s 0.000004s  22721.0 277526.3
+rsa 1024 bits 0.000089s 0.000007s  11292.7 146512.4
+rsa 2048 bits 0.000582s 0.000017s   1719.7  57421.9
+rsa 4096 bits 0.003645s 0.000058s    274.3  17204.8
+                  sign    verify    sign/s verify/s
+dsa  512 bits 0.000045s 0.000034s  22017.4  29358.1
+dsa 1024 bits 0.000083s 0.000072s  12017.1  13931.1
+dsa 2048 bits 0.000221s 0.000199s   4515.3   5029.3
+                              sign    verify    sign/s verify/s
+ 160 bit ecdsa (secp160r1)   0.0001s   0.0002s  17602.2   5489.3
+ 192 bit ecdsa (nistp192)   0.0001s   0.0002s  16243.9   4540.9
+ 224 bit ecdsa (nistp224)   0.0001s   0.0003s  11804.6   3452.1
+ 256 bit ecdsa (nistp256)   0.0000s   0.0001s  27670.0  13895.3
+ 384 bit ecdsa (nistp384)   0.0002s   0.0007s   5793.9   1463.9
+ 521 bit ecdsa (nistp521)   0.0004s   0.0014s   2812.0    713.2
+ 163 bit ecdsa (nistk163)   0.0002s   0.0003s   6227.4   2941.0
+ 233 bit ecdsa (nistk233)   0.0003s   0.0004s   3225.1   2267.8
+ 283 bit ecdsa (nistk283)   0.0004s   0.0008s   2227.1   1314.2
+ 409 bit ecdsa (nistk409)   0.0010s   0.0012s    979.5    838.4
+ 571 bit ecdsa (nistk571)   0.0021s   0.0027s    486.1    366.0
+ 163 bit ecdsa (nistb163)   0.0002s   0.0004s   6202.1   2806.6
+ 233 bit ecdsa (nistb233)   0.0003s   0.0005s   3224.4   2189.6
+ 283 bit ecdsa (nistb283)   0.0005s   0.0008s   2214.1   1205.8
+ 409 bit ecdsa (nistb409)   0.0010s   0.0013s    987.1    783.4
+ 571 bit ecdsa (nistb571)   0.0021s   0.0029s    473.9    339.7
+                              op      op/s
+ 160 bit ecdh (secp160r1)   0.0002s   6566.4
+ 192 bit ecdh (nistp192)   0.0002s   5357.8
+ 224 bit ecdh (nistp224)   0.0002s   4100.5
+ 256 bit ecdh (nistp256)   0.0000s  21362.9
+ 384 bit ecdh (nistp384)   0.0006s   1727.5
+ 521 bit ecdh (nistp521)   0.0012s    856.1
+ 163 bit ecdh (nistk163)   0.0002s   5992.6
+ 233 bit ecdh (nistk233)   0.0002s   4713.3
+ 283 bit ecdh (nistk283)   0.0004s   2682.1
+ 409 bit ecdh (nistk409)   0.0006s   1735.8
+ 571 bit ecdh (nistk571)   0.0013s    759.0
+ 163 bit ecdh (nistb163)   0.0002s   5695.4
+ 233 bit ecdh (nistb233)   0.0002s   4514.3
+ 283 bit ecdh (nistb283)   0.0004s   2547.9
+ 409 bit ecdh (nistb409)   0.0006s   1621.0
+
+=============================================
+
+Shelby Kimmel on no-go bounds for quantum seals:
+https://journals.aps.org/pra/accepted/45074N5dCa413a18c5645123e9b2b8363d15ea1fc
+
+https://brunorijsman.github.io/openssl-qkd/
+
+quantum random number generators:
+
+standalone: Tamura & Shikano on 
+https://arxiv.org/abs/1906.04410
+
+Bell:
+Shen ... Nam, Scarani, Kuritseifer
+https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.121.150402
+https://arxiv.org/abs/1805.02828
+
+practical device-independent qcrypt via entropy
+Arnon-Friedman, ..., Renner, Vidick
+https://www.nature.com/articles/s41467-017-02307-4
+
+WIDE PKI certificate:
+SHA-256 with RSA Encryption ( 1.2.840.113549.1.1.11 )
+Exponent 65537
+key size 2048 bits
+
+(SHA-256 is one type of SHA-2; SHA-3 also exists? Why do we use 2?)
+
+EV = Extended Validation Certificate
+gigazine.net/news/20190813-extended-validation-certificate/
+
+SHA-1 broken:
+https://sha-mbles.github.io/
+https://link.springer.com/chapter/10.1007%2F978-3-030-17659-4_18
+https://eurocrypt.iacr.org/2019/program.html
+
+cocori's post-quantum crypto Python
+https://colab.research.google.com/drive/1a4sh9PYCOyZO9dRsJpT17scLS3eMWU0T
+
+
+sanketh
+@__c1own
+Replying to 
+@rdviii
+Awesome series!! Quick comment on your statement in
+(https://rdvlivefromtokyo.blogspot.com/2019/10/aes-advanced-encryption-standard.html)
+that AES is easy to implement. It is not. See
+https://cr.yp.to/antiforgery/cachetiming-20050414.pdf
+
+https://twitter.com/__c1own/status/1216868406047191040
+sanketh
+@__c1own
+Replying to 
+@__c1own
+ and 
+@rdviii
+Two quick comments on (https://rdvlivefromtokyo.blogspot.com/2019/11/21-playing-defense-211-entropy.html):
+1. Kolmogorov complexity is uncomputable (https://web.archive.org/web/20190326105001/http://www.nearly42.org/vdisk/articles/Program-size_Complexity_Computes_the_Halting_Problem.pdf)
+2. You hint at this in the post, but to be explicit, in crypto, we
+care about min-entropy and not entropy.
+
+
+https://cr.yp.to/antiforgery/cachetiming-20050414.pdf
+
+A nice blog article by @__c1own on hybrid quantum-classical computation, in the context of attacking crypto.
+https://c1own.com/blog/2019/two-open-problems-hybrid-quantum-attacks-on-crypto/
+
+ACK Sanketh (c1own)
+
+https://cr.yp.to/snuffle/design.pdf
+
+possible (elliptic?) curve vulnerability:
+https://news.ycombinator.com/item?id=22048619&fbclid=IwAR0HTje3SlkFTaryK76gPDn_ss1k6n-yAGZlVF8bN6xvqLNBuZ33c8XTnnc
+
+Grassl et al. on AES w/ Grover:
+https://link.springer.com/chapter/10.1007/978-3-319-29360-8_3
+AES
+https://eprint.iacr.org/2019/272.pdf
+new AES paper (with short but relevant refs):
+https://ieeexplore.ieee.org/document/8961201
+
+New factoring record:
+https://www.johndcook.com/blog/2019/12/03/new-rsa-factoring/
+https://lists.gforge.inria.fr/pipermail/cado-nfs-discuss/2019-December/001139.html
+https://en.wikipedia.org/wiki/RSA_Factoring_Challenge
+
+https://arxiv.org/pdf/1804.00200.pdf
+
+More M$ on elliptic:
+https://eprint.iacr.org/2017/598.pdf
