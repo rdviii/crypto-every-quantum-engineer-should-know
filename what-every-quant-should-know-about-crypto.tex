@@ -178,7 +178,19 @@ Faculty of Environment and Information Studies, Keio University.%\\This line bre
              %  but any date may be explicitly specified
 
 \begin{abstract}
-Yadda
+  The potential impact of Shor's factoring algorithm on public key
+  cryptography and the potential of quantum key distribution to
+  replace key agreement mechanisms such as Diffie-Hellman are two of
+  the first facts that quantum researchers learn, but many researchers
+  remain vague on how those mechanisms fit into the overall goal of
+  achieving confidentiality, integrity and availability in classical
+  communications.  We describe the relationship between cryptography
+  and communication protocols, with emphasis on key lengths, block
+  sizes and known mathematical attacks on various ciphers.  This
+  information will help quantum researchers understand when quantum
+  computers will affect classical cryptographic practice and dsicover
+  new avenues for applying quantum technology to the overall problem
+  of secure communication.
 %
 %\comment{Valid PACS numbers may be entered using the \verb+\pacs{#1}+ command.}
 \end{abstract}
@@ -205,10 +217,12 @@ Yadda
 \comment{Comments on what to write and other notes to myself are in
   forest green.}
 
-[Document status:
+\comment{Document status:
 Okay, first drafty draft.  Not enough on TLS,
 nothing really on post-quantum crypto, not enough on bitcoin, not
-enough on quantum attacks in symmetric crypto.  It'll have to do.]
+enough on quantum attacks in symmetric crypto.  It'll have to do.}
+
+\comment{Should add WiFi and cell phone.}
 
 Following up on Renato's crypto lifetime question from the Network
 Games, Tropical Topology and Quantum Communication Workshop...
@@ -235,13 +249,6 @@ researchers who are familiar with Shor's algorithm, Grover's algorithm
 and QKD, since those are among the first things you learn, but who
 have only a very rough idea of what it means to actually encrypt data
 and to use encryption in a real-world setting.
-
-FYI, I think I'd like to ultimately publish this somewhere, either
-formally or informally.  Would love to have any or all of you sign on
-as coauthors.  Parts of this might eventually make their way into a
-second edition of my book.  (n.b.: no, I'm not un-self-aware enough to
-think this is yet in anything approximating publishable state, even as
-a blog post or series of thereof.)
 
 There are two fundamental reasons for periodic rekeying:
 
@@ -274,25 +281,12 @@ incidental radiation from them, or gained from the security-oriented
 papers we had to read when I did my master's at USC back before the
 Englightenment.
 
-I'm afraid this has gotten longer than I originally intended, so I
-hope it's all useful.  It's so long, a table of contents is in order:
+\subsection{Encrypted Communications}
 
-1. Brief, mostly non-mathematical intro to cryptography and its
-terminology, in the context of encrypted communications.
-2. General ideas behind cryptanalysis and the importance of limiting
-data volume, since that's the topic that started this conversation.
-3. How these ideas play out in IPsec, one of the Internet's key
-security protocols.
-4. How these ideas play out in TLS/SSL.
-5. Quantum and crypto.
-6. Post-quantum crypto.
-7. ACT NOW and order the above package, and as a FREE bonus, Ronco
-(well, Rodco) will send you a few thoughts on Bitcoin and its
-vulnerability to the development of quantum computers!
-8. References
-
-
-\section{Encrypted Communications}
+\comment{Crypto also used for signatures; integrity hashes (both
+  signed ans unsigned); spread spectrum for secrecy, difficulty of
+  triangulation and being hard to jam; challenge response rfid and
+  smart credit cards.}
 
 An encrypted conversation involves, at the macro level, three phases:
 
@@ -463,7 +457,7 @@ input block.  There is no requirement that the block and key are the
 same size.
 
 Ideally, the output block (the ciphertext) will look completely
-random: about 50% zeroes and 50% ones, regardless of input, and with
+random: about 50\% zeroes and 50\% ones, regardless of input, and with
 no detectable pattern.  That is, its entropy will be very high.  Of
 course, it cannot be completely random, as it must be possible for the
 data to be decrypted by someone holding the appropriate key.  A good
@@ -484,7 +478,9 @@ form but is primarily of historical interest now, and AES, the
 Advanced Encryption Standard, which is used for most communications
 today.
 
-\subsubsection{DES (the Data Encryption Standard)}
+\section{Encryption}
+
+\subsection{DES (the Data Encryption Standard)}
 
 DES, the Data Encryption Standard, was designed by IBM in the 1970s,
 consulting with the NSA.  DES is a type of cipher known as an
@@ -567,7 +563,7 @@ DES was withdrawn as a standard in 2005, after having been replaced by
 AES in 2001, although the U.S. government still allows 3DES until 2030
 for sensitive information.
 
-\subsubsection{AES}
+\subsection{AES}
 
 AES, the Advanced Encryption Standard, has replaced DES.  It is a type of block cipher known as a substitution-permutation cipher.  AES uses a block size of 128 bits, and a key size of 128, 192 or 256 bits. The key size affects the number of rounds of substitution-permutation, requiring 10, 12 or 14, respectively.
 
@@ -602,7 +598,7 @@ AES is easily implemented in either software or hardware. Some modern CPUs inclu
 
 Despite two decades of effort, there are no known attacks on AES that allow recovery of the key in substantially less time than brute force; the best attacks roughly halve that cost, at the cost of requiring tremendous amounts of storage.
 
-\subsubsection{Limitations of Block Ciphers}
+\subsection{Limitations of Block Ciphers}
 
 One obvious problem with the most straightforward application of a
 block cipher is that it's deterministic.  If you just apply the
@@ -683,11 +679,7 @@ if not the key itself: the birthday paradox.  But before we get into
 the cryptanalysis itself, let's look a little bit at how the designers
 built defenses into the block ciphers.
 
-\subsection{Playing Defense}
-
-* confusion/avalanche effect
-* diffusion
-* entropy
+\subsection{Playing Defense Using Math}
 
 \subsubsection{Entropy}
 
@@ -1060,9 +1052,9 @@ I found Heys' tutorial to be clear and helpful in understanding LC.
 
 \subsection{Known and chosen plaintexts in real systems}
 
-(Parts of this will make more sense after getting through the below.
-Maybe this section should be moved.  Also, some pictures will
-definitely help here.)
+\outlinecomment{Parts of this will make more sense after getting
+  through the below.  Maybe this section should be moved below the
+  next section.  Also, some pictures will definitely help here.}
 
 Modern HTTPS (web) and SMTP (email) connections have a lot of
 predictability in their content, with commands like 'HELO' and
@@ -1157,8 +1149,9 @@ even in 1997, but the content of the paper is valuable with respect to
 CBC.  I found the paper a tough read when trying to figure out how to
 apply the equations.
 
+\section{Standards for Encrypted Communication}
 
-\section{IPsec and the IETF}
+\subsection{IPsec and the IETF}
 
 In this section, we return to the original question about rekeying
 that sparked this whole venture, and answer three questions:
@@ -1170,7 +1163,7 @@ that sparked this whole venture, and answer three questions:
    the best practices for rekeying?
 3. What are best practices today?
 
-\subsection{Background on IPsec, IETF and RFCs}
+\subsubsection{Background on IPsec, IETF and RFCs}
 
 The Internet Engineering Task Force (IETF) is where protocol
 specifications for the Internet come from.  There is an entire Area
@@ -1207,7 +1200,7 @@ people will actually implement and use, but protocols are often de
 facto standards long before reaching that platinum frequent flyer
 status.
 
-\subsection{IKE and IPsec}
+\subsubsection{IKE and IPsec}
 
 If you really want to dig into the key exchange protocol, RFC 7296
 (Oct. 2014) is the most modern reference.  Unless you're actually
@@ -1284,7 +1277,7 @@ This ultimately is the heart of what we're looking for here: what is
 that recommended lifetime today, and what should it be in the light of
 quantum computing?
 
-\subsection{Digging into the Cryptanalysis of IPsec}
+\subsubsection{Digging into the Cryptanalysis of IPsec}
 
 What is the recommended lifetime of an IPsec Security Association
 today?  This is the question that has proven to be so hard to answer,
@@ -1346,7 +1339,7 @@ same key even using 3DES, due to the birthday paradox.  McGrew went so
 far as to write up a 16-page analysis posted on the Cryptology
 preprint server (see references).
 
-\subsection{IPsec, Quantum Computing and QKD}
+\subsubsection{IPsec, Quantum Computing and QKD}
 
 (This one is just a placeholder, but there is surprisingly little
 \emph{documented} about this kind of work.  Even e.g. the publications
@@ -1372,7 +1365,7 @@ in Section 5.)
 
 To be filled in eventually.
 
-\section{TLS/SSL and cryptography}
+\subsection{TLS/SSL and cryptography}
 
 Here we want to answer the same three questions we had above:
 
@@ -1402,7 +1395,7 @@ browsing traffic for a particular connection.  It also provides data
 integrity, using a MAC (message authentication code) when necessary.
 (IPsec also does both, but we ignored that above.)
 
-\subsection{TLS Records and Basic Limits}
+\subsubsection{TLS Records and Basic Limits}
 
 TLS consists of one primary protocol: the TLS Record Protocol.  On top
 of the TLS Record Protocol sit four protocols, one of which (the
@@ -1443,7 +1436,7 @@ some plaintext, or is this compromise of the entire session key?
 Figuring that out will take more digging, since they express things
 differently than most of the resources I used above.
 
-\subsection{Keying and Rekeying}
+\subsubsection{Keying and Rekeying}
 
 <<how the initial key is generated>>
 
@@ -1453,7 +1446,7 @@ what both ends really want.>>
 
 <<how rekeying is handled>>
 
-\subsection{Other Attacks on TLS}
+\subsubsection{Other Attacks on TLS}
 
 One startling and potentially useful document is RFC7457, "Summarizing
 Known Attacks on Transport Layer Security (TLS) and Datagram TLS
@@ -1475,11 +1468,15 @@ fix is straightforward (toss in an extra block of nonsense data before
 starting the new record), and current versions of TLS aren't
 vulnerable.
 
-\subsection{TLS and QKD}
+\subsubsection{TLS and QKD}
 
 Alan Mink, Sheila Frankel and Ray Perlner worked on integrating TLS
 with QKD, a full decade ago.
 \url{https://arxiv.org/abs/1004.0605}
+
+\subsection{WiFi}
+
+\subsection{Cellular Phones}
 
 \subsection{Notes \& References}
 
