@@ -35,8 +35,8 @@
 % I really don't know what fontenc does, but with T2A it screws up the
 % fonts, at least when compiling on my system.
 % \usepackage[T1,T2A]{fontenc}
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
+% \usepackage[T1]{fontenc}
+% \usepackage[utf8]{inputenc}
 % I was told this was necessary, but it messes with things like month
 % names and doesn't seem to do anything absolutely necessary here.
 % \usepackage[polish,russian]{babel}
@@ -59,24 +59,27 @@
 % \usepackage{caption}
 \usepackage[ruled,linesnumbered]{algorithm2e}
 %\setlength{\algomargin}{2em}
+
+%%% Not sure which, but one of these packages below busts the table of contents.
+
 %\usepackage{algorithm}
 %\usepackage{algorithmic}
 %\usepackage{listings}
-\usepackage{multirow}
-\usepackage{parskip}
-\usepackage{tabularx}
-\usepackage{psfrag,fancyhdr,layout,appendix}
+%\usepackage{multirow}
+%\usepackage{parskip}
+%\usepackage{tabularx}
+%\usepackage{psfrag,fancyhdr,layout,appendix}
 %\usepackage{natbib}
 %\usepackage{chapterbib}
-\usepackage{verbatim}
-\usepackage{framed}
-\usepackage{amsthm}
-\usepackage{booktabs}
-\usepackage{placeins}
-\usepackage{rotating}
-\usepackage{changebar}
-\usepackage{dcolumn}% Align table columns on decimal point
-\usepackage{multirow}
+% \usepackage{verbatim}
+% \usepackage{framed}
+% \usepackage{amsthm}
+% \usepackage{booktabs}
+% \usepackage{placeins}
+% \usepackage{rotating}
+% \usepackage{changebar}
+% \usepackage{dcolumn}% Align table columns on decimal point
+% \usepackage{multirow}
 % \usepackage{longtable}
 \usepackage{times}
 
@@ -186,6 +189,7 @@ Yadda
                               %display desired
 \maketitle
 
+\tableofcontents{}
 %%% I can't get the ToC to work properly on my installation, complains
 %%% about ! Missing number, treated as zero.
 %%% and ! Illegal unit of measure (pt inserted).
@@ -194,7 +198,7 @@ Yadda
 %%% the section numbers. --rdv, 18/1/8
 % \tableofcontents
 
-
+\section{Introduction}
 
 \outlinecomment{Comments on the structure/outline are in blue.}
 
@@ -288,7 +292,7 @@ vulnerability to the development of quantum computers!
 8. References
 
 
-1. Encrypted Communications
+\section{Encrypted Communications}
 
 An encrypted conversation involves, at the macro level, three phases:
 
@@ -367,7 +371,7 @@ context:
 
 Let's go phase by phase:
 
-1.1 Authentication
+\subsection{Authentication}
 
 The authentication phase can be accomplished using a pre-shared secret
 key and symmetric encryption of some message and response, or it can
@@ -414,7 +418,7 @@ to find primes big enough.]
 
 [called ECRYPT-CSA 2018, via Shigeya]
 
-1.2 Key generation
+\subsection{Key generation}
 
 The other algorithm we talk about a lot as being both important and
 vulnerable to Shor's factoring algorithm is Diffie-Hellman key
@@ -440,7 +444,7 @@ Note that, as-is, D-H is vulnerable to a man-in-the-middle attack, and
 so must be coupled with some form of authentication so that Alice and
 Bob each know that the other is who they say they are.
 
-1.3 Bulk data encryption
+\subsection{Bulk data encryption}
 
 D-H and RSA are pretty easy to understand, and known to be vulnerable
 to quantum computers, hence attract a lot of attention. The workhorse
@@ -480,7 +484,7 @@ form but is primarily of historical interest now, and AES, the
 Advanced Encryption Standard, which is used for most communications
 today.
 
-1.3.1 DES (the Data Encryption Standard)
+\subsubsection{DES (the Data Encryption Standard)}
 
 DES, the Data Encryption Standard, was designed by IBM in the 1970s,
 consulting with the NSA.  DES is a type of cipher known as an
@@ -518,6 +522,7 @@ that the subkeys are used in reverse order.
 Slightly more formally, the sequence of operations in a DES encryption
 is:
 
+\begin{verbatim}
 1. Apply initial permutation (IP) (a fixed operation)
 2. For i = 1 to 16 do
    1. divide the block into two 32-bit halves
@@ -535,6 +540,7 @@ is:
    8. XOR the left half with the right half of the block
    9. swap halves of the block
 3. Apply the final permutation (FP) (a fixed operation)
+\end{verbatim}
 
 The $6 \rightarrow 4$ S boxes are obviously inherently non-reversible,
 but the earlier expansion guarantees that ultimately no information is
@@ -561,7 +567,7 @@ DES was withdrawn as a standard in 2005, after having been replaced by
 AES in 2001, although the U.S. government still allows 3DES until 2030
 for sensitive information.
 
-1.3.2 AES
+\subsubsection{AES}
 
 AES, the Advanced Encryption Standard, has replaced DES.  It is a type of block cipher known as a substitution-permutation cipher.  AES uses a block size of 128 bits, and a key size of 128, 192 or 256 bits. The key size affects the number of rounds of substitution-permutation, requiring 10, 12 or 14, respectively.
 
@@ -588,13 +594,15 @@ The ShiftRows operation rotates all rows but the first. The MixColumns operation
 AES is easily implemented in either software or hardware. Some modern CPUs include special instructions to accelerate AES encryption, and even for those that don't, heavily optimized assembly language is achievable.  In the absence of special hardware, encrypting each 128-bit block of data requires several hundred CPU instructions. For example, my Mac laptop, with a 2.2GHz Intel Core i7 processor, encrypts AES-CBC at the following rates:
 
 
-
+\begin{verbatim}
 128-bit key: 1.25 Gbps for 16-byte chunks, 1.44 Gbps for 8192-byte chunks
 192-bit key: 1.06 Gbps for 16-byte chunks, 1.18 Gbps for 8192-byte chunks
 256-bit key: 912 Mbps for 16-byte chunks, 1.01 Gbps for 8192-byte chunks
+\end{verbatim}
+
 Despite two decades of effort, there are no known attacks on AES that allow recovery of the key in substantially less time than brute force; the best attacks roughly halve that cost, at the cost of requiring tremendous amounts of storage.
 
-1.3.3 Limitations of Block Ciphers
+\subsubsection{Limitations of Block Ciphers}
 
 One obvious problem with the most straightforward application of a
 block cipher is that it's deterministic.  If you just apply the
@@ -614,11 +622,11 @@ undesirable side effect of requiring encryption to be done serially,
 but attacks can be parallelized.  Nevertheless, it's the most commonly
 used mode.
 
-1.4 Notes and References
+\subsection{Notes and References}
 
 To be added.
 
-2. Cryptanalysis
+\section{Cryptanalysis}
 
 The general idea of trying to decode messages that are encrypted is
 known as cryptanalysis.  Some of the planet's smartest people have
@@ -675,13 +683,13 @@ if not the key itself: the birthday paradox.  But before we get into
 the cryptanalysis itself, let's look a little bit at how the designers
 built defenses into the block ciphers.
 
-2.1 Playing Defense
+\subsection{Playing Defense}
 
 * confusion/avalanche effect
 * diffusion
 * entropy
 
-2.1.1 Entropy
+\subsubsection{Entropy}
 
 The single most important concept in cryptography -- indeed, in all of
 information theory, and inarguably one of the most important in all of
@@ -711,6 +719,7 @@ that show up in our data sequence.
 From the fantastic website RosettaCode.org, we have a simple example
 in Python of calculating the entropy in bits per byte:
 
+\begin{verbatim}
 import math
 from collections import Counter
 
@@ -719,6 +728,7 @@ def entropy(s):
     return -sum( count/lns * math.log(count/lns, 2) for count in p.values())
 
 entropy("1223334444")
+\end{verbatim}
 
 (This function can actually calculate entropy of strings of other
 types besides characters, as well.)
@@ -757,7 +767,7 @@ in a substitution-permutation network; with permutation only the
 entropy of the original cleartext is preserved in the ciphertext, and
 in some cases reveals a great deal about the original data.
 
-2.1.2 Diffusion, Confusion and the Avalanche Effect
+\subsubsection{Diffusion, Confusion and the Avalanche Effect}
 
 Claude Shannon, in his seminal article on the mathematics of
 cryptography, defined two concepts he called \emph{diffusion} and
@@ -795,7 +805,7 @@ the search space; and the nonlinearity means that even a large set of
 straightforward equations is not enough to simply and mathematically
 relate the input and output.
 
-2.2 The Birthday Paradox
+\subsection{The Birthday Paradox}
 
 (Also called the pigeonhole principle or the hash collision problem.)
 
@@ -881,20 +891,22 @@ seconds on our 40Gbps link.  So change the keys at least once every
 half hour, and you're good.
 
 Keep in mind a few points:
-1. what's disclosed here is not the key but is plaintext-related, but
+\begin{enumerate}
+\item what's disclosed here is not the key but is plaintext-related, but
    not even pure plaintext; however, the insanely smart and devious
    cryptanalysts can do amazing things with small amounts of data;
-2. this depends only on the block size of a block cipher, not on the
+\item this depends only on the block size of a block cipher, not on the
    key length;
-3. part of this arises due to the CBC (cipher block chain) mode, but
+\item part of this arises due to the CBC (cipher block chain) mode, but
    ECB (electronic code book) mode is worse; there are other modes
    that I haven't looked at closely; and
-4. given that there are still other attacks, minimizing the amount of
+\item given that there are still other attacks, minimizing the amount of
    data under any given encryption key is still good practice.
+\end{enumerate}
 
 So let's look at a couple of the cryptanalysis techniques.
 
-2.3 Differential Cryptanalysis
+\subsection{Differential Cryptanalysis}
 
 Biham and Shamir wrote a seminal paper, then an easy-to-read book on
 their rediscovery of differential cryptanalysis.  The goal of DC is to
@@ -980,7 +992,7 @@ understanding of the process myself!  The differential tables are
 pretty straightforward, once you understand them, but working from
 there to a full-on attack is a big jump.
 
-2.4 Linear Cryptanalysis
+\subsection{Linear Cryptanalysis}
 
 Linear cryptanalysis (LC) is a known plaintext attack, developed by
 Mitsuru Matsui in 1990 after being inspired by differential
@@ -1046,7 +1058,7 @@ either DC or LC.
 
 I found Heys' tutorial to be clear and helpful in understanding LC.
 
-2.5: Known and chosen plaintexts in real systems
+\subsection{Known and chosen plaintexts in real systems}
 
 (Parts of this will make more sense after getting through the below.
 Maybe this section should be moved.  Also, some pictures will
@@ -1109,7 +1121,7 @@ noticeable fraction of your plaintext is known under benign
 circumstances, and that it's not all that hard for an attacker to
 mount a chosen plaintext attack.
 
-2.6: Notes \& References
+\subsection{Notes \& References}
 
 Some of the references I used for this section:
 
@@ -1146,7 +1158,7 @@ CBC.  I found the paper a tough read when trying to figure out how to
 apply the equations.
 
 
-3. IPsec and the IETF
+\section{IPsec and the IETF}
 
 In this section, we return to the original question about rekeying
 that sparked this whole venture, and answer three questions:
@@ -1158,7 +1170,7 @@ that sparked this whole venture, and answer three questions:
    the best practices for rekeying?
 3. What are best practices today?
 
-3.1 Background on IPsec, IETF and RFCs
+\subsection{Background on IPsec, IETF and RFCs}
 
 The Internet Engineering Task Force (IETF) is where protocol
 specifications for the Internet come from.  There is an entire Area
@@ -1195,7 +1207,7 @@ people will actually implement and use, but protocols are often de
 facto standards long before reaching that platinum frequent flyer
 status.
 
-3.2 IKE and IPsec
+\subsection{IKE and IPsec}
 
 If you really want to dig into the key exchange protocol, RFC 7296
 (Oct. 2014) is the most modern reference.  Unless you're actually
@@ -1272,7 +1284,7 @@ This ultimately is the heart of what we're looking for here: what is
 that recommended lifetime today, and what should it be in the light of
 quantum computing?
 
-3.3 Digging into the Cryptanalysis of IPsec
+\subsection{Digging into the Cryptanalysis of IPsec}
 
 What is the recommended lifetime of an IPsec Security Association
 today?  This is the question that has proven to be so hard to answer,
@@ -1305,10 +1317,11 @@ one ciphertext collision revealing some information.
 
 Searching the archives for "birthday" also turned up some relevant
 messages, e.g. the relatively recent (21 April 2015) message
-https://mailarchive.ietf.org/arch/msg/ipsec/T1woQuwh1Ccoz6fWWFDBETBllaY
+\url{https://mailarchive.ietf.org/arch/msg/ipsec/T1woQuwh1Ccoz6fWWFDBETBllaY}
 quoting the earlier message
-https://mailarchive.ietf.org/arch/msg/ipsec/De46HNR1h4lGXZnxlIVpNSfs5p0:
+\url{https://mailarchive.ietf.org/arch/msg/ipsec/De46HNR1h4lGXZnxlIVpNSfs5p0}
 
+\begin{verbatim}
 	"> I think the main problem with 3DES is not that it is significantly slower
 	> than AES, but that it has blocksize of 64 bits, that is considered
 	> loo small for high-speed networks, when the possibility of birthday attack
@@ -1320,6 +1333,7 @@ https://mailarchive.ietf.org/arch/msg/ipsec/De46HNR1h4lGXZnxlIVpNSfs5p0:
 	in under a minute. OTOH it’s no problem at all to run a CreateChildSA
 	every minute, or even every five seconds. So I think there are very
 	few cases that *can’t* use 3DES."
+\end{verbatim}
 
 This is interesting, particularly given its newness.  The author (Yoav
 Nir, one of the long-time leaders of the IPsec community) considers
@@ -1332,7 +1346,7 @@ same key even using 3DES, due to the birthday paradox.  McGrew went so
 far as to write up a 16-page analysis posted on the Cryptology
 preprint server (see references).
 
-3.4 IPsec, Quantum Computing and QKD
+\subsection{IPsec, Quantum Computing and QKD}
 
 (This one is just a placeholder, but there is surprisingly little
 \emph{documented} about this kind of work.  Even e.g. the publications
@@ -1354,11 +1368,11 @@ such as IPsec and on how effective quantum computers will or won't be
 at breaking communication security.  Some of this will also be covered
 in Section 5.)
 
-3.5 Notes \& References
+\subsection{Notes \& References}
 
 To be filled in eventually.
 
-4. TLS/SSL and cryptography
+\section{TLS/SSL and cryptography}
 
 Here we want to answer the same three questions we had above:
 
@@ -1388,7 +1402,7 @@ browsing traffic for a particular connection.  It also provides data
 integrity, using a MAC (message authentication code) when necessary.
 (IPsec also does both, but we ignored that above.)
 
-4.1 TLS Records and Basic Limits
+\subsection{TLS Records and Basic Limits}
 
 TLS consists of one primary protocol: the TLS Record Protocol.  On top
 of the TLS Record Protocol sit four protocols, one of which (the
@@ -1429,7 +1443,7 @@ some plaintext, or is this compromise of the entire session key?
 Figuring that out will take more digging, since they express things
 differently than most of the resources I used above.
 
-4.2 Keying and Rekeying
+\subsection{Keying and Rekeying}
 
 <<how the initial key is generated>>
 
@@ -1439,7 +1453,7 @@ what both ends really want.>>
 
 <<how rekeying is handled>>
 
-4.3 Other Attacks on TLS
+\subsection{Other Attacks on TLS}
 
 One startling and potentially useful document is RFC7457, "Summarizing
 Known Attacks on Transport Layer Security (TLS) and Datagram TLS
@@ -1461,17 +1475,17 @@ fix is straightforward (toss in an extra block of nonsense data before
 starting the new record), and current versions of TLS aren't
 vulnerable.
 
-4.4 TLS and QKD
+\subsection{TLS and QKD}
 
 Alan Mink, Sheila Frankel and Ray Perlner worked on integrating TLS
 with QKD, a full decade ago.
 \url{https://arxiv.org/abs/1004.0605}
 
-4.5 Notes \& References
+\subsection{Notes \& References}
 
 To be filled in eventually.
 
-5. Attacking classical cryptography using quantum computers
+\section{Attacking classical cryptography using quantum computers}
 
 Naturally, my own interest in writing these notes stems from my
 experience in quantum computing and quantum networking.  The previous
@@ -1480,7 +1494,7 @@ quantum networking can be integrated with classical thrown into each
 section.  Here, let's look at the attacks on classical cryptography
 using quantum computers.
 
-5.1 Shor 'Nuff
+\subsection{Shor 'Nuff}
 
 Obviously, the main thing we're talking about here is Shor's
 algorithm.  I have not been privy to the conversations of
@@ -1576,7 +1590,7 @@ factoring on D-Wave; I don’t think this paper tells us very much about factori
 That's more than enough for now, since it isn't really the focus of
 what we're after here, anyway.
 
-5.2 Grover's amplifier
+\subsection{Grover's amplifier}
 
 When learning about linear cryptanalysis (above), I naturally wondered
 I wonder how hard it would be to set up amplitude amplification for
@@ -1593,7 +1607,7 @@ Grover's algorithm and NFS:
 \url{https://research.tue.nl/en/publications/a-low-resource-quantum-factoring-algorithm}
 \url{https://cr.yp.to/papers/grovernfs-20170419.pdf}
 
-6. Post-quantum cryptography
+\section{Post-quantum cryptography}
 
 <<somebody besides me should write this.  Moriai-san?  Aono-san?  Jon?>>
 
@@ -1626,7 +1640,7 @@ Also in 2009, there was a book, which I'm sure is almost entirely
 outdated by now:
 \url{https://www.springer.com/jp/book/9783540887010}
 
-7. Bitcoin and Quantum Computers
+\section{Bitcoin and Quantum Computers}
 
 \comment{someone needs to take this one on, too...}
 
@@ -1650,7 +1664,7 @@ June 11, 2019
 and follow-ups, including
 \url{https://twitter.com/marcotomamichel/status/1138438446622470144}
 
-
+% Good \nocommand \more
 
 -----
 
@@ -1659,9 +1673,7 @@ Publish this eventually?
 Ars Technica?
 Quanta Magazine?
 
-===================
-
-8. References:
+\section{References}
 
 Most important reference:
 
@@ -1832,7 +1844,7 @@ generator:
 
 Appendix:
 
-A. Some Mathematica tinkering
+\section{Some Mathematica tinkering}
 
 Some ad hoc Mathematica code for dinking around with some of the
 numbers:
@@ -1878,7 +1890,7 @@ N[1 - 1/Sqrt[E]]
 
 =======
 
-B. Some notes for my students
+\section{Some notes for my students}
 
 This might seem very far from linear algebra, but the terms "linear"
 and "affine" show up in linear cryptanalysis, with a special meaning
@@ -2037,7 +2049,7 @@ def entropy(s):
 entropy("1223334444")
 \end{verbatim}
 
-=============================
+\section{Performance Testing}
 
 Run on battery, 10/30:
 
