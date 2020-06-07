@@ -23,17 +23,6 @@ _extensive_ mailing list archives from development of key Internet
 protocols.  I fell down a pretty serious rabbit hole here, and haven't
 found my way out yet.
 
-I'm also bringing in one of Japan's most senior cryptographers and one
-of the designers of the IPsec Internet Key Exchange, though you should
-blame me for errors, not them.  I'm also bringing in about half a
-dozen other people I've talked to about this in the meantime
-(including Dave Farber, grandfather of the Internet and head of Keio's
-Cyber Civilization Center), and the 2/3 of my group that raised their
-hands when I asked who was interested, and I'm still probably
-forgetting somebody.  All of you will find some things here you think
-of as banal, and hopefully some things that make you say, "I didn't
-know that (and it's interesting)!"
-
 The target audience for this is primarily quantum computing
 researchers who are familiar with Shor's algorithm, Grover's algorithm
 and QKD, since those are among the first things you learn, but who
@@ -857,36 +846,55 @@ I found Heys' tutorial to be clear and helpful in understanding LC.
 2.5: Known and chosen plaintexts in real systems
 
 (Parts of this will make more sense after getting through the below.
-Maybe this section should be moved.)
+Maybe this section should be moved.  Also, some pictures will
+definitely help here.)
 
 Modern HTTPS (web) and SMTP (email) connections have a lot of
 predictability in their content, with commands like 'HELO' and
-'HTTP/1.1'.  Thus, it's probably reasonable to consider attacks on TLS
-to be chosen-plaintext attacks.
+'HTTP/1.1' being standard parts of an exchange.  We'll see in a later
+section more detail about how this encryption is done using a protocol
+called Transport Layer Security, or TLS, but for the moment we'll only
+focus on the message contents and the fact that they are pretty
+predictable.  Thus, it's reasonable to consider attacks on TLS to be
+known-plaintext attacks, and in fact there are cases where we can
+create chosen-plaintext attacks.
 
-Given the existence of cross-site scripting attacks,
-I can set up a website that tells you first, "Go fetch
-https://google.com/1234".  I watch your browser do that and capture
-the ciphertext, then my website says, "Now go fetch
-https://google.com/1235".  I capture that ciphertext as well, and
-compare the two ciphertexts.  The success of such an attack requires a
-lot of assumptions about which parts of the entire process I can
-observe and which I can control, but using the principle of being
-conservative on security, assuming an attacker can force the choice of
-plaintext passed between two nodes through an encrypted connection is
-not unreasonable in today's richly interwoven distributed systems.
+Consider, for example, the connection between your laptop and your
+email server, whether Gmail or your organization's server.  Assume
+that I, an attacker, can send you email and can observe your encrypted
+connection to your server (perhaps I control a router somewhere
+between your server and your machine).  I can send you an email
+message that contains, for example, the strings 0x000000000000000 (15
+zero bytes in a row) and 0x000000010000000 (with a one in the middle).
+If your cipher block size is 8 bytes, as in DES, I know that one of
+the encrypted blocks will be all zeroes and one will have exactly one
+bit set, even if I have trouble controlling the exact position within
+the overall stream.  I capture the ciphertext blocks, and compare
+them.  This single-bit difference between two blocks helps me with the
+attack.  All I have to do to execute a basic chosen-plaintext attack
+is to send you email and watch the resulting packets flow between your
+machines!
 
-But especially for IPsec, there is another big vulnerability: one
-Security Association may carry data encrypted for a _bunch_ of
-machines.  So if an attacker manages to install a program on only one
-laptop (say, via email, or while you're sitting at Starbucks), they
-can cause your system to send out arbitrarily chosen packets that will
-cross the tunnel, so they can execute a chosen plaintext attack pretty
-easily.  Since IPsec encrypts the whole packet, they may not be able
-to tell immediately which packets were your laptop's and which my
-laptop's, but that distinction is a relatively minor overhead.
+The success of such an attack requires a lot of assumptions about
+which parts of the entire process I can observe and which I can
+control, but using the principle of being conservative on security,
+assuming an attacker can force the choice of plaintext passed between
+two nodes through an encrypted connection is not unreasonable in
+today's richly interwoven distributed systems.
 
-Also, for every IP packet from my laptop to the email server passing
+Especially for IPsec, there is another big vulnerability: one
+encrypted connection between two gateways (known as a _Security
+Association_, which we will see below) may carry data encrypted for a
+_bunch_ of machines.  So if an attacker manages to install a program
+on only one laptop (say, via email, or while you're sitting at
+Starbucks), they can cause your system to send out arbitrarily chosen
+packets that will cross the tunnel, so they can execute a chosen
+plaintext attack pretty easily.  Since IPsec encrypts the whole
+packet, they may not be able to tell immediately which packets came
+from your laptop and which from a colleague's laptop, but that
+distinction is a relatively minor overhead.
+
+Also, for every IP packet from your laptop to the email server passing
 through the IPsec tunnel, the IP header portion is going to be exactly
 the same, and its position in the encrypted stream is very easy to
 identify.  This led to some of the decisions around the use of CBC, I
@@ -898,7 +906,7 @@ noticeable fraction of your plaintext is known under benign
 circumstances, and that it's not all that hard for an attacker to
 mount a chosen plaintext attack.
 
-2.6:
+2.6: Notes & References
 
 Some of the references I used for this section:
 
@@ -929,7 +937,7 @@ abstract from STOC 1997
 https://ieeexplore.ieee.org/abstract/document/646128
 full paper at
 http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.117.4734&rep=rep1&type=pdf
-Focuses on DES, which was in the process of being superceded by AES
+Focuses on DES, which was in the process of being superseded by AES
 even in 1997, but the content of the paper is valuable with respect to
 CBC.  I found the paper a tough read when trying to figure out how to
 apply the equations.
@@ -937,7 +945,8 @@ apply the equations.
 
 3. IPsec and the IETF
 
-Here we want to answer three questions:
+In this section, we return to the original question about rekeying
+that sparked this whole venture, and answer three questions:
 
 1. What are the technical mechanisms in place for rekeying and
    effective use of encryption in the Internet standard security
@@ -946,9 +955,12 @@ Here we want to answer three questions:
    the best practices for rekeying?
 3. What are best practices today?
 
+3.1 Background on IPsec, IETF and RFCs
+
 The Internet Engineering Task Force (IETF) is where protocol
 specifications for the Internet come from.  There is an entire Area
-within IETF (the largest group, equivalent to a division of APS, I
+within IETF (an "area" is the largest size organizational group in
+IETF, equivalent to a division of the American Physical Society, I
 would guess) dedicated to security, which charters many different
 working groups.  Security is *MUCH, MUCH MORE* than cryptography, but
 an important area of work is developing the network protocols that
@@ -980,14 +992,17 @@ people will actually implement and use, but protocols are often de
 facto standards long before reaching that platinum frequent flyer
 status.
 
+3.2 IKE and IPsec
+
 If you really want to dig into the key exchange protocol, RFC 7296
 (Oct. 2014) is the most modern reference.  Unless you're actually
 manually configuring or implementing the stuff, you probably won't
 care about the differences between it and the older versions.
 https://tools.ietf.org/html/rfc7296
 
-But you might want to start with RFC 4301 (also a proposed standard),
-which is titled, "Security Architecture for the Internet Protocol."
+But you might want to start with RFC 4301 (Dec. 2005) (also a proposed
+standard), which is titled, "Security Architecture for the Internet
+Protocol."
 
 IPsec has a couple of modes, but let's stick to what's called tunnel
 mode.  Two boxes, known as gateways, build one or more Security
@@ -1009,7 +1024,7 @@ messages that govern the tunnel.  The first exchange of messages
 negotiates some security parameters, and carries random nonces used to
 "add freshness" to the cryptographic exchange and the parameters to be
 used for the Diffie-Hellman key exchange.  I believe this is where the
-preferred choice for the bulk encryption (2-DES v. AES v. whatever) is
+preferred choice for the bulk encryption (3-DES v. AES v. whatever) is
 also negotiated.  Since we have not yet established the tunnel, these
 messages are necessarily sent as plaintext.
 
@@ -1054,10 +1069,13 @@ This ultimately is the heart of what we're looking for here: what is
 that recommended lifetime today, and what should it be in the light of
 quantum computing?
 
-This is the question that has proven to be so hard to answer, and that
-has led me wandering all across the web.  Probably the most relevant
-source is, naturally, the mailing list where most of the design work
-is documented.
+3.3 Digging into the Cryptanalysis of IPsec
+
+What is the recommended lifetime of an IPsec Security Association
+today?  This is the question that has proven to be so hard to answer,
+and that has led me wandering all across the web.  Probably the most
+relevant source is, naturally, the mailing list where most of the
+design work is documented.
 
 One early, relevant message
 (https://mailarchive.ietf.org/arch/msg/ipsec/_dSgUvW6WiUFvw5aoyu7rJo5Kgc)
@@ -1101,7 +1119,7 @@ https://mailarchive.ietf.org/arch/msg/ipsec/De46HNR1h4lGXZnxlIVpNSfs5p0:
 
 This is interesting, particularly given its newness.  The author (Yoav
 Nir, one of the long-time leaders of the IPsec community) considers
-3DES + very frequent rekeying to be sufficient, at least for some use
+3DES plus very frequent rekeying to be sufficient, at least for some use
 cases, and it's important for backwards compatibility.  However, in a
 slightly earlier (2012) exchange on the mailing list, David McGrew
 (another key IPsec person) and Nir covered the same issue, with McGrew
@@ -1110,10 +1128,31 @@ same key even using 3DES, due to the birthday paradox.  McGrew went so
 far as to write up a 16-page analysis posted on the Cryptology
 preprint server (see references).
 
+3.4 IPsec, Quantum Computing and QKD
+
+(This one is just a placeholder, but there is surprisingly little
+_documented_ about this kind of work.  Even e.g. the publications
+describing the recent Chinese QKD satellite experiment say, "We used
+AES plus QKD," or, "We used QKD-generated keys as a one-time pad," but
+they tell you nothing about the _network_ or _transport_ layer
+protocols used, so who knows?  Might be documented elsewhere on the
+web, or described in talks, but so far I've failed to track down
+anything authoritative.)
+
 Chip Elliott was the first to modify IPsec to work with QKD, as far as
-I'm aware.  Shota Nagayama drafted and implemented a more formal
-protocol modification for his bachelor's thesis, back in 2010, but we
-failed to push that from Internet Draft to RFC.
+I'm aware, described in a 2003 SIGCOMM paper.  Shota Nagayama drafted
+and implemented a more formal protocol modification for his bachelor's
+thesis working with me, back in 2010, but we failed to push that from
+Internet Draft to RFC.
+
+(More to come here, eventually, on both the use of QKD with protocols
+such as IPsec and on how effective quantum computers will or won't be
+at breaking communication security.  Some of this will also be covered
+in Section 5.)
+
+3.5 Notes & References
+
+To be filled in eventually.
 
 4. TLS/SSL and cryptography
 
@@ -1126,23 +1165,26 @@ Here we want to answer the same three questions we had above:
 3. What are best practices today?
 
 but this section will be much shorter, as I know so much less about
-TLS.
+TLS (despite the fact that it is the most important use of encryption
+on the Internet today).
 
-The current standard for Transport Layer Security, or TLS, is RFC5246,
-published in 2008 and updated with various tidbits by almost a dozen
-newer RFCs.  It specifies version 1.2 of the protocol.  The main
-document itself is only 100 pages, not bad for something so complex
-and important.
+The current standard for Transport Layer Security, or TLS, is RFC8446,
+published in 2018.  It specifies version 1.3 of the protocol.  The
+main document itself is only 160 pages, not bad for something so
+complex and important.  (The 1.2 spec was only about 100 pages, so it
+has grown substantially.)
 
 ...oh, what is TLS?  It's the protocol that HTTPS runs over.  It's the
 successor to SSL, the Secure Sockets Layer, which was the first way to
-encrypt web browsing.  TLS originally builds on top of a reliable
+encrypt web browsing.  TLS originally built on top of a reliable
 transport protocol, such as TCP, though a later adaptation (RFC6347)
 lets it run over a datagram protocol.  We'll only worry about running
 it over TCP here.  TLS provides privacy, by encrypting all of your web
 browsing traffic for a particular connection.  It also provides data
 integrity, using a MAC (message authentication code) when necessary.
 (IPsec also does both, but we ignored that above.)
+
+4.1 TLS Records and Basic Limits
 
 TLS consists of one primary protocol: the TLS Record Protocol.  On top
 of the TLS Record Protocol sit four protocols, one of which (the
@@ -1153,36 +1195,16 @@ the bulk data encryption, and makes sure that this part of the process
 can't be modified by an attacker.  A third one of interest to us is
 the change cipher spec protocol.
 
-One attack this RFC points out is
-http://www.openssl.org/~bodo/tls-cbc.txt, which (among other things)
-describes a flaw in how TLS Record Protocol records are concatenated.
-Originally, TLS kept the ciphertext of the last block of a record to
-use as the initialization vector (IV) of the first block of a new
-record, but this allows an attacker who can adaptively choose
-plaintexts to more completely choose the text being encrypted.  The
-fix is straightforward (toss in an extra block of nonsense data before
-starting the new record), and current versions of TLS aren't
-vulnerable.
-
-One startling and potentially useful document is RFC7457, "Summarizing
-Known Attacks on Transport Layer Security (TLS) and Datagram TLS
-(DTLS)".  It details a couple of dozen attacks on TLS, most having to do
-with protocol implementation issues such as failing to correctly
-verify all of the information you are given.  Some of them leak
-information or allow a connection to be take over, others allow an
-attacker to downgrade the security negotiation so that a later attack
-on the cipher has a higher chance of success.
-
-A record in the record layer has a maximum size of 16KB (2^14).
+A record in the record layer has a maximum size of 16KB ($2^{14}+1$, actually).
 
 There is, as best I can tell, no official limit on the key lifetime or
 on the number of bytes that can be pushed through a single TLS except
-the limit on record sequence numbers of $2^64}-1$.  Combined with the
-max record size, that's 2^78 bytes, or 256 exabytes, which is a bloody
+the limit on record sequence numbers of $2^{64}-1$.  Combined with the
+max record size, that's 2^{78} bytes, or 256 exabytes, which is a bloody
 lot of data.  So, if the lifetime of a session needs to be limited, it
 has to be done by breaking the connection and renegotiating.
-Apparently, adding a key renegotiate feature is being considered for
-TLS 1.3.
+Apparently, adding a key renegotiate feature was considered for
+TLS 1.3, but doesn't seem to have been included.
 
 Luykx and Paterson wrote up a short (8 page) summary recommending
 limits for TLS with different cryptosystems. (My copy is dated
@@ -1195,20 +1217,54 @@ really necessary.
 In April 2016, Mozilla moved to limit the length of a connection,
 based on those results:
 https://bugzilla.mozilla.org/show_bug.cgi?id=1268745
-They set AES-CBC to about 2^34.5, or about 24 billion records, about
-400 terabytes max.  That should give a probability of 2^{-57} of
+They set AES-CBC to about $2^{34.5}$, or about 24 billion records, about
+400 terabytes max.  That should give a probability of $2^{-57}$ of
 "ciphertext integrity [being] breached", though I'm a little unclear
 on exactly what that means here -- is this just birthday bound leaking
 some plaintext, or is this compromise of the entire session key?
 Figuring that out will take more digging, since they express things
 differently than most of the resources I used above.
 
+4.2 Keying and Rekeying
+
+<<how the initial key is generated>>
+
+<<add more here on chains of trust for certificates, and how we make
+sure that an attacker can't cause a downgrade of security relative to
+what both ends really want.>>
+
+<<how rekeying is handled>>
+
+4.3 Other Attacks on TLS
+
+One startling and potentially useful document is RFC7457, "Summarizing
+Known Attacks on Transport Layer Security (TLS) and Datagram TLS
+(DTLS)".  It details a couple of dozen attacks on TLS, most having to do
+with protocol implementation issues such as failing to correctly
+verify all of the information you are given.  Some of them leak
+information or allow a connection to be take over, others allow an
+attacker to downgrade the security negotiation so that a later attack
+on the cipher has a higher chance of success.
+
+One attack this RFC points out is
+http://www.openssl.org/~bodo/tls-cbc.txt, which (among other things)
+describes a flaw in how TLS Record Protocol records are concatenated.
+Originally, TLS kept the ciphertext of the last block of a record to
+use as the initialization vector (IV) of the first block of a new
+record, but this allows an attacker who can adaptively choose
+plaintexts to more completely choose the text being encrypted.  The
+fix is straightforward (toss in an extra block of nonsense data before
+starting the new record), and current versions of TLS aren't
+vulnerable.
+
+4.4 TLS and QKD
+
 Alan Mink and Sheila Frankel worked on integrating TLS with QKD, a
 full decade ago.
 
-<<add more here on chains of trust for certificates, how rekeying is
-handled, and how we make sure that an attacker can't cause a downgrade
-of security relative to what both ends really want.>>
+4.5 Notes & References
+
+To be filled in eventually.
 
 5. Attacking classical cryptography using quantum computers
 
@@ -1310,11 +1366,11 @@ what we're after here, anyway.
 
 5.2 Grover's amplifier
 
+When learning about linear cryptanalysis (above), I naturally wondered
 I wonder how hard it would be to set up amplitude amplification for
-the bias in linear cryptanalysis?  The bias we are looking for is
-certainly small.
+the bias in LC.  The bias we are looking for is certainly small.
 
-Turns out people have addressed that question:
+It turns out people have addressed that question:
 https://arxiv.org/abs/1510.05836
 https://link.springer.com/article/10.1007/s11128-015-0983-3
 https://link.springer.com/chapter/10.1007/978-3-662-48683-2_5
@@ -1590,7 +1646,7 @@ one might like.)
 A good analysis of the birthday bound appears in Sec. 2.2 of the
 SWEET32 paper by Bhargavan and Leurent.
 
-The square root limit as $n$ and $d$ grow large:
+The square root limit as $n$ and $d$ grow large, in Mathematica:
 
 N[Sqrt[E]]
 1.64827
@@ -2129,3 +2185,175 @@ https://arxiv.org/pdf/1804.00200.pdf
 
 More M$ on elliptic:
 https://eprint.iacr.org/2017/598.pdf
+
+87% of web traffic was encrypted, as of Jan. 2019:
+https://duo.com/decipher/encryption-privacy-in-the-internet-trends-report
+
+and by October of that year it was 90%:
+https://meterpreter.org/https-encryption-traffic/
+
+Both of those seem to point back to Fortinet reports, but don't link
+to the exact one.  Best I can find is 3Q18:
+https://www.fortinet.com/content/dam/fortinet/assets/threat-reports/threat-report-q3-2018.pdf
+which says hovered around 50% throughout 2016, then rose sharply to
+72% by 3Q18.
+
+Apparently *old* discussion of short keys in SSL:
+http://www.geocities.ws/rahuljg/Attacks_on_SSL.htm
+
+Browser Reconnaissance and Exfiltration via Adaptive Compression of
+Hypertext) is a security exploit against HTTPS when using HTTP
+compression. BREACH is built based on the CRIME security exploit.
+https://en.wikipedia.org/wiki/BREACH
+
+CRIME is maybe closer to what I'm looking for:
+https://en.wikipedia.org/wiki/CRIME
+
+Refers to (original?) paper on leakage of info via
+compression-over-encryption:
+https://link.springer.com/chapter/10.1007%2F3-540-45661-9_21
+
+-----
+
+From ddp:
+
+just fast keying:
+http://www1.cs.columbia.edu/~angelos/Papers/jfk-tissec.pdf
+
+IKEv1 was a group compromise, almost no one liked it.  This was a valid criticism and probably should have been explored further.  I note that many of the subsequent enhancements in IKEv2 involve ideas found here:
+http://www1.cs.columbia.edu/~angelos/Papers/jfk-tissec.pdf
+
+But after three years of screaming at each other, it was time to ship
+something and see how it worked in the field.  It's also a fair
+criticism that perfect is the enemy of "it mostly works, and beats
+plaintext on the wire".
+
+"The keys used for the Child SAs, therefore, are the obvious target for traffic-based attacks, though the real prize is the keys for the IKE SA."
+
+The keys are equal, though you may think of the Phase 1 SA as being
+more important because the bulk keys are derived from it.
+
+"I'm having a hard time imagining how to mount an effective attack against the IKE SA."
+
+good news!
+
+Image of SKEYID:
+https://twitter.com/ddp/status/1263165272082403328
+
+again, this is IKEv1
+
+so the question you are posing is, what causes quantum keying material
+to wear out?  It is a very good question.
+
+Replying to 
+@rdviii
+ and 
+@ddp
+People like to talk about D-H, RSA and Shor, because D-H and RSA are
+pretty easy to understand, but the actual use of the keys matters.
+
+
+They both matter, but yes.  The Phase 1 keys are used by IKE for
+connection setup and rekeying, traffic is encrypted under the bulk
+sesssion keys that must be periodically rekeyed, but that's dependent
+on the amount of traffic.
+
+Depending on what algorithms you configure you may need to rekey more or less frequently, which is why it was left configurable on CryptoClusters.  I'm purposefully and wantonly ignoring the Red Book which probably would point out that the entire stream is a covert channel.
+
+Our TCSEC C2 and B1 evaluation stipulated that the network not be
+plugged in and DECwindows was disabled, there was a SECURITY_POLICY
+system parameter that was a bitmap of features to be disabled when
+running in the evaluated configuration.
+
+
+
+https://twitter.com/trimstray/status/1262985978618281986
+Ethical hacking platforms/trainings/CTFs:
+
+http://crackmes.one
+http://ringzer0ctf.com
+http://pwnable.kr
+http://ctflearn.com
+http://domgo.at
+http://pwnable.tw
+http://tryhackme.com
+http://ctfchallenge.co.uk
+http://cryptohack.org
+
+-----
+
+Dan Boneh's papers on SSL/TLS:
+http://crypto.stanford.edu/~dabo/pubs/pubsbytopic.html#S
+including some on quantum, going back as far as 95!
+Wow, and a paper on cracking DES on a DNA computer!
+
+-----
+
+
+Kenn White
+@kennwhite
+Replying to 
+@rdviii
+ and 
+@danieljbaird
+I think 
+@hanno
+ or 
+@FiloSottile
+ might be able to point you in the right direction re a good corpus on
+ attacks.
+
+Daniel Baird
+@danieljbaird
+Replying to 
+@danieljbaird
+ 
+@JapanGraphica
+ and 
+@rdviii
+also 
+@kennwhite
+  
+@matthew_d_green
+  
+@halvarflake
+
+https://twitter.com/SteveBellovin/status/1256578124093022211
+And then there was my mistake about sequence numbers in IPsec. 
+@mattblaze
+ wanted them; I said “no” and won. I then did some research that
+ showed that he was right and I was wrong , so I led the effort to put
+ them back in. See slide 43 of
+ https://cs.columbia.edu/~smb/talks/why-ipsec.pdf.
+
+NSA Military Cryptanalysis:
+https://www.nsa.gov/news-features/declassified-documents/military-cryptanalysis/
+Friedman's guide to cryptanalysis from the war.
+
+Replying to 
+@rdviii
+i believe it would still be algorithm specific, so i'm not sure what can be drawn by looking at the specific cryptanalysis of des for example.  in cases like these, dan and i always deferred to the cryptographers in the room; we had 3-4 participating and several from the nsa.
+11:06 PM · May 22, 2020·Twitter Web App
+
+Replying to 
+@ddp
+ and 
+@rdviii
+again, we had the goal of algorithm flexibility
+
+Searching publicly available NSA quantum documents:
+https://search.usa.gov/search?utf8=%E2%9C%93&affiliate=nsa_css&sort_by=&query=quantum
+
+SHA-1 is a Shambles:
+https://eprint.iacr.org/2020/014.pdf
+https://sha-mbles.github.io/
+https://www.openssh.com/txt/release-8.3
+
+BB84 in Qiskit:
+https://github.com/qiskit-community/may4_challenge_exercises/blob/master/ex03/Challenge3_BB84_Solutions.ipynb
+
+WeakDH is back online:
+https://weakdh.org/
+
+Elliott et al., SIGCOMM 2003:
+https://arxiv.org/abs/quant-ph/0307049
