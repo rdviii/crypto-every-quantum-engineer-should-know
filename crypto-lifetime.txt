@@ -1259,14 +1259,22 @@ vulnerable.
 
 4.4 TLS and QKD
 
-Alan Mink and Sheila Frankel worked on integrating TLS with QKD, a
-full decade ago.
+Alan Mink, Sheila Frankel and Ray Perlner worked on integrating TLS
+with QKD, a full decade ago.
+https://arxiv.org/abs/1004.0605
 
 4.5 Notes & References
 
 To be filled in eventually.
 
 5. Attacking classical cryptography using quantum computers
+
+Naturally, my own interest in writing these notes stems from my
+experience in quantum computing and quantum networking.  The previous
+sections dealt primarily with classical attacks, with a little bit of
+quantum networking can be integrated with classical thrown into each
+section.  Here, let's look at the attacks on classical cryptography
+using quantum computers.
 
 5.1 Shor 'Nuff
 
@@ -1314,7 +1322,7 @@ https://journals.aps.org/pra/abstract/10.1103/PhysRevA.54.147
 https://arxiv.org/abs/quant-ph/9602016
 https://journals.aps.org/pra/abstract/10.1103/PhysRevA.54.1034
 
-btw, if you are looking to broaden your reading on implementations of
+If you are looking to broaden your reading on implementations of
 Shor’s algorithm, the following are useful:
 
 Pavlidis and Gizopoulous found an efficient division algorithm,
@@ -1358,7 +1366,7 @@ factoring.
 https://science.sciencemag.org/content/270/5242/1633
 
 Among random things, there is Dridi and Alghassi,
-factoring on D-Wave; I don’t think much of this paper.
+factoring on D-Wave; I don’t think this paper tells us very much about factoring at scale.
 https://www.nature.com/articles/srep43048
 
 That's more than enough for now, since it isn't really the focus of
