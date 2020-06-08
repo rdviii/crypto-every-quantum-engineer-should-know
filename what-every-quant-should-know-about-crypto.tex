@@ -186,11 +186,12 @@ Faculty of Environment and Information Studies, Keio University.%\\This line bre
   achieving confidentiality, integrity and availability in classical
   communications.  We describe the relationship between cryptography
   and communication protocols, with emphasis on key lengths, block
-  sizes and known mathematical attacks on various ciphers.  This
-  information will help quantum researchers understand when quantum
-  computers will affect classical cryptographic practice and dsicover
-  new avenues for applying quantum technology to the overall problem
-  of secure communication.
+  sizes and known mathematical attacks on various ciphers.  We
+  primarily focus on Internet encryption, but also introduce WiFi and
+  cellular telephone networks.  This information will help quantum
+  researchers understand when quantum computers will affect classical
+  cryptographic practice and discover new avenues for applying quantum
+  technology to the overall problem of secure communication.
 %
 %\comment{Valid PACS numbers may be entered using the \verb+\pacs{#1}+ command.}
 \end{abstract}
@@ -224,14 +225,24 @@ enough on quantum attacks in symmetric crypto.  It'll have to do.}
 
 \comment{Should add WiFi and cell phone.}
 
-Following up on Renato's crypto lifetime question from the Network
-Games, Tropical Topology and Quantum Communication Workshop...
+\comment{Cite history of
+crypto~\cite{kahn1996codebreakers,singh1999code} and good  crypto/security references~\cite{schneier96:_applied_crypto,handbook,bishop2002art}.}
 
-First off, Jens, thanks for inviting me, it was a great but too-short
-trip.  Wish I could have been there for the whole week!  I learned a
-bunch in a short period of time, especially from Sang-il and Renato.
-I'm sure I would have learned so much more if I could have been there
-earlier.
+\comment{Symmetric and public key can both be used for
+  authentication~\cite{needham:encrypt}.}
+
+The goal of this document is to introduce four key areas:
+
+\begin{enumerate}
+\item the mathematics of encryption, including how math can be used to
+  attack encryptiion;
+\item how encryption is incorporated into complete communication
+  systems;
+\item how those systems are used to achieve the ``CIA'' goals of
+  confidentiality, integrity and availability; and
+\item how cryptography influences and is influenced by policy, both
+  corpoprate/organizational and governmental.
+\end{enumerate}
 
 Renato asked, paraphrasing, about why we change the cryptographic keys
 used during long communication sessions, and how often they \emph{ought} to
@@ -252,15 +263,17 @@ and to use encryption in a real-world setting.
 
 There are two fundamental reasons for periodic rekeying:
 
-1. Having a long string of data encrypted with the same key increases
+\begin{enumerate}
+\item Having a long string of data encrypted with the same key increases
 the ability of an attacker to find the key.
-2. As a practical matter, reducing the amount of data that is exposed
+\item As a practical matter, reducing the amount of data that is exposed
 in the event that a key is broken is good stewardship of your data.
+\end{enumerate}
 
 So changing the key "often" makes it both harder and less valuable for
 an attacker to find a key.  That's the tl;dr.  Turning it into
 concrete, numeric recommendations is hard, but it looks like rekeying
-every half hour is pretty good, if your key bandwidth isn't high
+every half hour is pretty good, if your key generation rate isn't high
 enough to do full one-time pad.
 
 The above I knew off the top of my head, but I'm not a cryptographer
@@ -269,17 +282,6 @@ rekeying) on faith.  So, let's dig a little deeper...there won't be
 any \emph{new} knowledge in this, but I hope it helps bring together some
 information and organizes it to both save you the googling and
 calculating I've done and to provide a clear picture.
-
-I used to work on a box known as an IPsec gateway, but I was the OS
-guy, not the cryptographer; Darrell Piper, Dan Harkins and Dave
-Kashtan did most of the crypto work.  I am also a board member of the
-WIDE Project, which through its KAME Project created the Racoon
-software that was an important early implementation of the key
-exchange protocol for IPsec, with much of that work done by Shoichi
-Sakane.  Much of what I know about IPsec and other security was just
-incidental radiation from them, or gained from the security-oriented
-papers we had to read when I did my master's at USC back before the
-Englightenment.
 
 \subsection{Encrypted Communications}
 
@@ -290,9 +292,11 @@ Englightenment.
 
 An encrypted conversation involves, at the macro level, three phases:
 
-	1. Authentication: proving that you are who you say you are
-	2. Key generation: creating the keys used for bulk data encryption
-	3. Encryption/sending/decryption of the user's valuable bulk data
+\begin{enumerate}
+\item Authentication: proving that you are who you say you are
+\item Key generation: creating the keys used for bulk data encryption
+\item Encryption/sending/decryption of the user's valuable bulk data
+\end{enumerate}
 
 That's a bit of an oversimplification, as we'll see below when we talk
 about IPsec, but good enough for now.
@@ -306,62 +310,69 @@ seems to be block, but I'm not sure why.
 
 Some additional terminology:
 
-* cleartext: data that isn't encrypted and isn't really intended to be
+\begin{itemize}
+\item cleartext: data that isn't encrypted and isn't really intended to be
   (sometimes confused with the below, even by me)
-* plaintext: the original, unencrypted message
-* ciphertext: the encrypted message
-* integrity: the data hasn't been tampered with
-* confidentiality or privacy: the data hasn't been disclosed to anyone unauthorized
-* session keys: the keys used for one communication session
-* forward secrecy: keeping your data secret in the future, esp. by
+\item plaintext: the original, unencrypted message
+\item ciphertext: the encrypted message
+\item integrity: the data hasn't been tampered with
+\item confidentiality or privacy: the data hasn't been disclosed to anyone unauthorized
+\item session keys: the keys used for one communication session
+\item forward secrecy: keeping your data secret in the future, esp. by
   building a crypytosystem that doesn't reuse keys
-* rekeying: changing the keys used in the middle of a session
-* subkeys: keys used for a portion of an encryption process, derived
+\item rekeying: changing the keys used in the middle of a session
+\item subkeys: keys used for a portion of an encryption process, derived
   from a subset of the bits of the session key
-* cryptoperiod: the time that a specific key is authorized for use
+\item cryptoperiod: the time that a specific key is authorized for use
+\end{itemize}
 
 Attacks on encrypted communications generally fall into one of three
 categories:
 
-* unknown plaintext: the hardest problem; how do you recognize when
+\begin{itemize}
+\item unknown plaintext: the hardest problem; how do you recognize when
   you've found the message?  With many but not all systems, failure
   will leave only unintelligible, random data, while success will
   produce words from the dictionary or other recognizable text.
-* known plaintext: when an attacker knows what the plaintext
+\item known plaintext: when an attacker knows what the plaintext
   corresponding to a particular ciphertext is, and attempts to find
   the key; not uncommon given the regularity of communications such as
   web browsing or email
-* chosen plaintext: when the attacker can control the text to be
+\item chosen plaintext: when the attacker can control the text to be
   encrypted, but obviously not the key; rarer than known plaintext,
   but can happen with small devices that a person may "own" but not
   always completely control, or if the attacker partially controls
   some subset of resources, such as a related web server, or has
   compromised one or more hosts behind an encryption gateway
+\end{itemize}
 
 We also need these definitions:
 
-* brute force/exhaustive search: checking every possible key, which of
+\begin{itemize}
+\item brute force/exhaustive search: checking every possible key, which of
   course is $2^n$ for an n-bit key, resulting in an expected hit time of
   half that number of trials; if you have a method that will find a
   key in substantially less than $2^{n-1}$ trials, you have "broken" the
   cipher, even if your attack isn't necessarily practical in the short
   run.
-* pentesting (penetration testing)
+\item pentesting (penetration testing)
+\end{itemize}
 
 And three mathematical definitions I know for algebra on the real
 numbers, but I'm a little fuzzy on in the bitwise, cryptographic
 context:
 
-* linear function: I think in this context, f(x,y) is a linear
+\begin{itemize}
+\item linear function: I think in this context, f(x,y) is a linear
   function of some bits if it involves only a linear addition of
   the inputs, and f(0,0) = 0 (origin is preserved).  Multiplication
   (AND) is disallowed?  Importantly, f(x1 + x2) = f(x1) + f(x2).
-* affine function: same as a linear function, but an offset is
+\item affine function: same as a linear function, but an offset is
   allowed, such that f(0,0) = 1 (origin isn't necessarily preserved)
   (equivalent to a translation in a real space $R^n$).
-* nonlinear function: A nonlinear function is one in which $f(x+y) \ne f(x) + f(y)$ for some values $x$ and $y$. An affine function is one type of nonlinear function. I'm definitely fuzzy here...multiplication and
+\item nonlinear function: A nonlinear function is one in which $f(x+y) \ne f(x) + f(y)$ for some values $x$ and $y$. An affine function is one type of nonlinear function. I'm definitely fuzzy here...multiplication and
   arbitrary mappings are allowed?
-
+\end{itemize}
 
 Let's go phase by phase:
 
@@ -518,6 +529,7 @@ that the subkeys are used in reverse order.
 Slightly more formally, the sequence of operations in a DES encryption
 is:
 
+\begin{widetext}
 \begin{verbatim}
 1. Apply initial permutation (IP) (a fixed operation)
 2. For i = 1 to 16 do
@@ -537,6 +549,7 @@ is:
    9. swap halves of the block
 3. Apply the final permutation (FP) (a fixed operation)
 \end{verbatim}
+\end{widetext}
 
 The $6 \rightarrow 4$ S boxes are obviously inherently non-reversible,
 but the earlier expansion guarantees that ultimately no information is
@@ -589,12 +602,13 @@ The ShiftRows operation rotates all rows but the first. The MixColumns operation
 
 AES is easily implemented in either software or hardware. Some modern CPUs include special instructions to accelerate AES encryption, and even for those that don't, heavily optimized assembly language is achievable.  In the absence of special hardware, encrypting each 128-bit block of data requires several hundred CPU instructions. For example, my Mac laptop, with a 2.2GHz Intel Core i7 processor, encrypts AES-CBC at the following rates:
 
-
+\begin{widetext}
 \begin{verbatim}
 128-bit key: 1.25 Gbps for 16-byte chunks, 1.44 Gbps for 8192-byte chunks
 192-bit key: 1.06 Gbps for 16-byte chunks, 1.18 Gbps for 8192-byte chunks
 256-bit key: 912 Mbps for 16-byte chunks, 1.01 Gbps for 8192-byte chunks
 \end{verbatim}
+\end{widetext}
 
 Despite two decades of effort, there are no known attacks on AES that allow recovery of the key in substantially less time than brute force; the best attacks roughly halve that cost, at the cost of requiring tremendous amounts of storage.
 
@@ -711,6 +725,7 @@ that show up in our data sequence.
 From the fantastic website RosettaCode.org, we have a simple example
 in Python of calculating the entropy in bits per byte:
 
+\begin{widetext}
 \begin{verbatim}
 import math
 from collections import Counter
@@ -721,6 +736,7 @@ def entropy(s):
 
 entropy("1223334444")
 \end{verbatim}
+\end{widetext}
 
 (This function can actually calculate entropy of strings of other
 types besides characters, as well.)
@@ -846,11 +862,11 @@ well as why and how much to be conservative relative to that value.
 If the block size is $n$ bits, there are $N = 2^n$ possible
 ciphertexts, and if the number of blocks encrypted is the square root
 of that number, $2^{n/2}$, the probability of at least one collision
-is above 39%, which arises in the limit as the expression
+is above 39\%, which arises in the limit as the expression
 $1-1/e^{1/2}$.  (See the appendix of these notes for some example
 calculations of this and the following to play around with.)
 
-Assuming you consider a 39% chance of disclosing some information to
+Assuming you consider a 39\% chance of disclosing some information to
 be an unacceptably large probability, when should you rekey?  That's
 the first-level answer to our ultimate question of when to rekey using
 QKD, which is of course back where we started this conversation.  Say,
@@ -993,7 +1009,7 @@ an S box, allowing you to calculate possible keys in reverse more
 quickly.
 
 If a cipher is good, every individual bit of the output should have a
-50% probability of being 0 and a 50% probability of being 1.
+50\% probability of being 0 and a 50\% probability of being 1.
 Likewise, there should be no obvious relationship between the input
 and output bits (e.g., "If the third input bit is 1, the seventh
 output bit is 0.")  However, it is possible that some \emph{combinations}
@@ -1008,7 +1024,7 @@ $L = P_1 + P_3 + C_2 + C_4$
 
 (where '+' is modulo 2 addition, or XOR, here).  We say that such a
 combination has a bias if the probability of $L$ being 0 is noticeably
-different from 50%.
+different from 50\%.
 
 Such a combination is a \emph{linear} combination of bits.  It is known (by
 whom?) that if the S-boxes in our cipher are fully linear, then the
@@ -1289,6 +1305,7 @@ One early, relevant message
 (\url{https://mailarchive.ietf.org/arch/msg/ipsec/_dSgUvW6WiUFvw5aoyu7rJo5Kgc})
 from 08 March 1995 carries the quote:
 
+\begin{widetext}
 \begin{verbatim}
 	"I think 2^32 is a better bound than 2^43, at least for certain modes
 	of DES. For instance, after 2^32 blocks in CBC mode, you expect to see
@@ -1303,6 +1320,7 @@ from 08 March 1995 carries the quote:
 	lifetime of a key, and that takes care of the 2^43/2^47 attacks as
 	well."
 \end{verbatim}
+\end{widetext}
 referring, although not by name, to both the birthday paradox and the
 differential cryptanalysis limits discussed above.  Keep in mind that
 at $2^{32}$ blocks, we are at a 39\% probability of there being at least
@@ -1314,6 +1332,7 @@ messages, e.g. the relatively recent (21 April 2015) message
 quoting the earlier message
 \url{https://mailarchive.ietf.org/arch/msg/ipsec/De46HNR1h4lGXZnxlIVpNSfs5p0}
 
+\begin{widetext}
 \begin{verbatim}
 	"> I think the main problem with 3DES is not that it is significantly slower
 	> than AES, but that it has blocksize of 64 bits, that is considered
@@ -1327,6 +1346,7 @@ quoting the earlier message
 	every minute, or even every five seconds. So I think there are very
 	few cases that *can’t* use 3DES."
 \end{verbatim}
+\end{widetext}
 
 This is interesting, particularly given its newness.  The author (Yoav
 Nir, one of the long-time leaders of the IPsec community) considers
@@ -1606,7 +1626,7 @@ Grover's algorithm and NFS:
 
 \section{Post-quantum cryptography}
 
-<<somebody besides me should write this.  Moriai-san?  Aono-san?  Jon?>>
+\comment{somebody besides me should write this.  Moriai-san?  Aono-san?  Jon?}
 
 Post-quantum cryptography is the attempt to find a public key
 cryptosystem that is resistant to quantum computing, Shor's algorithm
@@ -1637,40 +1657,36 @@ Also in 2009, there was a book, which I'm sure is almost entirely
 outdated by now:
 \url{https://www.springer.com/jp/book/9783540887010}
 
-\section{Bitcoin and Quantum Computers}
+\section{Policy and Conclusions}
 
-\comment{someone needs to take this one on, too...}
+\comment{Add a few paragraphs here on how national and corporate
+  policy drive, and are driven by, advances in crypto, and in
+  consequence quantum.}
 
-I promised those of you who stuck around some things on bitcoin and
-quantum.  Here are just a few random links, not stuff I have studied
-seriously.  There has been a bunch in the news lately, and I don't
-have time right now to sort out what's what.
+\section*{Acknowledgments}
 
-Quantum attacks on Bitcoin:
-\url{https://driveinsider.com/the-quantum-attack-on-bitcoin/}
+This document began as a very long email to a group researchers,
+following up on a question from Renato Renner about cryptographic key
+lifetimes at the Network Games, Tropical Topology and Quantum
+Communication Workshop.  Thanks to Jens Eisert for inviting me.
 
-\url{https://www.bitcoinmarketjournal.com/how-many-people-use-bitcoin/}
-found via
-\url{https://twitter.com/yayayday/status/1140214798367543297}
-says 32M Bitcoin wallets, 34\% are active users, 7M active.
+Thanks to Darrell Piper for insight into the early discussions of IKE
+and IPsec.
 
-Marco Tomamichel with some data on level of vulnerability across the
-entire bitcoin universe:
-\url{https://twitter.com/marcotomamichel/status/1138431744103686144}
-June 11, 2019
-and follow-ups, including
-\url{https://twitter.com/marcotomamichel/status/1138438446622470144}
-
-% Good \nocommand \more
-
------
-
-Publish this eventually?
-
-Ars Technica?
-Quanta Magazine?
+I used to work on a box known as an IPsec gateway, but I was the OS
+guy, not the cryptographer; Darrell Piper, Dan Harkins and Dave
+Kashtan did most of the crypto work.  I am also a board member of the
+WIDE Project, which through its KAME Project created the Racoon
+software that was an important early implementation of the key
+exchange protocol for IPsec, with much of that work done by Shoichi
+Sakane.  Much of what I know about IPsec and other security was just
+incidental radiation from them, or gained from the security-oriented
+papers we had to read when I did my master's at USC back before the
+Englightenment.
 
 \section{References}
+
+\bibliography{paper-reviews.bib}
 
 Most important reference:
 
@@ -1837,9 +1853,34 @@ generator:
 =====
 
 \appendix
-\onecolumngrid
 
-Appendix:
+\section{Bitcoin and Quantum Computers}
+
+\comment{someone needs to take this one on, too...}
+
+I promised those of you who stuck around some things on bitcoin and
+quantum.  Here are just a few random links, not stuff I have studied
+seriously.  There has been a bunch in the news lately, and I don't
+have time right now to sort out what's what.
+
+Quantum attacks on Bitcoin:
+\url{https://driveinsider.com/the-quantum-attack-on-bitcoin/}
+
+\url{https://www.bitcoinmarketjournal.com/how-many-people-use-bitcoin/}
+found via
+\url{https://twitter.com/yayayday/status/1140214798367543297}
+says 32M Bitcoin wallets, 34\% are active users, 7M active.
+
+Marco Tomamichel with some data on level of vulnerability across the
+entire bitcoin universe:
+\url{https://twitter.com/marcotomamichel/status/1138431744103686144}
+June 11, 2019
+and follow-ups, including
+\url{https://twitter.com/marcotomamichel/status/1138438446622470144}
+
+% Good \nocommand \more
+
+\onecolumngrid
 
 \section{Some Mathematica tinkering}
 
@@ -2328,7 +2369,7 @@ dsa 2048 bits 0.000221s 0.000199s   4515.3   5029.3
  409 bit ecdh (nistb409)   0.0006s   1621.0
 \end{verbatim}
 
-=============================================
+\section{Unsorted Notes}
 
 Shelby Kimmel on no-go bounds for quantum seals:
 \url{https://journals.aps.org/pra/accepted/45074N5dCa413a18c5645123e9b2b8363d15ea1fc}
@@ -2366,6 +2407,8 @@ SHA-1 broken:
 
 cocori's post-quantum crypto Python
 \url{https://colab.research.google.com/drive/1a4sh9PYCOyZO9dRsJpT17scLS3eMWU0T}
+
+\subsection{A Twitter Exchange}
 
 \begin{verbatim}
 sanketh
@@ -2448,7 +2491,7 @@ compression-over-encryption:
 
 -----
 
-From ddp:
+\subsection{From ddp}
 
 just fast keying:
 \url{http://www1.cs.columbia.edu/~angelos/Papers/jfk-tissec.pdf}
@@ -2498,7 +2541,7 @@ plugged in and DECwindows was disabled, there was a \verb|SECURITY_POLICY|
 system parameter that was a bitmap of features to be disabled when
 running in the evaluated configuration.
 
-
+\subsection{More Unsorted Stuff}
 
 \url{https://twitter.com/trimstray/status/1262985978618281986}
 Ethical hacking platforms/trainings/CTFs:

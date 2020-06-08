@@ -1,0 +1,88 @@
+%merlin.mbs aipnum4-1.bst 2010-07-25 4.21a (PWD, AO, DPC) hacked
+%Control: key (0)
+%Control: author (8) initials jnrlst
+%Control: editor formatted (1) identically to author
+%Control: production of article title (0) allowed
+%Control: page (1) range
+%Control: year (1) truncated
+%Control: production of eprint (0) enabled
+\begin{thebibliography}{5}%
+\makeatletter
+\providecommand \@ifxundefined [1]{%
+ \@ifx{#1\undefined}
+}%
+\providecommand \@ifnum [1]{%
+ \ifnum #1\expandafter \@firstoftwo
+ \else \expandafter \@secondoftwo
+ \fi
+}%
+\providecommand \@ifx [1]{%
+ \ifx #1\expandafter \@firstoftwo
+ \else \expandafter \@secondoftwo
+ \fi
+}%
+\providecommand \natexlab [1]{#1}%
+\providecommand \enquote  [1]{``#1''}%
+\providecommand \bibnamefont  [1]{#1}%
+\providecommand \bibfnamefont [1]{#1}%
+\providecommand \citenamefont [1]{#1}%
+\providecommand \href@noop [0]{\@secondoftwo}%
+\providecommand \href [0]{\begingroup \@sanitize@url \@href}%
+\providecommand \@href[1]{\@@startlink{#1}\@@href}%
+\providecommand \@@href[1]{\endgroup#1\@@endlink}%
+\providecommand \@sanitize@url [0]{\catcode `\\12\catcode `\$12\catcode
+  `\&12\catcode `\#12\catcode `\^12\catcode `\_12\catcode `\%12\relax}%
+\providecommand \@@startlink[1]{}%
+\providecommand \@@endlink[0]{}%
+\providecommand \url  [0]{\begingroup\@sanitize@url \@url }%
+\providecommand \@url [1]{\endgroup\@href {#1}{\urlprefix }}%
+\providecommand \urlprefix  [0]{URL }%
+\providecommand \Eprint [0]{\href }%
+\providecommand \doibase [0]{http://dx.doi.org/}%
+\providecommand \selectlanguage [0]{\@gobble}%
+\providecommand \bibinfo  [0]{\@secondoftwo}%
+\providecommand \bibfield  [0]{\@secondoftwo}%
+\providecommand \translation [1]{[#1]}%
+\providecommand \BibitemOpen [0]{}%
+\providecommand \bibitemStop [0]{}%
+\providecommand \bibitemNoStop [0]{.\EOS\space}%
+\providecommand \EOS [0]{\spacefactor3000\relax}%
+\providecommand \BibitemShut  [1]{\csname bibitem#1\endcsname}%
+\let\auto@bib@innerbib\@empty
+%</preamble>
+\bibitem [{\citenamefont {Kahn}(1996)}]{kahn1996codebreakers}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {D.}~\bibnamefont
+  {Kahn}},\ }\href@noop {} {\emph {\bibinfo {title} {The Codebreakers: The
+  comprehensive history of secret communication from ancient times to the
+  internet}}},\ \bibinfo {edition} {2nd}\ ed.\ (\bibinfo  {publisher} {Simon
+  and Schuster},\ \bibinfo {year} {1996})\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Singh}(1999)}]{singh1999code}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
+  {Singh}},\ }\href@noop {} {\emph {\bibinfo {title} {The Code Book}}}\
+  (\bibinfo  {publisher} {Doubleday New York},\ \bibinfo {year}
+  {1999})\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Schneier}(1996)}]{schneier96:_applied_crypto}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {B.}~\bibnamefont
+  {Schneier}},\ }\href@noop {} {\emph {\bibinfo {title} {Applied
+  Cryptography}}},\ \bibinfo {edition} {2nd}\ ed.\ (\bibinfo  {publisher} {J.
+  Wiley},\ \bibinfo {year} {1996})\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Bishop}(2018)}]{bishop2002art}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.~A.}\ \bibnamefont
+  {Bishop}},\ }\href@noop {} {\emph {\bibinfo {title} {Computer Security: Art
+  and Science}}},\ \bibinfo {edition} {2nd}\ ed.\ (\bibinfo  {publisher}
+  {Addison-Wesley Professional},\ \bibinfo {year} {2018})\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Needham}\ and\ \citenamefont
+  {Schroeder}(1978)}]{needham:encrypt}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {R.~M.}\ \bibnamefont
+  {Needham}}\ and\ \bibinfo {author} {\bibfnamefont {M.~D.}\ \bibnamefont
+  {Schroeder}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Using
+  encryption for authentication in large networks of computers},}\ }\href
+  {\doibase 10.1145/359657.359659} {\bibfield  {journal} {\bibinfo  {journal}
+  {Commun. ACM}\ }\textbf {\bibinfo {volume} {21}},\ \bibinfo {pages}
+  {993–999} (\bibinfo {year} {1978})}\BibitemShut {NoStop}%
+\end{thebibliography}%
