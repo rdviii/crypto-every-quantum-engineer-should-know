@@ -6,7 +6,7 @@
 %Control: page (1) range
 %Control: year (1) truncated
 %Control: production of eprint (0) enabled
-\begin{thebibliography}{5}%
+\begin{thebibliography}{17}%
 \makeatletter
 \providecommand \@ifxundefined [1]{%
  \@ifx{#1\undefined}
@@ -85,4 +85,161 @@
   {\doibase 10.1145/359657.359659} {\bibfield  {journal} {\bibinfo  {journal}
   {Commun. ACM}\ }\textbf {\bibinfo {volume} {21}},\ \bibinfo {pages}
   {993–999} (\bibinfo {year} {1978})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {All\'eaume}\ \emph {et~al.}(2014)\citenamefont
+  {All\'eaume}, \citenamefont {Branciard}, \citenamefont {Bouda}, \citenamefont
+  {Debuisschert}, \citenamefont {Dianati}, \citenamefont {Gisin}, \citenamefont
+  {Godfrey}, \citenamefont {Grangier}, \citenamefont {L{\"a}nger},
+  \citenamefont {L{\"u}tkenhaus}, \citenamefont {Monyk}, \citenamefont
+  {Painchault}, \citenamefont {Peev}, \citenamefont {Poppe}, \citenamefont
+  {Pornin}, \citenamefont {Rarity}, \citenamefont {Renner}, \citenamefont
+  {Ribordy}, \citenamefont {Riguidel}, \citenamefont {Salvail}, \citenamefont
+  {Shields}, \citenamefont {Weinfurter},\ and\ \citenamefont
+  {Zeilinger}}]{Alleaume201462}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {R.}~\bibnamefont
+  {All\'eaume}}, \bibinfo {author} {\bibfnamefont {C.}~\bibnamefont
+  {Branciard}}, \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Bouda}},
+  \bibinfo {author} {\bibfnamefont {T.}~\bibnamefont {Debuisschert}}, \bibinfo
+  {author} {\bibfnamefont {M.}~\bibnamefont {Dianati}}, \bibinfo {author}
+  {\bibfnamefont {N.}~\bibnamefont {Gisin}}, \bibinfo {author} {\bibfnamefont
+  {M.}~\bibnamefont {Godfrey}}, \bibinfo {author} {\bibfnamefont
+  {P.}~\bibnamefont {Grangier}}, \bibinfo {author} {\bibfnamefont
+  {T.}~\bibnamefont {L{\"a}nger}}, \bibinfo {author} {\bibfnamefont
+  {N.}~\bibnamefont {L{\"u}tkenhaus}}, \bibinfo {author} {\bibfnamefont
+  {C.}~\bibnamefont {Monyk}}, \bibinfo {author} {\bibfnamefont
+  {P.}~\bibnamefont {Painchault}}, \bibinfo {author} {\bibfnamefont
+  {M.}~\bibnamefont {Peev}}, \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Poppe}}, \bibinfo {author} {\bibfnamefont {T.}~\bibnamefont {Pornin}},
+  \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Rarity}}, \bibinfo
+  {author} {\bibfnamefont {R.}~\bibnamefont {Renner}}, \bibinfo {author}
+  {\bibfnamefont {G.}~\bibnamefont {Ribordy}}, \bibinfo {author} {\bibfnamefont
+  {M.}~\bibnamefont {Riguidel}}, \bibinfo {author} {\bibfnamefont
+  {L.}~\bibnamefont {Salvail}}, \bibinfo {author} {\bibfnamefont
+  {A.}~\bibnamefont {Shields}}, \bibinfo {author} {\bibfnamefont
+  {H.}~\bibnamefont {Weinfurter}}, \ and\ \bibinfo {author} {\bibfnamefont
+  {A.}~\bibnamefont {Zeilinger}},\ }\bibfield  {title} {\enquote {\bibinfo
+  {title} {Using quantum key distribution for cryptographic purposes: A
+  survey},}\ }\href {\doibase http://doi.org/10.1016/j.tcs.2014.09.018}
+  {\bibfield  {journal} {\bibinfo  {journal} {Theoretical Computer Science}\
+  }\textbf {\bibinfo {volume} {560, Part 1}},\ \bibinfo {pages} {62 -- 81}
+  (\bibinfo {year} {2014})},\ \bibinfo {note} {theoretical Aspects of Quantum
+  Cryptography, celebrating 30 years of \{BB84\}}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Mink}, \citenamefont {Frankel},\ and\ \citenamefont
+  {Perlner}(2009)}]{mink09:_qkd_and_ipsec}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Mink}}, \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont {Frankel}}, \
+  and\ \bibinfo {author} {\bibfnamefont {R.}~\bibnamefont {Perlner}},\
+  }\bibfield  {title} {\enquote {\bibinfo {title} {Quantum key distribution
+  ({QKD}) and commodity security protocols: Introduction and integration},}\
+  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {International
+  Journal of Network Security \& Its Applications (IJNSA)}\ }\textbf {\bibinfo
+  {volume} {1}} (\bibinfo {year} {2009})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Shor}(1997)}]{shor:siam-factor}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {P.~W.}\ \bibnamefont
+  {Shor}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Polynomial time
+  algorithms for prime factorization and discrete logarithms on a quantum
+  computer},}\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {SIAM
+  J. Comp.}\ }\textbf {\bibinfo {volume} {26}},\ \bibinfo {pages} {1484--1509}
+  (\bibinfo {year} {1997})},\ \bibinfo {note}
+  {http://arXiv.org/quant-ph/9508027}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Bennett}\ and\ \citenamefont
+  {Brassard}(1984)}]{bennett:bb84}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {C.~H.}\ \bibnamefont
+  {Bennett}}\ and\ \bibinfo {author} {\bibfnamefont {G.}~\bibnamefont
+  {Brassard}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Quantum
+  cryptography: Public key distribution and coin tossing},}\ }in\ \href
+  {http://www.research.ibm.com/people/b/bennetc/bennettc198469790513.pdf}
+  {\emph {\bibinfo {booktitle} {Proc. IEEE International Conference on
+  Computers, Systems, and Signal Processing}}}\ (\bibinfo  {publisher} {IEEE},\
+  \bibinfo {year} {1984})\ pp.\ \bibinfo {pages} {175--179}\BibitemShut
+  {NoStop}%
+\bibitem [{\citenamefont {Bennett}, \citenamefont {Brassard},\ and\
+  \citenamefont {Mermin}(1992)}]{PhysRevLett.68.557}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {C.~H.}\ \bibnamefont
+  {Bennett}}, \bibinfo {author} {\bibfnamefont {G.}~\bibnamefont {Brassard}}, \
+  and\ \bibinfo {author} {\bibfnamefont {N.~D.}\ \bibnamefont {Mermin}},\
+  }\bibfield  {title} {\enquote {\bibinfo {title} {Quantum cryptography without
+  bell's theorem},}\ }\href {\doibase 10.1103/PhysRevLett.68.557} {\bibfield
+  {journal} {\bibinfo  {journal} {Phys. Rev. Lett.}\ }\textbf {\bibinfo
+  {volume} {68}},\ \bibinfo {pages} {557--559} (\bibinfo {year}
+  {1992})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Ekert}(1991)}]{ekert1991qcb}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Ekert}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Quantum
+  cryptography based on {Bell's} theorem},}\ }\href@noop {} {\bibfield
+  {journal} {\bibinfo  {journal} {Physical Review Letters}\ }\textbf {\bibinfo
+  {volume} {67}},\ \bibinfo {pages} {661--663} (\bibinfo {year}
+  {1991})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Lo}, \citenamefont {Curty},\ and\ \citenamefont
+  {Qi}(2012)}]{PhysRevLett.108.130503}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {H.-K.}\ \bibnamefont
+  {Lo}}, \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {Curty}}, \ and\
+  \bibinfo {author} {\bibfnamefont {B.}~\bibnamefont {Qi}},\ }\bibfield
+  {title} {\enquote {\bibinfo {title} {Measurement-device-independent quantum
+  key distribution},}\ }\href {\doibase 10.1103/PhysRevLett.108.130503}
+  {\bibfield  {journal} {\bibinfo  {journal} {Phys. Rev. Lett.}\ }\textbf
+  {\bibinfo {volume} {108}},\ \bibinfo {pages} {130503} (\bibinfo {year}
+  {2012})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Xu}\ \emph {et~al.}(2015)\citenamefont {Xu},
+  \citenamefont {Curty}, \citenamefont {Qi},\ and\ \citenamefont
+  {Lo}}]{xu2015measurement}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {F.}~\bibnamefont
+  {Xu}}, \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {Curty}}, \bibinfo
+  {author} {\bibfnamefont {B.}~\bibnamefont {Qi}}, \ and\ \bibinfo {author}
+  {\bibfnamefont {H.-K.}\ \bibnamefont {Lo}},\ }\bibfield  {title} {\enquote
+  {\bibinfo {title} {Measurement-device-independent quantum cryptography},}\
+  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {IEEE Journal of
+  Selected Topics in Quantum Electronics}\ }\textbf {\bibinfo {volume} {21}},\
+  \bibinfo {pages} {148--158} (\bibinfo {year} {2015})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Vazirani}\ and\ \citenamefont
+  {Vidick}(2019)}]{Vazirani:2019:FDI:3321370.3310974}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {U.}~\bibnamefont
+  {Vazirani}}\ and\ \bibinfo {author} {\bibfnamefont {T.}~\bibnamefont
+  {Vidick}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Fully device
+  independent quantum key distribution},}\ }\href {\doibase 10.1145/3310974}
+  {\bibfield  {journal} {\bibinfo  {journal} {Commun. ACM}\ }\textbf {\bibinfo
+  {volume} {62}},\ \bibinfo {pages} {133--133} (\bibinfo {year}
+  {2019})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Scarani}\ \emph {et~al.}(2009)\citenamefont
+  {Scarani}, \citenamefont {Bechmann-Pasquinucci}, \citenamefont {Cerf},
+  \citenamefont {Du\ifmmode~\check{s}\else \v{s}\fi{}ek}, \citenamefont
+  {L\"utkenhaus},\ and\ \citenamefont {Peev}}]{RevModPhys.81.1301}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {V.}~\bibnamefont
+  {Scarani}}, \bibinfo {author} {\bibfnamefont {H.}~\bibnamefont
+  {Bechmann-Pasquinucci}}, \bibinfo {author} {\bibfnamefont {N.~J.}\
+  \bibnamefont {Cerf}}, \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
+  {Du\ifmmode~\check{s}\else \v{s}\fi{}ek}}, \bibinfo {author} {\bibfnamefont
+  {N.}~\bibnamefont {L\"utkenhaus}}, \ and\ \bibinfo {author} {\bibfnamefont
+  {M.}~\bibnamefont {Peev}},\ }\bibfield  {title} {\enquote {\bibinfo {title}
+  {The security of practical quantum key distribution},}\ }\href {\doibase
+  10.1103/RevModPhys.81.1301} {\bibfield  {journal} {\bibinfo  {journal} {Rev.
+  Mod. Phys.}\ }\textbf {\bibinfo {volume} {81}},\ \bibinfo {pages}
+  {1301--1350} (\bibinfo {year} {2009})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Shor}\ and\ \citenamefont
+  {Preskill}(2000)}]{PhysRevLett.85.441}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {P.~W.}\ \bibnamefont
+  {Shor}}\ and\ \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
+  {Preskill}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Simple proof
+  of security of the bb84 quantum key distribution protocol},}\ }\href
+  {\doibase 10.1103/PhysRevLett.85.441} {\bibfield  {journal} {\bibinfo
+  {journal} {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {85}},\ \bibinfo
+  {pages} {441--444} (\bibinfo {year} {2000})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {McGrew}(2012)}]{cryptoeprint:2012:623}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {D.}~\bibnamefont
+  {McGrew}},\ }\href@noop {} {\enquote {\bibinfo {title} {Impossible plaintext
+  cryptanalysis and probable-plaintext collision attacks of 64-bit block cipher
+  modes},}\ }\bibinfo {howpublished} {Cryptology ePrint Archive, Report
+  2012/623} (\bibinfo {year} {2012}),\ \bibinfo {note}
+  {\url{https://eprint.iacr.org/2012/623}}\BibitemShut {NoStop}%
 \end{thebibliography}%

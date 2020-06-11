@@ -231,6 +231,20 @@ crypto~\cite{kahn1996codebreakers,singh1999code} and good  crypto/security refer
 \comment{Symmetric and public key can both be used for
   authentication~\cite{needham:encrypt}.}
 
+\comment{Papers on actually integrating QKD into classical crypto~\cite{Alleaume201462,mink09:_qkd_and_ipsec,}.}
+
+\comment{I have two major QKD reviews in my stacks somewhere, haven't
+  found either yet...}
+
+Those who study the fields of quantum computing and quantum
+communication quickly become familiar with Shor's algorithm for
+factoring large numbers and calculating discrete
+logarithms~\cite{shor:siam-factor}, and with quantum key
+distribution~\cite{bennett:bb84,PhysRevLett.68.557,ekert1991qcb,PhysRevLett.108.130503,xu2015measurement,Vazirani:2019:FDI:3321370.3310974,RevModPhys.81.1301,PhysRevLett.85.441}.
+These two independent discoveries both impact classical cryptography,
+one by making it more vulnerable, the other by making it stronger --
+in theory.
+
 The goal of this document is to introduce four key areas:
 
 \begin{enumerate}
@@ -1074,13 +1088,13 @@ I found Heys' tutorial to be clear and helpful in understanding LC.
 
 Modern HTTPS (web) and SMTP (email) connections have a lot of
 predictability in their content, with commands like 'HELO' and
-'HTTP/1.1' being standard parts of an exchange.  We'll see in a later
-section more detail about how this encryption is done using a protocol
-called Transport Layer Security, or TLS, but for the moment we'll only
-focus on the message contents and the fact that they are pretty
-predictable.  Thus, it's reasonable to consider attacks on TLS to be
-known-plaintext attacks, and in fact there are cases where we can
-create chosen-plaintext attacks.
+'HTTP/1.1' being standard parts of an exchange.  In
+Sec.~\ref{sec:tls}, we'll see more detail about how this encryption is
+done using a protocol called Transport Layer Security, or TLS, but for
+the moment we'll only focus on the message contents and the fact that
+they are pretty predictable.  Thus, it's reasonable to consider
+attacks on TLS to be known-plaintext attacks, and in fact there are
+cases where we can create chosen-plaintext attacks.
 
 Consider, for example, the connection between your laptop and your
 email server, whether Gmail or your organization's server.  Assume
@@ -1105,17 +1119,17 @@ assuming an attacker can force the choice of plaintext passed between
 two nodes through an encrypted connection is not unreasonable in
 today's richly interwoven distributed systems.
 
-Especially for IPsec, there is another big vulnerability: one
-encrypted connection between two gateways (known as a \emph{Security
-Association}, which we will see below) may carry data encrypted for a
-\emph{bunch} of machines.  So if an attacker manages to install a program
-on only one laptop (say, via email, or while you're sitting at
-Starbucks), they can cause your system to send out arbitrarily chosen
-packets that will cross the tunnel, so they can execute a chosen
-plaintext attack pretty easily.  Since IPsec encrypts the whole
-packet, they may not be able to tell immediately which packets came
-from your laptop and which from a colleague's laptop, but that
-distinction is a relatively minor overhead.
+Especially for IPsec (Sec.~\ref{sec:ipsec}), there is another big
+vulnerability: one encrypted connection between two gateways (known as
+a \emph{Security Association}, which we will see below) may carry data
+encrypted for a \emph{bunch} of machines.  So if an attacker manages
+to install a program on only one laptop (say, via email, or while
+you're sitting at Starbucks), they can cause your system to send out
+arbitrarily chosen packets that will cross the tunnel, so they can
+execute a chosen plaintext attack pretty easily.  Since IPsec encrypts
+the whole packet, they may not be able to tell immediately which
+packets came from your laptop and which from a colleague's laptop, but
+that distinction is a relatively minor overhead.
 
 Also, for every IP packet from your laptop to the email server passing
 through the IPsec tunnel, the IP header portion is going to be exactly
@@ -1168,6 +1182,7 @@ apply the equations.
 \section{Standards for Encrypted Communication}
 
 \subsection{IPsec and the IETF}
+\label{sec:ipsec}
 
 In this section, we return to the original question about rekeying
 that sparked this whole venture, and answer three questions:
@@ -1357,7 +1372,7 @@ slightly earlier (2012) exchange on the mailing list, David McGrew
 arguing that no more than 50 megabytes should be encrypted with the
 same key even using 3DES, due to the birthday paradox.  McGrew went so
 far as to write up a 16-page analysis posted on the Cryptology
-preprint server (see references).
+preprint server~\cite{cryptoeprint:2012:623}.
 
 \subsubsection{IPsec, Quantum Computing and QKD}
 
@@ -1386,6 +1401,7 @@ in Section 5.)
 To be filled in eventually.
 
 \subsection{TLS/SSL and cryptography}
+\label{sec:tls}
 
 Here we want to answer the same three questions we had above:
 
@@ -1458,13 +1474,13 @@ differently than most of the resources I used above.
 
 \subsubsection{Keying and Rekeying}
 
-<<how the initial key is generated>>
+\comment{how the initial key is generated}
 
-<<add more here on chains of trust for certificates, and how we make
+\comment{add more here on chains of trust for certificates, and how we make
 sure that an attacker can't cause a downgrade of security relative to
-what both ends really want.>>
+what both ends really want.}
 
-<<how rekeying is handled>>
+\comment{how rekeying is handled}
 
 \subsubsection{Other Attacks on TLS}
 
