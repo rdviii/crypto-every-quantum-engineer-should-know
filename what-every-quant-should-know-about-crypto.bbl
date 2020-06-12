@@ -6,7 +6,7 @@
 %Control: page (1) range
 %Control: year (1) truncated
 %Control: production of eprint (0) enabled
-\begin{thebibliography}{23}%
+\begin{thebibliography}{28}%
 \makeatletter
 \providecommand \@ifxundefined [1]{%
  \@ifx{#1\undefined}
@@ -149,6 +149,58 @@
   {\doibase 10.1103/PhysRevLett.85.441} {\bibfield  {journal} {\bibinfo
   {journal} {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {85}},\ \bibinfo
   {pages} {441--444} (\bibinfo {year} {2000})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Buhrman}\ \emph {et~al.}(2014)\citenamefont
+  {Buhrman}, \citenamefont {Chandran}, \citenamefont {Fehr}, \citenamefont
+  {Gelles}, \citenamefont {Goyal}, \citenamefont {Ostrovsky},\ and\
+  \citenamefont {Schaffner}}]{buhrman14:_posit_based_quant_crypt}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {H.}~\bibnamefont
+  {Buhrman}}, \bibinfo {author} {\bibfnamefont {N.}~\bibnamefont {Chandran}},
+  \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont {Fehr}}, \bibinfo {author}
+  {\bibfnamefont {R.}~\bibnamefont {Gelles}}, \bibinfo {author} {\bibfnamefont
+  {V.}~\bibnamefont {Goyal}}, \bibinfo {author} {\bibfnamefont
+  {R.}~\bibnamefont {Ostrovsky}}, \ and\ \bibinfo {author} {\bibfnamefont
+  {C.}~\bibnamefont {Schaffner}},\ }\bibfield  {title} {\enquote {\bibinfo
+  {title} {Position-based quantum cryptography: Impossibility and
+  constructions},}\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal}
+  {SIAM Journal on Computing}\ }\textbf {\bibinfo {volume} {43}},\ \bibinfo
+  {pages} {150--178} (\bibinfo {year} {2014})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Ben-Or}\ and\ \citenamefont
+  {Hassidim}(2005)}]{ben-or2005fast}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
+  {Ben-Or}}\ and\ \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Hassidim}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {{Fast quantum
+  Byzantine agreement}},}\ }in\ \href@noop {} {\emph {\bibinfo {booktitle}
+  {Proceedings of the thirty-seventh annual ACM symposium on Theory of
+  computing}}}\ (\bibinfo {organization} {ACM},\ \bibinfo {year} {2005})\ pp.\
+  \bibinfo {pages} {481--485}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Cre\'peau}, \citenamefont {Gottesman},\ and\
+  \citenamefont {Smith}(2002)}]{crepeau:_secur_multi_party_qc}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {C.}~\bibnamefont
+  {Cre\'peau}}, \bibinfo {author} {\bibfnamefont {D.}~\bibnamefont
+  {Gottesman}}, \ and\ \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Smith}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Secure
+  multi-party quantum computation},}\ }in\ \href@noop {} {\emph {\bibinfo
+  {booktitle} {Proc. Symposium on Theory of Computing}}}\ (\bibinfo
+  {organization} {ACM},\ \bibinfo {year} {2002})\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Eisert}\ \emph {et~al.}(2019)\citenamefont {Eisert},
+  \citenamefont {Hangleiter}, \citenamefont {Walk}, \citenamefont {Roth},
+  \citenamefont {Markham}, \citenamefont {Parekh}, \citenamefont {Chabaud},\
+  and\ \citenamefont {Kashefi}}]{eisert2019cert}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
+  {Eisert}}, \bibinfo {author} {\bibfnamefont {D.}~\bibnamefont {Hangleiter}},
+  \bibinfo {author} {\bibfnamefont {N.}~\bibnamefont {Walk}}, \bibinfo {author}
+  {\bibfnamefont {I.}~\bibnamefont {Roth}}, \bibinfo {author} {\bibfnamefont
+  {D.}~\bibnamefont {Markham}}, \bibinfo {author} {\bibfnamefont
+  {R.}~\bibnamefont {Parekh}}, \bibinfo {author} {\bibfnamefont
+  {U.}~\bibnamefont {Chabaud}}, \ and\ \bibinfo {author} {\bibfnamefont
+  {E.}~\bibnamefont {Kashefi}},\ }\bibfield  {title} {\enquote {\bibinfo
+  {title} {Quantum certification and benchmarking},}\ }\href@noop {} {\bibfield
+   {journal} {\bibinfo  {journal} {arXiv preprint arXiv:1910.06343}\ }
+  (\bibinfo {year} {2019})}\BibitemShut {NoStop}%
 \bibitem [{Note1()}]{Note1}%
   \BibitemOpen
   \bibinfo {note} {This question, in fact, prompted the development of this
@@ -236,6 +288,11 @@
   {Shannon}},\ }\href {https://www.iacr.org/museum/shannon45.html} {\enquote
   {\bibinfo {title} {A mathematical theory of communication},}\ } (\bibinfo
   {year} {1945})\BibitemShut {NoStop}%
+\bibitem [{Note2()}]{Note2}%
+  \BibitemOpen
+  \bibinfo {note} {\protect \url
+  {https://en.wikipedia.org/wiki/Confusion_and_diffusion}}\BibitemShut
+  {NoStop}%
 \bibitem [{\citenamefont {McGrew}(2012)}]{cryptoeprint:2012:623}%
   \BibitemOpen
   \bibfield  {author} {\bibinfo {author} {\bibfnamefont {D.}~\bibnamefont

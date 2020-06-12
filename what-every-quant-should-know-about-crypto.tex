@@ -185,8 +185,8 @@ Faculty of Environment and Information Studies, Keio University.%\\This line bre
   remain vague on how those mechanisms fit into the overall goal of
   achieving confidentiality, integrity and availability in classical
   communications.  We describe the relationship between cryptography
-  and communication protocols, with emphasis on key lengths, block
-  sizes and known mathematical attacks on various ciphers.  We
+  and communication protocols, with emphasis on key lengths, rekeying,
+  block sizes and known mathematical attacks on various ciphers.  We
   primarily focus on Internet encryption, but also introduce WiFi and
   cellular telephone networks.  This information will help quantum
   researchers understand when quantum computers will affect classical
@@ -289,6 +289,10 @@ What this document is \emph{not}:
 
 \begin{itemize}
 \item a survey or tutorial on either QKD or Shor's algorithm;
+\item a full survey of the massive amounts of clever research done in
+  quantum security algorithms
+  (e.g.,~\cite{kimmel,buhrman14:_posit_based_quant_crypt,ben-or2005fast,crepeau:_secur_multi_party_qc});
+\item a survey of techniques for certifying the quantumness of states~\cite{eisert2019cert}; or
 \item a full tutorial on cryptography.
 \end{itemize}
 
@@ -633,7 +637,12 @@ AES, the Advanced Encryption Standard, has replaced DES.  It is a type of block 
 
 AES began life in 1997 when NIST announced a competition for a successor to DES, due to the problems with DES described earlier and later. Two Belgian cryptographers, Vincent Rijmen and Joan Daemen, submitted a proposal they dubbed Rijndael, which ultimately beat out fourteen other serious competitors to become, with some modifications, the Advanced Encryption Standard, published as the standard in 2001.
 
-A substitution-permutation network, as you might guess, alternates substituting new bits for old ones with permuting (rearranging) the bits, conducted over a series of rounds. DES has some characteristics of a substitution-permutation network, but is not purely so. A well-designed s-p net will maximize Shannon's confusion (or the avalanche effect) and diffusion, which we will see shortly.
+A substitution-permutation network, as you might guess, alternates
+substituting new bits for old ones with permuting (rearranging) the
+bits, conducted over a series of rounds. DES has some characteristics
+of a substitution-permutation network, but is not purely so. A
+well-designed s-p net will maximize Shannon's confusion (or the
+avalanche effect) and diffusion, which we will see shortly (Sec.~\ref{sec:diffusion}).
 
 AES begins by laying out the sixteen bytes in a $4\times 4$ array in column major form:the first byte in the upper left, then the next byte below it, with the fifth byte returning to the top of the second column. Most operations work on rows, however, increasing the mixing of the bytes.
 
@@ -695,6 +704,8 @@ used mode.
 
 \comment{bitcoiin here or elsewhere?  Blockchain is an \emph{auditable
     communication channel}~\cite{suzuki2017blockchain}.}
+
+\comment{Internet security-oriented encryption not covered yet: ssh, DNSSEC, BGPsec}
 
 \subsection{Notes \& References}
 
@@ -843,10 +854,11 @@ entropy of the original cleartext is preserved in the ciphertext, and
 in some cases reveals a great deal about the original data.
 
 \subsubsection{Diffusion, Confusion and the Avalanche Effect}
+\label{sec:diffusion}
 
 Claude Shannon, in his seminal article on the mathematics of
 cryptography~\cite{shannon45}, defined two concepts he called
-\emph{diffusion} and \emph{confusion}.  In diffusion, information from
+\emph{diffusion} and \emph{confusion}~\footnote{\url{https://en.wikipedia.org/wiki/Confusion_and_diffusion}}.  In diffusion, information from
 the original plaintext message is spread across more than one symbol
 in the output ciphertext; the farther the information spreads, the
 better.  Shannon defined \emph{confusion} as making "the relation
@@ -1565,6 +1577,10 @@ Alan Mink, Sheila Frankel and Ray Perlner worked on integrating TLS
 with QKD, a full decade ago.
 \url{https://arxiv.org/abs/1004.0605}
 
+\subsection{Other Internet Security Protocols}
+
+\comment{Internet security-oriented encryption not covered yet: ssh, DNSSEC, BGPsec}
+
 \subsection{WiFi}
 
 \subsection{Cellular Phones}
@@ -1768,6 +1784,8 @@ Englightenment.
 \section{References}
 
 \bibliography{paper-reviews.bib}
+
+\subsection{Not yet cited}
 
 Most important reference:
 
@@ -2052,19 +2070,6 @@ Jogenfors (the QKD hacker?) on bitcoin:
 
 -----
 
-Should consider, in addition to Internet security:
-
-* Internet security-oriented encryption
-  - IPsec
-  - TLS/SSL
-  - ssh
-  - DNSSEC
-  - BGPsec
-* WLAN
-  - WEP
-  - WPA
-* 3G-5G
-
 \url{https://news.yahoo.com/exclusive-russia-carried-out-a-stunning-breach-of-fbi-communications-system-escalating-the-spy-game-on-us-soil-090024212.html?soc_src=community&soc_trk=tw}
 
 Darrell says IKEv1 is believed to be stronger post-quantum than IKEv2,
@@ -2108,9 +2113,6 @@ Good info on status of DES/3-DES at
 Supplementary material listing all of the S-boxes, permutations and
 functions at
 \url{https://en.wikipedia.org/wiki/DES_supplementary_material}
-
-Need to talk about confusion and diffusion, thanks to Shannon.
-\url{https://en.wikipedia.org/wiki/Confusion_and_diffusion}
 
 Perlner survey of post-quantum crypto
 
