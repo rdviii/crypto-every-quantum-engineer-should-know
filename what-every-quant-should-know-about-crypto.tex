@@ -82,7 +82,7 @@
 % \usepackage{multirow}
 % \usepackage{longtable}
 \usepackage{times}
-
+\usepackage{listings}
 
 \def\outlinecomment#1{\hrule{\color{Blue}$\Rightarrow${\small\em #1}}\hrule}
 %\def\comment#1{}
@@ -165,7 +165,7 @@
 
 \title[What Crypto]{What Every Quantum Researcher and Engineer Should Know about Classical Cryptography}% Force line breaks with \\
 % \thanks{Supported by JSPS and AOARD.}
-\thanks{Supported by AOARD.}
+% \thanks{Supported by AOARD.}
 
 \author{Rodney Van Meter}
 %  \altaffiliation[Also at ]{}%Lines break automatically or can be forced with \\
@@ -218,23 +218,11 @@ Faculty of Environment and Information Studies, Keio University.%\\This line bre
 \comment{Comments on what to write and other notes to myself are in
   forest green.}
 
-\comment{Document status:
-Okay, first drafty draft.  Not enough on TLS,
-nothing really on post-quantum crypto, not enough on bitcoin, not
-enough on quantum attacks in symmetric crypto.  It'll have to do.}
-
-\comment{Should add WiFi and cell phone.}
-
-\comment{Cite history of
-crypto~\cite{kahn1996codebreakers,singh1999code} and good  crypto/security references~\cite{schneier96:_applied_crypto,handbook,bishop2002art}.}
-
-\comment{Symmetric and public key can both be used for
-  authentication~\cite{needham:encrypt}.}
-
-\comment{Papers on actually integrating QKD into classical crypto~\cite{Alleaume201462,mink09:_qkd_and_ipsec,}.}
-
-\comment{I have two major QKD reviews in my stacks somewhere, haven't
-  found either yet...}
+\outlinecomment{Document status: Second, still drafty draft.  Nothing
+  really on post-quantum crypto, not enough on bitcoin, not enough on
+  quantum attacks in symmetric crypto.  It'll have to do.}
+\outlinecomment{At the moment, there are zero figures in this
+  document, which absolutely must be remedied.}
 
 Those who study the fields of quantum computing and quantum
 communication quickly become familiar with Shor's algorithm for
@@ -247,8 +235,15 @@ in theory.
 
 However, the direct, organized study of cryptography often ends there,
 despite the importance of cryptography as a driving force in funding
-and potential deployment of quantum technology.  Quantum researchers
-should be asking questions such as:
+and potential deployment of quantum technology.  The target audience
+for this is primarily quantum computing researchers who are familiar
+with Shor's algorithm, Grover's algorithm and QKD, since those are
+among the first things you learn, but who have only a very rough idea
+of what it means to actually encrypt data and to use encryption in a
+real-world setting.  This document will help to orient such readers so
+that they can communicate effectively with the classical
+communications and cryptography communities, and help them to ask the
+right research questions, such as:
 
 \begin{itemize}
 \item What QKD key generation rate is appropriate for
@@ -259,22 +254,25 @@ should be asking questions such as:
   \end{itemize}
   Especially, under what performance conditions will existing mechanisms
   be replaced effectively one-for-one, and under what conditions will new
-  capabilities are enabled?
+  capabilities be enabled?
 \item When will quantum computers be able to effectively attack:
   \begin{itemize}
   \item the generation of cryptographic keys used for communications;
-  \item bulk data encryption itself; and
+  \item bulk data encryption itself;
+  \item digital signatures and hashes; and
   \item blockchain?
   \end{itemize}
 \item What mathematical techniques commonly used in cryptography might
   be adaptable to use in new quantum-based attacks?
+\item What is the response of the classical cryptographic community to
+  the potential development of quantum computers?
 \end{itemize}
 
 Addressing all of these questions in depth in a single document is
 impossible, but to help quantum researchers and engineers effectively
 answer these questions in concrete ways that help guide their own
 work, this document introduces four key areas of modern cryptographic
-practice:
+practice and associated historical background:
 
 \begin{enumerate}
 \item the mathematics of encryption, including how math can be used to
@@ -287,22 +285,38 @@ practice:
   corporate/organizational and governmental.
 \end{enumerate}
 
-Renato asked, paraphrasing, about why we change the cryptographic keys
-used during long communication sessions, and how often they \emph{ought} to
-be changed.  I waved my hands a little bit, but I wasn't completely
-satisfied with my own answer.  It turned out to be a good opportunity
-for me to dig into a little background I'd been meaning to go through.
-It also proved to be a \emph{remarkably} hard question to answer from
-googling up pages, including cryptography research papers and the
-\emph{extensive} mailing list archives from development of key Internet
-protocols.  I fell down a pretty serious rabbit hole here, and haven't
-found my way out yet.
+What this document is \emph{not}:
 
-The target audience for this is primarily quantum computing
-researchers who are familiar with Shor's algorithm, Grover's algorithm
-and QKD, since those are among the first things you learn, but who
-have only a very rough idea of what it means to actually encrypt data
-and to use encryption in a real-world setting.
+\begin{itemize}
+\item a survey or tutorial on either QKD or Shor's algorithm;
+\item a full tutorial on cryptography.
+\end{itemize}
+
+\subsection{Encrypted Communications}
+
+An encrypted conversation involves, at the macro level, three phases:
+
+\begin{enumerate}
+\item Authentication: proving that you are who you say you are;
+\item Key generation: creating the keys used for bulk data encryption,
+  possibly including regeneration of keys mid-connection
+  (\emph{rekeying}); and
+\item Encryption/sending/decryption of the user's valuable bulk data.
+\end{enumerate}
+
+That's a bit of an oversimplification, as we'll see below when we talk
+about IPsec (Sec.~\ref{sec:ipsec}), but good enough for now.
+
+Rekeying, the changing of the cryptographic keys used during long
+communication sessions mentioned above, raises the question: how often
+\emph{should} keys be changed?~\footnote{This question, in fact,
+  prompted the development of this entire document.}  This question
+proved to be \emph{remarkably} hard to answer from basic Internet
+searches, including reading cryptography research papers and the
+\emph{extensive} mailing list archives from development of key
+Internet protocols.  Consequently, some parts of this document
+(annotated where appropriate) are derived from direct conversation
+with the principals.
 
 There are two fundamental reasons for periodic rekeying:
 
@@ -319,30 +333,16 @@ concrete, numeric recommendations is hard, but it looks like rekeying
 every half hour is pretty good, if your key generation rate isn't high
 enough to do full one-time pad.
 
-The above I knew off the top of my head, but I'm not a cryptographer
-and had more or less taken the need for changing the keys (known as
-rekeying) on faith.  So, let's dig a little deeper...there won't be
-any \emph{new} knowledge in this, but I hope it helps bring together some
-information and organizes it to both save you the googling and
-calculating I've done and to provide a clear picture.
+\subsection{Concepts and Terminology}
 
-\subsection{Encrypted Communications}
-
-\comment{Crypto also used for signatures; integrity hashes (both
-  signed ans unsigned); spread spectrum for secrecy, difficulty of
-  triangulation and being hard to jam; challenge response rfid and
-  smart credit cards.}
-
-An encrypted conversation involves, at the macro level, three phases:
-
-\begin{enumerate}
-\item Authentication: proving that you are who you say you are
-\item Key generation: creating the keys used for bulk data encryption
-\item Encryption/sending/decryption of the user's valuable bulk data
-\end{enumerate}
-
-That's a bit of an oversimplification, as we'll see below when we talk
-about IPsec, but good enough for now.
+\emph{Cryptography} is the science of secrets, and has a history going
+back several thousand years~\cite{kahn1996codebreakers,singh1999code}.
+Modern practice with digital communications effectively began in the
+1970s~\cite{schneier96:_applied_crypto,handbook}.
+\emph{Computer security} often involves cryptography, but is a far
+broader field tasked with ensuring the confidentiality, integrity and
+availability of data, computing and communication resources
+ and good  crypto/security references~\cite{bishop2002art}.
 
 You probably all know that there are two major kinds of cryptography
 -- symmetric key and asymmetric key, also known as public key.  Due to
@@ -417,13 +417,15 @@ context:
   arbitrary mappings are allowed?
 \end{itemize}
 
+\section{Encryption}
+
 Let's go phase by phase:
 
 \subsection{Authentication}
 
 The authentication phase can be accomplished using a pre-shared secret
 key and symmetric encryption of some message and
-response~\cite{needham:large-net-auth}, or it can be done via
+response~\cite{needham:encrypt}, or it can be done via
 asymmetric, public-key cryptography~\cite{rivest78:_rsa}.
 
 The best-known and most-used form of public key crypto is RSA, developed by Rivest, Shamir and Adelman (but also previously discovered by Cocks, of a British intelligence agency):
@@ -537,9 +539,7 @@ form but is primarily of historical interest now, and AES, the
 Advanced Encryption Standard, which is used for most communications
 today.
 
-\section{Encryption}
-
-\subsection{DES (the Data Encryption Standard)}
+\subsubsection{DES (the Data Encryption Standard)}
 
 DES, the Data Encryption Standard, was designed by IBM in the 1970s,
 consulting with the NSA.  DES is a type of cipher known as an
@@ -577,27 +577,29 @@ that the subkeys are used in reverse order.
 Slightly more formally, the sequence of operations in a DES encryption
 is:
 
-\begin{widetext}
-\begin{verbatim}
-1. Apply initial permutation (IP) (a fixed operation)
-2. For i = 1 to 16 do
-   1. divide the block into two 32-bit halves
-   2. expand the left half to 48 bits (a fixed operation)
-   3. calculate subkey i
-      1. split key into two 28-bit halves
-      2. rotate each half 1 or 2 bits (a fixed operation according to
-         the key schedule)
-      3. select a subset of 48 bits (a fixed operation according to
-         the schedule)
-   4. XOR subkey i with the left half of the block
-   5. split into 8 six-bit pieces
-   6. push each 6-bit piece through a $6\rightarrow 4$ S-box
-   7. permute and recombine the pieces (a fixed operation)
-   8. XOR the left half with the right half of the block
-   9. swap halves of the block
-3. Apply the final permutation (FP) (a fixed operation)
-\end{verbatim}
-\end{widetext}
+\begin{enumerate}
+\item Apply initial permutation (IP) (a fixed operation)
+\item For $i = 1$ to 16 do
+  \begin{enumerate}
+  \item divide the block into two 32-bit halves
+  \item expand the left half to 48 bits (a fixed operation)
+  \item calculate subkey $i$:
+    \begin{enumerate}
+    \item split key into two 28-bit halves
+    \item rotate each half 1 or 2 bits (a fixed operation according to
+      the key schedule)
+    \item select a subset of 48 bits (a fixed operation according to
+      the schedule)
+    \end{enumerate}
+  \item XOR subkey $i$ with the left half of the block
+  \item split into 8 six-bit pieces
+  \item push each 6-bit piece through a $6\rightarrow 4$ S-box
+  \item permute and recombine the pieces (a fixed operation)
+  \item XOR the left half with the right half of the block
+  \item swap halves of the block
+  \end{enumerate}
+\item Apply the final permutation (FP) (a fixed operation)
+\end{enumerate}
 
 The $6 \rightarrow 4$ S boxes are obviously inherently non-reversible,
 but the earlier expansion guarantees that ultimately no information is
@@ -609,10 +611,11 @@ were six rounds instead of sixteen, we could do yea much.  Various
 attacks have been able to penetrate DES to different depths.  Of
 course, the more straightforward approach is sheer brute force; as
 early as 1977, Diffie and Hellman published a critique in which they
-argued that brute force stood at the edge of feasible, and indeed in
-1999, a special-purpose machine named Deep Crack, built by the
-Electronic Freedom Foundation, cracked a DES key.  Further advances
-have made it possible even for dedicated hobbyists to crack.
+argued that brute force stood at the edge of
+feasible~\cite{diffie1977special}, and indeed in 1999, a
+special-purpose machine named Deep Crack, built by the Electronic
+Freedom Foundation, cracked a DES key.  Further advances have made it
+possible even for dedicated hobbyists to crack.
 
 Triple-DES (also called 3DES) has several modes of operation, but is
 usually used with three independent 56-bit keys, $K1$, $K2$, and $K3$,
@@ -624,7 +627,7 @@ DES was withdrawn as a standard in 2005, after having been replaced by
 AES in 2001, although the U.S. government still allows 3DES until 2030
 for sensitive information.
 
-\subsection{AES}
+\subsubsection{AES (the Advanced Encryption Standard)}
 
 AES, the Advanced Encryption Standard, has replaced DES.  It is a type of block cipher known as a substitution-permutation cipher.  AES uses a block size of 128 bits, and a key size of 128, 192 or 256 bits. The key size affects the number of rounds of substitution-permutation, requiring 10, 12 or 14, respectively.
 
@@ -632,16 +635,19 @@ AES began life in 1997 when NIST announced a competition for a successor to DES,
 
 A substitution-permutation network, as you might guess, alternates substituting new bits for old ones with permuting (rearranging) the bits, conducted over a series of rounds. DES has some characteristics of a substitution-permutation network, but is not purely so. A well-designed s-p net will maximize Shannon's confusion (or the avalanche effect) and diffusion, which we will see shortly.
 
-AES begins by laying out the sixteen bytes in a $4\times 4$ array in column major form:the first byte in the upper left, then the next byte below it, with the fifth byte returning to the tp of the second column. Most operations work on rows, however, increasing the mixing of the bytes.
+AES begins by laying out the sixteen bytes in a $4\times 4$ array in column major form:the first byte in the upper left, then the next byte below it, with the fifth byte returning to the top of the second column. Most operations work on rows, however, increasing the mixing of the bytes.
 
 First, in the KeyExpansion phase, the round keys are created from the original key.
 
 Next, the appropriate number of rounds is performed. Each round consists of the following steps:
 
-SubBytes
-ShiftRows
-MixColumns
-AddRoundKey
+\begin{enumerate}
+\item SubBytes
+\item ShiftRows
+\item MixColumns
+\item AddRoundKey
+\end{enumerate}
+
 In the first round, AddRoundKey is performed before the other operations as well as after. In the last round, the MixColumns step is omitted.
 
 The S box in SubBytes is a single, byte-level, fixed operation, $1:1$, unlike the DES S boxes, which are more complex and vary depending on the position within the block. The AES S box is nonlinear ($f(x+y) \ne f(x)+f(y)$) and was designed specifically to defeat both linear and differential cryptanalysis (which we will see later), but should you not trust the specific values they can be modified. The S box can be implemented as a straightforward 256-byte lookup table, with the input byte as the index, or as a simple bitwise matrix multiplication.
@@ -660,7 +666,7 @@ AES is easily implemented in either software or hardware. Some modern CPUs inclu
 
 Despite two decades of effort, there are no known attacks on AES that allow recovery of the key in substantially less time than brute force; the best attacks roughly halve that cost, at the cost of requiring tremendous amounts of storage.
 
-\subsection{Limitations of Block Ciphers}
+\subsubsection{Limitations of Block Ciphers}
 
 One obvious problem with the most straightforward application of a
 block cipher is that it's deterministic.  If you just apply the
@@ -680,7 +686,17 @@ undesirable side effect of requiring encryption to be done serially,
 but attacks can be parallelized.  Nevertheless, it's the most commonly
 used mode.
 
-\subsection{Notes and References}
+\subsection{Other Applications}
+
+\comment{Crypto also used for signatures; integrity hashes (both
+  signed ans unsigned); spread spectrum for secrecy, difficulty of
+  triangulation and being hard to jam; challenge response rfid and
+  smart credit cards.}
+
+\comment{bitcoiin here or elsewhere?  Blockchain is an \emph{auditable
+    communication channel}~\cite{suzuki2017blockchain}.}
+
+\subsection{Notes \& References}
 
 To be added.
 
@@ -774,7 +790,8 @@ From the fantastic website RosettaCode.org, we have a simple example
 in Python of calculating the entropy in bits per byte:
 
 \begin{widetext}
-\begin{verbatim}
+%\begin{verbatim}
+\begin{lstlisting}[language=Python]
 import math
 from collections import Counter
 
@@ -783,7 +800,8 @@ def entropy(s):
     return -sum( count/lns * math.log(count/lns, 2) for count in p.values())
 
 entropy("1223334444")
-\end{verbatim}
+\end{lstlisting}
+%\end{verbatim}
 \end{widetext}
 
 (This function can actually calculate entropy of strings of other
@@ -826,12 +844,13 @@ in some cases reveals a great deal about the original data.
 \subsubsection{Diffusion, Confusion and the Avalanche Effect}
 
 Claude Shannon, in his seminal article on the mathematics of
-cryptography, defined two concepts he called \emph{diffusion} and
-\emph{confusion}.  In diffusion, information from the original plaintext
-message is spread across more than one symbol in the output
-ciphertext; the farther the information spreads, the better.  Shannon
-defined \emph{confusion} as making "the relation between...[the ciphertext]
-$E$ and the...[key] $K$ a very complex and involved one."
+cryptography~\cite{shannon45}, defined two concepts he called
+\emph{diffusion} and \emph{confusion}.  In diffusion, information from
+the original plaintext message is spread across more than one symbol
+in the output ciphertext; the farther the information spreads, the
+better.  Shannon defined \emph{confusion} as making "the relation
+between...[the ciphertext] $E$ and the...[key] $K$ a very complex and
+involved one."
 
 Feistel, who designed DES, called diffusion the \emph{avalanche effect}.
 Webster and Tavares defined the \emph{strict avalanche criterion} (SAC),
@@ -1410,6 +1429,11 @@ preprint server~\cite{cryptoeprint:2012:623}.
 
 \subsubsection{IPsec, Quantum Computing and QKD}
 
+\comment{Papers on actually integrating QKD into classical crypto~\cite{Alleaume201462,mink09:_qkd_and_ipsec}.}
+
+\comment{I have two major QKD reviews in my stacks somewhere, haven't
+  found either yet...}
+
 (This one is just a placeholder, but there is surprisingly little
 \emph{documented} about this kind of work.  Even e.g. the publications
 describing the recent Chinese QKD satellite experiment say, "We used
@@ -1429,10 +1453,6 @@ Internet Draft to RFC.
 such as IPsec and on how effective quantum computers will or won't be
 at breaking communication security.  Some of this will also be covered
 in Section 5.)
-
-\subsection{Notes \& References}
-
-To be filled in eventually.
 
 \subsection{TLS/SSL and cryptography}
 \label{sec:tls}
@@ -1674,6 +1694,11 @@ Grover's algorithm and NFS:
 \url{https://research.tue.nl/en/publications/a-low-resource-quantum-factoring-algorithm}
 \url{https://cr.yp.to/papers/grovernfs-20170419.pdf}
 
+\subsection{Notes \& References}
+
+To be filled in eventually, mostly by moving the existing parts of
+this section into this subsection!
+
 \section{Post-quantum cryptography}
 
 \comment{somebody besides me should write this.  Moriai-san?  Aono-san?  Jon?}
@@ -1706,6 +1731,11 @@ A survey from a decade ago:
 Also in 2009, there was a book, which I'm sure is almost entirely
 outdated by now:
 \url{https://www.springer.com/jp/book/9783540887010}
+
+\subsection{Notes \& References}
+
+To be filled in eventually, mostly by moving the existing parts of
+this section into this subsection!
 
 \section{Policy and Conclusions}
 
@@ -1891,10 +1921,6 @@ published an entire book on the topic:
 Biham \& Shamir, Differential Cryptanalysis of the Data Encryption
 Standard, Springer 1993.
 \url{http://www.cs.technion.ac.il/~biham/Reports/differential-cryptanalysis-of-the-data-encryption-standard-biham-shamir-authors-latex-version.pdf}
-
-Diffie \& Hellman analyzed direct, brute force attacks on DES, and
-found them to be feasible, all the way back in 1977.
-\url{https://ieeexplore.ieee.org/abstract/document/1646525}
 
 Weak PRNGs, including Microsoft's, and RSA/NSA elliptic curve
 generator:
@@ -2685,3 +2711,15 @@ Elliott et al., SIGCOMM 2003:
 \url{https://arxiv.org/abs/quant-ph/0307049}
 
 \end{document}
+
+Diffie \& Hellman analyzed direct, brute force attacks on DES, and
+found them to be feasible, all the way back in 1977.
+\url{https://ieeexplore.ieee.org/abstract/document/1646525}
+
+
+The above I knew off the top of my head, but I'm not a cryptographer
+and had more or less taken the need for changing the keys (known as
+rekeying) on faith.  So, let's dig a little deeper...there won't be
+any \emph{new} knowledge in this, but I hope it helps bring together some
+information and organizes it to both save you the googling and
+calculating I've done and to provide a clear picture.

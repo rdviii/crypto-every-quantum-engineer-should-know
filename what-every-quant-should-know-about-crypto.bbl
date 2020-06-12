@@ -6,7 +6,7 @@
 %Control: page (1) range
 %Control: year (1) truncated
 %Control: production of eprint (0) enabled
-\begin{thebibliography}{19}%
+\begin{thebibliography}{22}%
 \makeatletter
 \providecommand \@ifxundefined [1]{%
  \@ifx{#1\undefined}
@@ -50,91 +50,6 @@
 \providecommand \BibitemShut  [1]{\csname bibitem#1\endcsname}%
 \let\auto@bib@innerbib\@empty
 %</preamble>
-\bibitem [{\citenamefont {Kahn}(1996)}]{kahn1996codebreakers}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {D.}~\bibnamefont
-  {Kahn}},\ }\href@noop {} {\emph {\bibinfo {title} {The Codebreakers: The
-  comprehensive history of secret communication from ancient times to the
-  internet}}},\ \bibinfo {edition} {2nd}\ ed.\ (\bibinfo  {publisher} {Simon
-  and Schuster},\ \bibinfo {year} {1996})\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Singh}(1999)}]{singh1999code}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
-  {Singh}},\ }\href@noop {} {\emph {\bibinfo {title} {The Code Book}}}\
-  (\bibinfo  {publisher} {Doubleday New York},\ \bibinfo {year}
-  {1999})\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Schneier}(1996)}]{schneier96:_applied_crypto}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {B.}~\bibnamefont
-  {Schneier}},\ }\href@noop {} {\emph {\bibinfo {title} {Applied
-  Cryptography}}},\ \bibinfo {edition} {2nd}\ ed.\ (\bibinfo  {publisher} {J.
-  Wiley},\ \bibinfo {year} {1996})\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Bishop}(2018)}]{bishop2002art}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.~A.}\ \bibnamefont
-  {Bishop}},\ }\href@noop {} {\emph {\bibinfo {title} {Computer Security: Art
-  and Science}}},\ \bibinfo {edition} {2nd}\ ed.\ (\bibinfo  {publisher}
-  {Addison-Wesley Professional},\ \bibinfo {year} {2018})\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Needham}\ and\ \citenamefont
-  {Schroeder}(1978{\natexlab{a}})}]{needham:encrypt}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {R.~M.}\ \bibnamefont
-  {Needham}}\ and\ \bibinfo {author} {\bibfnamefont {M.~D.}\ \bibnamefont
-  {Schroeder}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Using
-  encryption for authentication in large networks of computers},}\ }\href
-  {\doibase 10.1145/359657.359659} {\bibfield  {journal} {\bibinfo  {journal}
-  {Commun. ACM}\ }\textbf {\bibinfo {volume} {21}},\ \bibinfo {pages}
-  {993–999} (\bibinfo {year} {1978}{\natexlab{a}})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {All\'eaume}\ \emph {et~al.}(2014)\citenamefont
-  {All\'eaume}, \citenamefont {Branciard}, \citenamefont {Bouda}, \citenamefont
-  {Debuisschert}, \citenamefont {Dianati}, \citenamefont {Gisin}, \citenamefont
-  {Godfrey}, \citenamefont {Grangier}, \citenamefont {L{\"a}nger},
-  \citenamefont {L{\"u}tkenhaus}, \citenamefont {Monyk}, \citenamefont
-  {Painchault}, \citenamefont {Peev}, \citenamefont {Poppe}, \citenamefont
-  {Pornin}, \citenamefont {Rarity}, \citenamefont {Renner}, \citenamefont
-  {Ribordy}, \citenamefont {Riguidel}, \citenamefont {Salvail}, \citenamefont
-  {Shields}, \citenamefont {Weinfurter},\ and\ \citenamefont
-  {Zeilinger}}]{Alleaume201462}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {R.}~\bibnamefont
-  {All\'eaume}}, \bibinfo {author} {\bibfnamefont {C.}~\bibnamefont
-  {Branciard}}, \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Bouda}},
-  \bibinfo {author} {\bibfnamefont {T.}~\bibnamefont {Debuisschert}}, \bibinfo
-  {author} {\bibfnamefont {M.}~\bibnamefont {Dianati}}, \bibinfo {author}
-  {\bibfnamefont {N.}~\bibnamefont {Gisin}}, \bibinfo {author} {\bibfnamefont
-  {M.}~\bibnamefont {Godfrey}}, \bibinfo {author} {\bibfnamefont
-  {P.}~\bibnamefont {Grangier}}, \bibinfo {author} {\bibfnamefont
-  {T.}~\bibnamefont {L{\"a}nger}}, \bibinfo {author} {\bibfnamefont
-  {N.}~\bibnamefont {L{\"u}tkenhaus}}, \bibinfo {author} {\bibfnamefont
-  {C.}~\bibnamefont {Monyk}}, \bibinfo {author} {\bibfnamefont
-  {P.}~\bibnamefont {Painchault}}, \bibinfo {author} {\bibfnamefont
-  {M.}~\bibnamefont {Peev}}, \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
-  {Poppe}}, \bibinfo {author} {\bibfnamefont {T.}~\bibnamefont {Pornin}},
-  \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Rarity}}, \bibinfo
-  {author} {\bibfnamefont {R.}~\bibnamefont {Renner}}, \bibinfo {author}
-  {\bibfnamefont {G.}~\bibnamefont {Ribordy}}, \bibinfo {author} {\bibfnamefont
-  {M.}~\bibnamefont {Riguidel}}, \bibinfo {author} {\bibfnamefont
-  {L.}~\bibnamefont {Salvail}}, \bibinfo {author} {\bibfnamefont
-  {A.}~\bibnamefont {Shields}}, \bibinfo {author} {\bibfnamefont
-  {H.}~\bibnamefont {Weinfurter}}, \ and\ \bibinfo {author} {\bibfnamefont
-  {A.}~\bibnamefont {Zeilinger}},\ }\bibfield  {title} {\enquote {\bibinfo
-  {title} {Using quantum key distribution for cryptographic purposes: A
-  survey},}\ }\href {\doibase http://doi.org/10.1016/j.tcs.2014.09.018}
-  {\bibfield  {journal} {\bibinfo  {journal} {Theoretical Computer Science}\
-  }\textbf {\bibinfo {volume} {560, Part 1}},\ \bibinfo {pages} {62 -- 81}
-  (\bibinfo {year} {2014})},\ \bibinfo {note} {theoretical Aspects of Quantum
-  Cryptography, celebrating 30 years of \{BB84\}}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Mink}, \citenamefont {Frankel},\ and\ \citenamefont
-  {Perlner}(2009)}]{mink09:_qkd_and_ipsec}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
-  {Mink}}, \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont {Frankel}}, \
-  and\ \bibinfo {author} {\bibfnamefont {R.}~\bibnamefont {Perlner}},\
-  }\bibfield  {title} {\enquote {\bibinfo {title} {Quantum key distribution
-  ({QKD}) and commodity security protocols: Introduction and integration},}\
-  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {International
-  Journal of Network Security \& Its Applications (IJNSA)}\ }\textbf {\bibinfo
-  {volume} {1}} (\bibinfo {year} {2009})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Shor}(1997)}]{shor:siam-factor}%
   \BibitemOpen
   \bibfield  {author} {\bibinfo {author} {\bibfnamefont {P.~W.}\ \bibnamefont
@@ -163,7 +78,7 @@
   {Bennett}}, \bibinfo {author} {\bibfnamefont {G.}~\bibnamefont {Brassard}}, \
   and\ \bibinfo {author} {\bibfnamefont {N.~D.}\ \bibnamefont {Mermin}},\
   }\bibfield  {title} {\enquote {\bibinfo {title} {Quantum cryptography without
-  bell's theorem},}\ }\href {\doibase 10.1103/PhysRevLett.68.557} {\bibfield
+  {Bell's} theorem},}\ }\href {\doibase 10.1103/PhysRevLett.68.557} {\bibfield
   {journal} {\bibinfo  {journal} {Phys. Rev. Lett.}\ }\textbf {\bibinfo
   {volume} {68}},\ \bibinfo {pages} {557--559} (\bibinfo {year}
   {1992})}\BibitemShut {NoStop}%
@@ -230,19 +145,49 @@
   \bibfield  {author} {\bibinfo {author} {\bibfnamefont {P.~W.}\ \bibnamefont
   {Shor}}\ and\ \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
   {Preskill}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Simple proof
-  of security of the bb84 quantum key distribution protocol},}\ }\href
+  of security of the {BB84} quantum key distribution protocol},}\ }\href
   {\doibase 10.1103/PhysRevLett.85.441} {\bibfield  {journal} {\bibinfo
   {journal} {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {85}},\ \bibinfo
   {pages} {441--444} (\bibinfo {year} {2000})}\BibitemShut {NoStop}%
+\bibitem [{Note1()}]{Note1}%
+  \BibitemOpen
+  \bibinfo {note} {This question, in fact, prompted the development of this
+  entire document.}\BibitemShut {Stop}%
+\bibitem [{\citenamefont {Kahn}(1996)}]{kahn1996codebreakers}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {D.}~\bibnamefont
+  {Kahn}},\ }\href@noop {} {\emph {\bibinfo {title} {The Codebreakers: The
+  comprehensive history of secret communication from ancient times to the
+  internet}}},\ \bibinfo {edition} {2nd}\ ed.\ (\bibinfo  {publisher} {Simon
+  and Schuster},\ \bibinfo {year} {1996})\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Singh}(1999)}]{singh1999code}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
+  {Singh}},\ }\href@noop {} {\emph {\bibinfo {title} {The Code Book}}}\
+  (\bibinfo  {publisher} {Doubleday New York},\ \bibinfo {year}
+  {1999})\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Schneier}(1996)}]{schneier96:_applied_crypto}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {B.}~\bibnamefont
+  {Schneier}},\ }\href@noop {} {\emph {\bibinfo {title} {Applied
+  Cryptography}}},\ \bibinfo {edition} {2nd}\ ed.\ (\bibinfo  {publisher} {J.
+  Wiley},\ \bibinfo {year} {1996})\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Bishop}(2018)}]{bishop2002art}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.~A.}\ \bibnamefont
+  {Bishop}},\ }\href@noop {} {\emph {\bibinfo {title} {Computer Security: Art
+  and Science}}},\ \bibinfo {edition} {2nd}\ ed.\ (\bibinfo  {publisher}
+  {Addison-Wesley Professional},\ \bibinfo {year} {2018})\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Needham}\ and\ \citenamefont
-  {Schroeder}(1978{\natexlab{b}})}]{needham:large-net-auth}%
+  {Schroeder}(1978)}]{needham:encrypt}%
   \BibitemOpen
   \bibfield  {author} {\bibinfo {author} {\bibfnamefont {R.~M.}\ \bibnamefont
   {Needham}}\ and\ \bibinfo {author} {\bibfnamefont {M.~D.}\ \bibnamefont
-  {Schroeder}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal}
-  {Communications of the ACM}\ }\textbf {\bibinfo {volume} {21}},\ \bibinfo
-  {pages} {993--999} (\bibinfo {year} {1978}{\natexlab{b}})}\BibitemShut
-  {NoStop}%
+  {Schroeder}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Using
+  encryption for authentication in large networks of computers},}\ }\href
+  {\doibase 10.1145/359657.359659} {\bibfield  {journal} {\bibinfo  {journal}
+  {Commun. ACM}\ }\textbf {\bibinfo {volume} {21}},\ \bibinfo {pages}
+  {993–999} (\bibinfo {year} {1978})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Rivest}, \citenamefont {Shamir},\ and\ \citenamefont
   {Adleman}(1978)}]{rivest78:_rsa}%
   \BibitemOpen
@@ -254,6 +199,33 @@
    {journal} {\bibinfo  {journal} {Communications of the ACM}\ }\textbf
   {\bibinfo {volume} {21}},\ \bibinfo {pages} {120--126} (\bibinfo {year}
   {1978})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Diffie}\ and\ \citenamefont
+  {Hellman}(1977)}]{diffie1977special}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {W.}~\bibnamefont
+  {Diffie}}\ and\ \bibinfo {author} {\bibfnamefont {M.~E.}\ \bibnamefont
+  {Hellman}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Special feature
+  exhaustive cryptanalysis of the {NBS} data encryption standard},}\ }\href
+  {https://ieeexplore.ieee.org/abstract/document/1646525} {\bibfield  {journal}
+  {\bibinfo  {journal} {Computer}\ }\textbf {\bibinfo {volume} {10}},\ \bibinfo
+  {pages} {74--84} (\bibinfo {year} {1977})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Suzuki}\ and\ \citenamefont
+  {Murai}(2017)}]{suzuki2017blockchain}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
+  {Suzuki}}\ and\ \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Murai}},\
+  }\bibfield  {title} {\enquote {\bibinfo {title} {Blockchain as an audit-able
+  communication channel},}\ }in\ \href@noop {} {\emph {\bibinfo {booktitle}
+  {2017 IEEE 41st Annual Computer Software and Applications Conference
+  (COMPSAC)}}},\ Vol.~\bibinfo {volume} {2}\ (\bibinfo {organization} {IEEE},\
+  \bibinfo {year} {2017})\ pp.\ \bibinfo {pages} {516--522}\BibitemShut
+  {NoStop}%
+\bibitem [{\citenamefont {Shannon}(1945)}]{shannon45}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {C.~E.}\ \bibnamefont
+  {Shannon}},\ }\href {https://www.iacr.org/museum/shannon45.html} {\enquote
+  {\bibinfo {title} {A mathematical theory of communication},}\ } (\bibinfo
+  {year} {1945})\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {McGrew}(2012)}]{cryptoeprint:2012:623}%
   \BibitemOpen
   \bibfield  {author} {\bibinfo {author} {\bibfnamefont {D.}~\bibnamefont
@@ -262,4 +234,54 @@
   modes},}\ }\bibinfo {howpublished} {Cryptology ePrint Archive, Report
   2012/623} (\bibinfo {year} {2012}),\ \bibinfo {note}
   {\url{https://eprint.iacr.org/2012/623}}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {All\'eaume}\ \emph {et~al.}(2014)\citenamefont
+  {All\'eaume}, \citenamefont {Branciard}, \citenamefont {Bouda}, \citenamefont
+  {Debuisschert}, \citenamefont {Dianati}, \citenamefont {Gisin}, \citenamefont
+  {Godfrey}, \citenamefont {Grangier}, \citenamefont {L{\"a}nger},
+  \citenamefont {L{\"u}tkenhaus}, \citenamefont {Monyk}, \citenamefont
+  {Painchault}, \citenamefont {Peev}, \citenamefont {Poppe}, \citenamefont
+  {Pornin}, \citenamefont {Rarity}, \citenamefont {Renner}, \citenamefont
+  {Ribordy}, \citenamefont {Riguidel}, \citenamefont {Salvail}, \citenamefont
+  {Shields}, \citenamefont {Weinfurter},\ and\ \citenamefont
+  {Zeilinger}}]{Alleaume201462}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {R.}~\bibnamefont
+  {All\'eaume}}, \bibinfo {author} {\bibfnamefont {C.}~\bibnamefont
+  {Branciard}}, \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Bouda}},
+  \bibinfo {author} {\bibfnamefont {T.}~\bibnamefont {Debuisschert}}, \bibinfo
+  {author} {\bibfnamefont {M.}~\bibnamefont {Dianati}}, \bibinfo {author}
+  {\bibfnamefont {N.}~\bibnamefont {Gisin}}, \bibinfo {author} {\bibfnamefont
+  {M.}~\bibnamefont {Godfrey}}, \bibinfo {author} {\bibfnamefont
+  {P.}~\bibnamefont {Grangier}}, \bibinfo {author} {\bibfnamefont
+  {T.}~\bibnamefont {L{\"a}nger}}, \bibinfo {author} {\bibfnamefont
+  {N.}~\bibnamefont {L{\"u}tkenhaus}}, \bibinfo {author} {\bibfnamefont
+  {C.}~\bibnamefont {Monyk}}, \bibinfo {author} {\bibfnamefont
+  {P.}~\bibnamefont {Painchault}}, \bibinfo {author} {\bibfnamefont
+  {M.}~\bibnamefont {Peev}}, \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Poppe}}, \bibinfo {author} {\bibfnamefont {T.}~\bibnamefont {Pornin}},
+  \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Rarity}}, \bibinfo
+  {author} {\bibfnamefont {R.}~\bibnamefont {Renner}}, \bibinfo {author}
+  {\bibfnamefont {G.}~\bibnamefont {Ribordy}}, \bibinfo {author} {\bibfnamefont
+  {M.}~\bibnamefont {Riguidel}}, \bibinfo {author} {\bibfnamefont
+  {L.}~\bibnamefont {Salvail}}, \bibinfo {author} {\bibfnamefont
+  {A.}~\bibnamefont {Shields}}, \bibinfo {author} {\bibfnamefont
+  {H.}~\bibnamefont {Weinfurter}}, \ and\ \bibinfo {author} {\bibfnamefont
+  {A.}~\bibnamefont {Zeilinger}},\ }\bibfield  {title} {\enquote {\bibinfo
+  {title} {Using quantum key distribution for cryptographic purposes: A
+  survey},}\ }\href {\doibase http://doi.org/10.1016/j.tcs.2014.09.018}
+  {\bibfield  {journal} {\bibinfo  {journal} {Theoretical Computer Science}\
+  }\textbf {\bibinfo {volume} {560, Part 1}},\ \bibinfo {pages} {62 -- 81}
+  (\bibinfo {year} {2014})},\ \bibinfo {note} {theoretical Aspects of Quantum
+  Cryptography, celebrating 30 years of \{BB84\}}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Mink}, \citenamefont {Frankel},\ and\ \citenamefont
+  {Perlner}(2009)}]{mink09:_qkd_and_ipsec}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Mink}}, \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont {Frankel}}, \
+  and\ \bibinfo {author} {\bibfnamefont {R.}~\bibnamefont {Perlner}},\
+  }\bibfield  {title} {\enquote {\bibinfo {title} {Quantum key distribution
+  ({QKD}) and commodity security protocols: Introduction and integration},}\
+  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {International
+  Journal of Network Security \& Its Applications (IJNSA)}\ }\textbf {\bibinfo
+  {volume} {1}} (\bibinfo {year} {2009})}\BibitemShut {NoStop}%
 \end{thebibliography}%
