@@ -6,7 +6,7 @@
 %Control: page (1) range
 %Control: year (1) truncated
 %Control: production of eprint (0) enabled
-\begin{thebibliography}{22}%
+\begin{thebibliography}{23}%
 \makeatletter
 \providecommand \@ifxundefined [1]{%
  \@ifx{#1\undefined}
@@ -220,6 +220,16 @@
   (COMPSAC)}}},\ Vol.~\bibinfo {volume} {2}\ (\bibinfo {organization} {IEEE},\
   \bibinfo {year} {2017})\ pp.\ \bibinfo {pages} {516--522}\BibitemShut
   {NoStop}%
+\bibitem [{\citenamefont {{Ziv}}\ and\ \citenamefont
+  {{Lempel}}(1978)}]{compression:Ziv78}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
+  {{Ziv}}}\ and\ \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {{Lempel}}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Compression of
+  individual sequences via variable-rate coding},}\ }\href@noop {} {\bibfield
+  {journal} {\bibinfo  {journal} {IEEE Trans. Inf. Theory}\ }\textbf {\bibinfo
+  {volume} {IT-24}},\ \bibinfo {pages} {530--6} (\bibinfo {year}
+  {1978})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Shannon}(1945)}]{shannon45}%
   \BibitemOpen
   \bibfield  {author} {\bibinfo {author} {\bibfnamefont {C.~E.}\ \bibnamefont

@@ -814,10 +814,11 @@ strings 0101...01 and 000...01...111 have a bit-level entropy just as
 high as a string composed of exactly 50/50 randomly chosen 0s and 1s,
 although by applying a little intelligence we can easily reconstruct
 the former but not the latter (at least, not exactly).  Many lossless
-data compression programs operate on stateful \emph{sequences} of data to
-predict the next symbol.  For example, the common Unix utilities gzip
-and compress use the Lempel-Ziv algorithm, which builds a dictionary
-of sequences as it goes, so that repetitive data and long runs are
+data compression programs operate on stateful \emph{sequences} of data
+to predict the next symbol.  For example, the common Unix utilities
+gzip and compress use the Lempel-Ziv
+algorithm~\cite{compression:Ziv78}, which builds a dictionary of
+sequences as it goes, so that repetitive data and long runs are
 compressed effectively; this is especially good at sequences such as
 0101...01 or 000...01...111.
 
@@ -1963,7 +1964,8 @@ and follow-ups, including
 Some ad hoc Mathematica code for dinking around with some of the
 numbers:
 
-\begin{verbatim}
+% \begin{verbatim}
+\begin{lstlisting}[language=Mathematica]
 NoCollisionProbability[n_, D_] := N[Factorial[D]/Factorial[D - n]/D^n]
 
 NoCollisionProbability[23, 365]
@@ -1982,7 +1984,8 @@ NoCollisionProbabilityApprox[2^10, 2^20]
 
 NoCollisionProbabilityApprox[2^12, 2^24]
 0.606580027339
-\end{verbatim}
+\end{lstlisting}
+% \end{verbatim}
 (That last example took several minutes on my laptop.  Be very careful
 running the above code with larger numbers, it's very easy to start a
 computation that won't complete in your lifetime, and Mathematica
@@ -1994,13 +1997,15 @@ SWEET32 paper by Bhargavan and Leurent.
 
 The square root limit as $n$ and $d$ grow large, in Mathematica:
 
-\begin{verbatim}
+% \begin{verbatim}
+\begin{lstlisting}[language=Mathematica]
 N[Sqrt[E]]
 1.64827
 
 N[1 - 1/Sqrt[E]]
 0.393469
-\end{verbatim}
+\end{lstlisting}
+% \end{verbatim}
 
 =======
 
