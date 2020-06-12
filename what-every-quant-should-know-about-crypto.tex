@@ -245,7 +245,36 @@ These two independent discoveries both impact classical cryptography,
 one by making it more vulnerable, the other by making it stronger --
 in theory.
 
-The goal of this document is to introduce four key areas:
+However, the direct, organized study of cryptography often ends there,
+despite the importance of cryptography as a driving force in funding
+and potential deployment of quantum technology.  Quantum researchers
+should be asking questions such as:
+
+\begin{itemize}
+\item What QKD key generation rate is appropriate for
+  quantum-protected activities such as:
+  \begin{itemize}
+  \item e-commerce, especially web browsing; and
+  \item intra-organization network-to-network connection?
+  \end{itemize}
+  Especially, under what performance conditions will existing mechanisms
+  be replaced effectively one-for-one, and under what conditions will new
+  capabilities are enabled?
+\item When will quantum computers be able to effectively attack:
+  \begin{itemize}
+  \item the generation of cryptographic keys used for communications;
+  \item bulk data encryption itself; and
+  \item blockchain?
+  \end{itemize}
+\item What mathematical techniques commonly used in cryptography might
+  be adaptable to use in new quantum-based attacks?
+\end{itemize}
+
+Addressing all of these questions in depth in a single document is
+impossible, but to help quantum researchers and engineers effectively
+answer these questions in concrete ways that help guide their own
+work, this document introduces four key areas of modern cryptographic
+practice:
 
 \begin{enumerate}
 \item the mathematics of encryption, including how math can be used to
@@ -255,7 +284,7 @@ The goal of this document is to introduce four key areas:
 \item how those systems are used to achieve the ``CIA'' goals of
   confidentiality, integrity and availability; and
 \item how cryptography influences and is influenced by policy, both
-  corpoprate/organizational and governmental.
+  corporate/organizational and governmental.
 \end{enumerate}
 
 Renato asked, paraphrasing, about why we change the cryptographic keys
@@ -377,12 +406,12 @@ numbers, but I'm a little fuzzy on in the bitwise, cryptographic
 context:
 
 \begin{itemize}
-\item linear function: I think in this context, f(x,y) is a linear
+\item linear function: I think in this context, $f(x,y)$ is a linear
   function of some bits if it involves only a linear addition of
-  the inputs, and f(0,0) = 0 (origin is preserved).  Multiplication
-  (AND) is disallowed?  Importantly, f(x1 + x2) = f(x1) + f(x2).
+  the inputs, and $f(0,0) = 0$ (origin is preserved).  Multiplication
+  (AND) is disallowed?  Importantly, $f(x_1 + x_2) = f(x_1) + f(x_2)$.
 \item affine function: same as a linear function, but an offset is
-  allowed, such that f(0,0) = 1 (origin isn't necessarily preserved)
+  allowed, such that $f(0,0) = 1$ (origin isn't necessarily preserved)
   (equivalent to a translation in a real space $R^n$).
 \item nonlinear function: A nonlinear function is one in which $f(x+y) \ne f(x) + f(y)$ for some values $x$ and $y$. An affine function is one type of nonlinear function. I'm definitely fuzzy here...multiplication and
   arbitrary mappings are allowed?
@@ -393,16 +422,19 @@ Let's go phase by phase:
 \subsection{Authentication}
 
 The authentication phase can be accomplished using a pre-shared secret
-key and symmetric encryption of some message and response, or it can
-be done via asymmetric, public-key cryptography.
+key and symmetric encryption of some message and
+response~\cite{needham:large-net-auth}, or it can be done via
+asymmetric, public-key cryptography~\cite{rivest78:_rsa}.
 
 The best-known and most-used form of public key crypto is RSA, developed by Rivest, Shamir and Adelman (but also previously discovered by Cocks, of a British intelligence agency):
 
-	1. Pick two large primes, $p$ and $q$, let $n = pq$.
-	2. Calculate $\phi(p,q) = (p-1)(q-1)$.
-	3. Pick $e$, prime relative to $\phi(p,q)$.
-	4. Calculate $d$, s.t. $de = 1 \bmod \phi(p,q)$,
-	   which we can call the inverse of $e$ modulo $\phi(p,q)$.
+\begin{enumerate}
+\item Pick two large primes, $p$ and $q$, let $n = pq$.
+\item Calculate $\phi(p,q) = (p-1)(q-1)$.
+\item Pick $e$, prime relative to $\phi(p,q)$.
+\item Calculate $d$, s.t. $de = 1 \bmod \phi(p,q)$,
+  which we can call the inverse of $e$ modulo $\phi(p,q)$.
+\end{enumerate}
 
 The tuple $\langle n,e\rangle$ is now your public key, and $d$ is your private key.
 You can publish $\langle n,e\rangle$ any way you like, including in the New York
@@ -448,13 +480,15 @@ the same key, for a lot of obvious reasons.
 
 D-H works as follows:
 
-	1. Alice and Bob publicly agree on a modulus $p$ and a base $g$ (in cleartext is okay)
-	2. Alice and Bob each pick a secret random number $a$ and $b$
-	3. Alice calculates $A = g^a \bmod p$,
-	   Bob calculates $B = g^b \bmod p$
-	4. Alice sends Bob $A$, Bob sends Alice $B$ (in cleartext is okay)
-	5. Alice calculates $s = B^a \bmod p$,
+\begin{enumerate}
+  \item Alice and Bob publicly agree on a modulus $p$ and a base $g$ (in cleartext is okay)
+  \item Alice and Bob each pick a secret random number $a$ and $b$
+  \item Alice calculates $A = g^a \bmod p$,
+    Bob calculates $B = g^b \bmod p$
+  \item Alice sends Bob $A$, Bob sends Alice $B$ (in cleartext is okay)
+  \item Alice calculates $s = B^a \bmod p$,
 	   Bob calculates $s = A^b \bmod p$
+\end{enumerate}
 
 Both Alice and Bob now have the same secret $s$, which they can use as
 an encryption key.
