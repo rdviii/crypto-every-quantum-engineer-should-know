@@ -6,7 +6,7 @@
 %Control: page (1) range
 %Control: year (1) truncated
 %Control: production of eprint (0) enabled
-\begin{thebibliography}{45}%
+\begin{thebibliography}{52}%
 \makeatletter
 \providecommand \@ifxundefined [1]{%
  \@ifx{#1\undefined}
@@ -234,6 +234,17 @@
   {Schneier}},\ }\href@noop {} {\emph {\bibinfo {title} {Applied
   Cryptography}}},\ \bibinfo {edition} {2nd}\ ed.\ (\bibinfo  {publisher} {J.
   Wiley},\ \bibinfo {year} {1996})\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Menezes}\ \emph {et~al.}(1996)\citenamefont
+  {Menezes}, \citenamefont {Katz}, \citenamefont {Van~Oorschot},\ and\
+  \citenamefont {Vanstone}}]{menezes1996handbook}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.~J.}\ \bibnamefont
+  {Menezes}}, \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Katz}},
+  \bibinfo {author} {\bibfnamefont {P.~C.}\ \bibnamefont {Van~Oorschot}}, \
+  and\ \bibinfo {author} {\bibfnamefont {S.~A.}\ \bibnamefont {Vanstone}},\
+  }\href@noop {} {\emph {\bibinfo {title} {Handbook of applied cryptography}}}\
+  (\bibinfo  {publisher} {CRC press},\ \bibinfo {year} {1996})\BibitemShut
+  {NoStop}%
 \bibitem [{\citenamefont {Bishop}(2018)}]{bishop2002art}%
   \BibitemOpen
   \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.~A.}\ \bibnamefont
@@ -270,17 +281,18 @@
   \BibitemOpen
   \bibfield  {author} {\bibinfo {author} {\bibfnamefont {W.}~\bibnamefont
   {Diffie}}\ and\ \bibinfo {author} {\bibfnamefont {M.~E.}\ \bibnamefont
-  {Hellman}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Special feature
-  exhaustive cryptanalysis of the {NBS} data encryption standard},}\ }\href
-  {https://ieeexplore.ieee.org/abstract/document/1646525} {\bibfield  {journal}
-  {\bibinfo  {journal} {Computer}\ }\textbf {\bibinfo {volume} {10}},\ \bibinfo
-  {pages} {74--84} (\bibinfo {year} {1977})}\BibitemShut {NoStop}%
+  {Hellman}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Special
+  feature: exhaustive cryptanalysis of the {NBS} data encryption standard},}\
+  }\href {https://ieeexplore.ieee.org/abstract/document/1646525} {\bibfield
+  {journal} {\bibinfo  {journal} {Computer}\ }\textbf {\bibinfo {volume}
+  {10}},\ \bibinfo {pages} {74--84} (\bibinfo {year} {1977})}\BibitemShut
+  {NoStop}%
 \bibitem [{Note3()}]{Note3}%
   \BibitemOpen
   \bibinfo {note} {On recent Intel processors the instructions \protect \textsc
   {aesdec}, \protect \textsc {aesdeclast}, \protect \textsc {aesenc}, \protect
   \textsc {aesenclast}, \protect \textsc {aesimc}, and \protect \textsc
-  {aeskeygetnassist} are custom-created for AES, and \protect \textsc
+  {aeskeygenassist} are custom-created for AES, and \protect \textsc
   {pclmulqdq} is a more generic instruction for lock-oriented
   encryption.}\BibitemShut {Stop}%
 \bibitem [{\citenamefont {Suzuki}\ and\ \citenamefont
@@ -294,6 +306,14 @@
   (COMPSAC)}}},\ Vol.~\bibinfo {volume} {2}\ (\bibinfo {organization} {IEEE},\
   \bibinfo {year} {2017})\ pp.\ \bibinfo {pages} {516--522}\BibitemShut
   {NoStop}%
+\bibitem [{\citenamefont {Matsui}(1993)}]{matsui1993linear}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
+  {Matsui}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Linear
+  cryptanalysis method for {DES} cipher},}\ }in\ \href@noop {} {\emph {\bibinfo
+  {booktitle} {Workshop on the Theory and Application of of Cryptographic
+  Techniques}}}\ (\bibinfo {organization} {Springer},\ \bibinfo {year} {1993})\
+  pp.\ \bibinfo {pages} {386--397}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {{Ziv}}\ and\ \citenamefont
   {{Lempel}}(1978)}]{compression:Ziv78}%
   \BibitemOpen
@@ -504,6 +524,25 @@
   }\href {\doibase 10.1103/PhysRevLett.120.030501} {\bibfield  {journal}
   {\bibinfo  {journal} {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {120}},\
   \bibinfo {pages} {030501} (\bibinfo {year} {2018})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Elliott}, \citenamefont {Pearson},\ and\
+  \citenamefont {Troxel}(2003)}]{elliott:qkd-net}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {C.}~\bibnamefont
+  {Elliott}}, \bibinfo {author} {\bibfnamefont {D.}~\bibnamefont {Pearson}}, \
+  and\ \bibinfo {author} {\bibfnamefont {G.}~\bibnamefont {Troxel}},\
+  }\bibfield  {title} {\enquote {\bibinfo {title} {Quantum cryptography in
+  practice},}\ }in\ \href@noop {} {\emph {\bibinfo {booktitle} {Proc. SIGCOMM
+  2003}}},\ \bibinfo {organization} {ACM}\ (\bibinfo  {publisher} {ACM},\
+  \bibinfo {year} {2003})\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Nagayama}\ and\ \citenamefont {Van{
+  }Meter}(2014)}]{nagayama12:_ike_for_ipsec_with_qkd}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
+  {Nagayama}}\ and\ \bibinfo {author} {\bibfnamefont {R.}~\bibnamefont {Van{
+  }Meter}},\ }\href@noop {} {\enquote {\bibinfo {title} {{IKE} for {IPsec} with
+  {QKD}},}\ } (\bibinfo {year} {2014}),\ \bibinfo {note} {internet Draft,
+  draft-nagayama-ipsecme-ipsec-with-qkd-01; expired April 30, 2015}\BibitemShut
+  {NoStop}%
 \bibitem [{\citenamefont {Rescorla}(2018)}]{RFC8446}%
   \BibitemOpen
   \bibfield  {author} {\bibinfo {author} {\bibfnamefont {E.}~\bibnamefont
@@ -532,6 +571,33 @@
   datagram tls (dtls)},}\ }\bibinfo {type} {RFC}\ \bibinfo {number} {7457}\
   (\bibinfo  {institution} {RFC Editor},\ \bibinfo {year} {2015})\ \bibinfo
   {note} {\url{http://www.rfc-editor.org/rfc/rfc7457.txt}}\BibitemShut
+  {NoStop}%
+\bibitem [{\citenamefont {Van{ }Meter{ }III}(2006)}]{van-meter06:thesis}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {R.~D.}\ \bibnamefont
+  {Van{ }Meter{ }III}},\ }\emph {\bibinfo {title} {Architecture of a Quantum
+  Multicomputer Optimized for {Shor's} Factoring Algorithm}},\ \href@noop {}
+  {Ph.D. thesis},\ \bibinfo  {school} {Keio University} (\bibinfo {year}
+  {2006}),\ \bibinfo {note} {available as arXiv:quant-ph/0607065}\BibitemShut
+  {NoStop}%
+\bibitem [{\citenamefont {Van{ }Meter}\ and\ \citenamefont
+  {Itoh}(2005)}]{van-meter04:fast-modexp}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {R.}~\bibnamefont {Van{
+  }Meter}}\ and\ \bibinfo {author} {\bibfnamefont {K.~M.}\ \bibnamefont
+  {Itoh}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Fast quantum
+  modular exponentiation},}\ }\href@noop {} {\bibfield  {journal} {\bibinfo
+  {journal} {Physical Review A}\ }\textbf {\bibinfo {volume} {71}},\ \bibinfo
+  {pages} {052320} (\bibinfo {year} {2005})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Van{ }Meter}\ and\ \citenamefont
+  {Horsman}(2013)}]{van-meter13:_blueprint}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {R.}~\bibnamefont {Van{
+  }Meter}}\ and\ \bibinfo {author} {\bibfnamefont {C.}~\bibnamefont
+  {Horsman}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {A blueprint for
+  building a quantum computer},}\ }\href@noop {} {\bibfield  {journal}
+  {\bibinfo  {journal} {Communications of the ACM}\ }\textbf {\bibinfo {volume}
+  {53}},\ \bibinfo {pages} {84--93} (\bibinfo {year} {2013})}\BibitemShut
   {NoStop}%
 \bibitem [{Note7()}]{Note7}%
   \BibitemOpen

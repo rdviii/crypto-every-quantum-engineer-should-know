@@ -332,8 +332,8 @@ the probability of an attacker being able to find the key.
 in the event that a key is broken is good stewardship of your data.
 \end{enumerate}
 
-So changing the key "often" makes it both harder and less valuable for
-an attacker to find a key.  That's the tl;dr.  Turning it into
+So changing the key ``often'' makes it both harder and less valuable
+for an attacker to find a key.  That's the tl;dr.  Turning it into
 concrete, numeric recommendations is hard, but it looks like rekeying
 every half hour is pretty good, if your key generation rate isn't high
 enough to do full one-time pad.
@@ -343,7 +343,7 @@ enough to do full one-time pad.
 \emph{Cryptography} is the science of secrets, and has a history going
 back several thousand years~\cite{kahn1996codebreakers,singh1999code}.
 Modern practice with digital communications effectively began in the
-1970s~\cite{schneier96:_applied_crypto,handbook}.
+1970s~\cite{schneier96:_applied_crypto,menezes1996handbook}.
 \emph{Computer security} often involves cryptography, but is a far
 broader field tasked with ensuring the confidentiality, integrity and
 availability of data, computing and communication resources
@@ -491,10 +491,11 @@ D-H works as follows:
 \begin{enumerate}
   \item Alice and Bob publicly agree on a modulus $p$ and a base $g$ (in cleartext is okay)
   \item Alice and Bob each pick a secret random number $a$ and $b$
-  \item Alice calculates $A = g^a \bmod p$,
+  \item Alice calculates $A = g^a \bmod p$, \\
     Bob calculates $B = g^b \bmod p$
-  \item Alice sends Bob $A$, Bob sends Alice $B$ (in cleartext is okay)
-  \item Alice calculates $s = B^a \bmod p$,
+  \item Alice sends Bob $A$, \\
+Bob sends Alice $B$ (in cleartext is okay)
+  \item Alice calculates $s = B^a \bmod p$, \\
 	   Bob calculates $s = A^b \bmod p$
 \end{enumerate}
 
@@ -669,7 +670,7 @@ AES is easily implemented in either software or hardware. Some modern
 CPUs include special instructions to accelerate AES
 encryption~\footnote{On recent Intel processors the instructions
   \textsc{aesdec}, \textsc{aesdeclast}, \textsc{aesenc},
-  \textsc{aesenclast}, \textsc{aesimc}, and \textsc{aeskeygetnassist}
+  \textsc{aesenclast}, \textsc{aesimc}, and \textsc{aeskeygenassist}
   are custom-created for AES, and \textsc{pclmulqdq} is a more generic
   instruction for lock-oriented encryption.} , and even for those that
 don't, heavily optimized assembly language is achievable.  In the
@@ -781,7 +782,7 @@ defending against the technique drove DES design decisions), and
 earlier by NSA.
 \url{https://en.wikipedia.org/wiki/Differential_cryptanalysis}
 The second is linear crypanalysis, discovered by Mitsuru Matsui in
-1990.
+1990~\cite{matsui1993linear}.
 \url{https://en.wikipedia.org/wiki/Linear_cryptanalysis}
 
 (Other techniques that I know nothing about include integral,
@@ -1094,9 +1095,9 @@ there to a full-on attack is a big jump.
 
 Linear cryptanalysis (LC) is a known plaintext attack, developed by
 Mitsuru Matsui in 1990 after being inspired by differential
-cryptanalysis.  The key(!)  idea is to build a linear approximation of
-an S box, allowing you to calculate possible keys in reverse more
-quickly.
+cryptanalysis~\cite{matsui1993linear}.  The key(!)  idea is to build a
+linear approximation of an S box, allowing you to calculate possible
+keys in reverse more quickly.
 
 If a cipher is good, every individual bit of the output should have a
 50\% probability of being 0 and a 50\% probability of being 1.
@@ -1469,10 +1470,11 @@ described in talks, but so far I've failed to track down anything
 authoritative.)
 
 Chip Elliott was the first to modify IPsec to work with QKD, as far as
-I'm aware, described in a 2003 SIGCOMM paper.  Shota Nagayama drafted
-and implemented a more formal protocol modification for his bachelor's
-thesis working with me, back in 2010, but we failed to push that from
-Internet Draft to RFC.
+I'm aware, described in a 2003 SIGCOMM paper~\cite{elliott:qkd-net}.
+Shota Nagayama drafted and implemented a more formal protocol
+modification for his bachelor's thesis working with me, back in 2010,
+but we failed to push that from Internet Draft to
+RFC~\cite{nagayama12:_ike_for_ipsec_with_qkd}.
 
 (More to come here, eventually, on both the use of QKD with protocols
 such as IPsec and on how effective quantum computers will or won't be
@@ -1636,14 +1638,13 @@ find the factors of a large semi-prime number.)
 
 The key insight may be the behavior of the QFT, but the bulk of the
 execution time will be in the modular exponentiation phase.  This is
-actually one of the areas that I worked on in my Ph.D. thesis.
-\url{https://arxiv.org/abs/quant-ph/0607065}
-Some of the important parts of this were published in Physical Review
-A.
+actually one of the areas that I worked on in my
+Ph.D. thesis~\cite{van-meter06:thesis}.  Some of the important parts
+of this were published in Physical Review
+A~\cite{van-meter04:fast-modexp}.
 
 In my thesis there is a plot that I think is useful, which we updated
-and published in our Communications of the ACM article:
-\url{https://m-cacm.acm.org/magazines/2013/10/168172-a-blueprint-for-building-a-quantum-computer/fulltext}
+and published in our Communications of the ACM article~\cite{van-meter13:_blueprint}.
 
 We worked out detailed performance estimates, including hardware
 requirements and quantum error correction, in some of our papers:
@@ -1793,7 +1794,7 @@ this section into this subsection!
 
 \section{Policy and Conclusions}
 
-\outlinecomment{Get Farber to contribute here.}
+\outlinecomment{Get Farber to contribute here (and elsewhere).}
 
 \comment{Add a few paragraphs here on how national and corporate
   policy drive, and are driven by, advances in crypto, and in
