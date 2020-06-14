@@ -1590,8 +1590,9 @@ vulnerable.
 \subsubsection{TLS and QKD}
 
 Alan Mink, Sheila Frankel and Ray Perlner worked on integrating TLS
-with QKD, a full decade ago.
-\url{https://arxiv.org/abs/1004.0605}
+with QKD, a full decade ago~\cite{mink09:_qkd_and_ipsec}.
+
+\comment{Performance requirement: interactivity means a few seconds or less; 300ms per click, is it?}
 
 \subsection{Other Internet Security Protocols}
 
@@ -1647,31 +1648,21 @@ In my thesis there is a plot that I think is useful, which we updated
 and published in our Communications of the ACM article~\cite{van-meter13:_blueprint}.
 
 We worked out detailed performance estimates, including hardware
-requirements and quantum error correction, in some of our papers:
-\url{https://journals.aps.org/prx/abstract/10.1103/PhysRevX.2.031007}
-and
-\url{https://www.worldscientific.com/doi/abs/10.1142/S0219749910006435}
-\url{https://arxiv.org/abs/0906.2686}
+requirements and quantum error correction, in some of our papers~\cite{van-meter10:dist_arch_ijqi,PhysRevX.2.031007}.
 
 There were other, contemporary important papers on how to implement
-Shor, including Fowler et al., \url{https://arxiv.org/abs/quant-ph/0402196}
+Shor, including Fowler et al.~\cite{fowler04:_shor_implem},
 who discussed Shor on a linear array, a few months ahead of my own
 Phys. Rev. A paper on the same topic.
 
 We both built on important, early work by Vedral, Barenco and Ekert
-(VBE) and by Beckman, Chari, Devabhaktuni and Preskill (BCDP).
-\url{https://arxiv.org/abs/quant-ph/9511018}
-\url{https://journals.aps.org/pra/abstract/10.1103/PhysRevA.54.147}
-\url{https://arxiv.org/abs/quant-ph/9602016}
-\url{https://journals.aps.org/pra/abstract/10.1103/PhysRevA.54.1034}
+(VBE)~\cite{vedral:quant-arith} and by Beckman, Chari, Devabhaktuni and Preskill (BCDP)~\cite{beckman96:eff-net-quant-fact}.
 
 If you are looking to broaden your reading on implementations of
 Shor’s algorithm, the following are useful:
 
 Pavlidis and Gizopoulous found an efficient division algorithm,
-accelerating the math.
-\url{https://arxiv.org/abs/1207.0511}
-\url{https://dl.acm.org/citation.cfm?id=2638682.2638690}
+accelerating the math~\cite{Pavlidis:2014:FQM:2638682.2638690}.
 
 Roetteler, Steinwandt focused on the applicability of Shor's algorithm
 to elliptic curve. I like the paper, except I think their survey of
@@ -1700,17 +1691,14 @@ much from very simple demonstrations on a few qubits.
 \url{https://www.nature.com/articles/nature12290}
 
 Here is one early paper on how to assess errors in Shor’s algorithm,
-by Miquel, Paz and Perazzo:
-\url{https://arxiv.org/abs/quant-ph/9601021}
-\url{https://journals.aps.org/pra/abstract/10.1103/PhysRevA.54.2605}
+by Miquel, Paz and Perazzo~\cite{miquel1996fdq}.
 
 Chuang et al., also published an early examination of decoherence in
-factoring.
-\url{https://science.sciencemag.org/content/270/5242/1633}
+factoring~\cite{chuang95:_factoring-decoherence}.
 
 Among random things, there is Dridi and Alghassi,
-factoring on D-Wave; I don’t think this paper tells us very much about factoring at scale.
-\url{https://www.nature.com/articles/srep43048}
+factoring on D-Wave; I don’t think this paper tells us very much about factoring at scale~\cite{dridi2017prime}.
+
 
 That's more than enough for now, since it isn't really the focus of
 what we're after here, anyway.
@@ -2812,3 +2800,6 @@ Biham \& Shamir, Differential Cryptanalysis of the Data Encryption
 Standard, Springer 1993.
 \url{http://www.cs.technion.ac.il/~biham/Reports/differential-cryptanalysis-of-the-data-encryption-standard-biham-shamir-authors-latex-version.pdf}
 
+:
+\url{https://arxiv.org/abs/quant-ph/9601021}
+\url{https://journals.aps.org/pra/abstract/10.1103/PhysRevA.54.2605}

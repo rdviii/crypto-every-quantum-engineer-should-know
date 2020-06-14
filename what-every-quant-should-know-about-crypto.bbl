@@ -6,7 +6,7 @@
 %Control: page (1) range
 %Control: year (1) truncated
 %Control: production of eprint (0) enabled
-\begin{thebibliography}{52}%
+\begin{thebibliography}{61}%
 \makeatletter
 \providecommand \@ifxundefined [1]{%
  \@ifx{#1\undefined}
@@ -471,9 +471,10 @@
   and\ \bibinfo {author} {\bibfnamefont {R.}~\bibnamefont {Perlner}},\
   }\bibfield  {title} {\enquote {\bibinfo {title} {Quantum key distribution
   ({QKD}) and commodity security protocols: Introduction and integration},}\
-  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {International
-  Journal of Network Security \& Its Applications (IJNSA)}\ }\textbf {\bibinfo
-  {volume} {1}} (\bibinfo {year} {2009})}\BibitemShut {NoStop}%
+  }\href {https://arxiv.org/abs/1004.0605} {\bibfield  {journal} {\bibinfo
+  {journal} {International Journal of Network Security \& Its Applications
+  (IJNSA)}\ }\textbf {\bibinfo {volume} {1}} (\bibinfo {year}
+  {2009})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Liao}\ \emph {et~al.}(2018)\citenamefont {Liao},
   \citenamefont {Cai}, \citenamefont {Handsteiner}, \citenamefont {Liu},
   \citenamefont {Yin}, \citenamefont {Zhang}, \citenamefont {Rauch},
@@ -599,6 +600,116 @@
   {\bibinfo  {journal} {Communications of the ACM}\ }\textbf {\bibinfo {volume}
   {53}},\ \bibinfo {pages} {84--93} (\bibinfo {year} {2013})}\BibitemShut
   {NoStop}%
+\bibitem [{\citenamefont {Van{ }Meter}\ \emph {et~al.}(2010)\citenamefont {Van{
+  }Meter}, \citenamefont {Ladd}, \citenamefont {Fowler},\ and\ \citenamefont
+  {Yamamoto}}]{van-meter10:dist_arch_ijqi}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {R.}~\bibnamefont {Van{
+  }Meter}}, \bibinfo {author} {\bibfnamefont {T.~D.}\ \bibnamefont {Ladd}},
+  \bibinfo {author} {\bibfnamefont {A.~G.}\ \bibnamefont {Fowler}}, \ and\
+  \bibinfo {author} {\bibfnamefont {Y.}~\bibnamefont {Yamamoto}},\ }\bibfield
+  {title} {\enquote {\bibinfo {title} {Distributed quantum computation
+  architecture using semiconductor nanophotonics},}\ }\href
+  {https://www.worldscientific.com/doi/abs/10.1142/S0219749910006435}
+  {\bibfield  {journal} {\bibinfo  {journal} {International Journal of Quantum
+  Information}\ }\textbf {\bibinfo {volume} {8}},\ \bibinfo {pages} {295--323}
+  (\bibinfo {year} {2010})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Jones}\ \emph {et~al.}(2012)\citenamefont {Jones},
+  \citenamefont {Van~Meter}, \citenamefont {Fowler}, \citenamefont {McMahon},
+  \citenamefont {Kim}, \citenamefont {Ladd},\ and\ \citenamefont
+  {Yamamoto}}]{PhysRevX.2.031007}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {N.~C.}\ \bibnamefont
+  {Jones}}, \bibinfo {author} {\bibfnamefont {R.}~\bibnamefont {Van~Meter}},
+  \bibinfo {author} {\bibfnamefont {A.~G.}\ \bibnamefont {Fowler}}, \bibinfo
+  {author} {\bibfnamefont {P.~L.}\ \bibnamefont {McMahon}}, \bibinfo {author}
+  {\bibfnamefont {J.}~\bibnamefont {Kim}}, \bibinfo {author} {\bibfnamefont
+  {T.~D.}\ \bibnamefont {Ladd}}, \ and\ \bibinfo {author} {\bibfnamefont
+  {Y.}~\bibnamefont {Yamamoto}},\ }\bibfield  {title} {\enquote {\bibinfo
+  {title} {Layered architecture for quantum computing},}\ }\href {\doibase
+  10.1103/PhysRevX.2.031007} {\bibfield  {journal} {\bibinfo  {journal} {Phys.
+  Rev. X}\ }\textbf {\bibinfo {volume} {2}},\ \bibinfo {pages} {031007}
+  (\bibinfo {year} {2012})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Fowler}, \citenamefont {Devitt},\ and\ \citenamefont
+  {Hollenberg}(2004)}]{fowler04:_shor_implem}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.~G.}\ \bibnamefont
+  {Fowler}}, \bibinfo {author} {\bibfnamefont {S.~J.}\ \bibnamefont {Devitt}},
+  \ and\ \bibinfo {author} {\bibfnamefont {L.~C.}\ \bibnamefont {Hollenberg}},\
+  }\bibfield  {title} {\enquote {\bibinfo {title} {Implementation of {Shor's}
+  algorithm on a linear nearest neighbor qubit array},}\ }\href
+  {https://arxiv.org/abs/quant-ph/0402196} {\bibfield  {journal} {\bibinfo
+  {journal} {Quantum Information and Computation}\ }\textbf {\bibinfo {volume}
+  {4}},\ \bibinfo {pages} {237} (\bibinfo {year} {2004})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Vedral}, \citenamefont {Barenco},\ and\ \citenamefont
+  {Ekert}(1996)}]{vedral:quant-arith}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {V.}~\bibnamefont
+  {Vedral}}, \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont {Barenco}}, \
+  and\ \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont {Ekert}},\ }\bibfield
+   {title} {\enquote {\bibinfo {title} {Quantum networks for elementary
+  arithmetic operations},}\ }\href@noop {} {\bibfield  {journal} {\bibinfo
+  {journal} {Phys. Rev. A}\ }\textbf {\bibinfo {volume} {54}},\ \bibinfo
+  {pages} {147--153} (\bibinfo {year} {1996})},\ \bibinfo {note}
+  {http://arXiv.org/quant-ph/9511018}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Beckman}\ \emph {et~al.}(1996)\citenamefont
+  {Beckman}, \citenamefont {Chari}, \citenamefont {Devabhaktuni},\ and\
+  \citenamefont {Preskill}}]{beckman96:eff-net-quant-fact}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {D.}~\bibnamefont
+  {Beckman}}, \bibinfo {author} {\bibfnamefont {A.~N.}\ \bibnamefont {Chari}},
+  \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont {Devabhaktuni}}, \ and\
+  \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Preskill}},\ }\bibfield
+  {title} {\enquote {\bibinfo {title} {Efficient networks for quantum
+  factoring},}\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal}
+  {Phys. Rev. A}\ }\textbf {\bibinfo {volume} {54}},\ \bibinfo {pages}
+  {1034--1063} (\bibinfo {year} {1996})},\ \bibinfo {note}
+  {http://arXiv.org/quant-ph/9602016}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Pavlidis}\ and\ \citenamefont
+  {Gizopoulos}(2014)}]{Pavlidis:2014:FQM:2638682.2638690}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Pavlidis}}\ and\ \bibinfo {author} {\bibfnamefont {D.}~\bibnamefont
+  {Gizopoulos}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Fast quantum
+  modular exponentiation architecture for {Shor's} factoring algorithm},}\
+  }\href {http://dl.acm.org/citation.cfm?id=2638682.2638690} {\bibfield
+  {journal} {\bibinfo  {journal} {Quantum Info. Comput.}\ }\textbf {\bibinfo
+  {volume} {14}},\ \bibinfo {pages} {649--682} (\bibinfo {year}
+  {2014})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Miquel}, \citenamefont {Paz},\ and\ \citenamefont
+  {Perazzo}(1996)}]{miquel1996fdq}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {C.}~\bibnamefont
+  {Miquel}}, \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Paz}}, \ and\
+  \bibinfo {author} {\bibfnamefont {R.}~\bibnamefont {Perazzo}},\ }\bibfield
+  {title} {\enquote {\bibinfo {title} {Factoring in a dissipative quantum
+  computer},}\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal}
+  {Physical Review A}\ }\textbf {\bibinfo {volume} {54}},\ \bibinfo {pages}
+  {2605--2613} (\bibinfo {year} {1996})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Chuang}\ \emph {et~al.}(1995)\citenamefont {Chuang},
+  \citenamefont {Laflamme}, \citenamefont {Shor},\ and\ \citenamefont
+  {Zurek}}]{chuang95:_factoring-decoherence}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {I.~L.}\ \bibnamefont
+  {Chuang}}, \bibinfo {author} {\bibfnamefont {R.}~\bibnamefont {Laflamme}},
+  \bibinfo {author} {\bibfnamefont {P.}~\bibnamefont {Shor}}, \ and\ \bibinfo
+  {author} {\bibfnamefont {W.~H.}\ \bibnamefont {Zurek}},\ }\bibfield  {title}
+  {\enquote {\bibinfo {title} {Quantum computers, factoring and decoherence},}\
+  }\href {https://science.sciencemag.org/content/270/5242/1633} {\bibfield
+  {journal} {\bibinfo  {journal} {Science}\ }\textbf {\bibinfo {volume}
+  {270}},\ \bibinfo {pages} {1633--1635} (\bibinfo {year} {1995})}\BibitemShut
+  {NoStop}%
+\bibitem [{\citenamefont {Dridi}\ and\ \citenamefont
+  {Alghassi}(2017)}]{dridi2017prime}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {R.}~\bibnamefont
+  {Dridi}}\ and\ \bibinfo {author} {\bibfnamefont {H.}~\bibnamefont
+  {Alghassi}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {Prime
+  factorization using quantum annealing and computational algebraic
+  geometry},}\ }\href {https://www.nature.com/articles/srep43048} {\bibfield
+  {journal} {\bibinfo  {journal} {Scientific Reports}\ }\textbf {\bibinfo
+  {volume} {7}},\ \bibinfo {pages} {43048} (\bibinfo {year}
+  {2017})}\BibitemShut {NoStop}%
 \bibitem [{Note7()}]{Note7}%
   \BibitemOpen
   \bibinfo {note} {\protect \url
