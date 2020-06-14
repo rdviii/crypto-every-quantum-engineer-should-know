@@ -718,7 +718,7 @@ undesirable side effect of requiring encryption to be done serially,
 but attacks can be parallelized.  Nevertheless, it's the most commonly
 used mode.
 
-\subsection{Other Applications}
+\subsection{Other Tasks}
 
 \comment{Crypto also used for signatures; integrity hashes (both
   signed ans unsigned); spread spectrum for secrecy, difficulty of
@@ -1005,8 +1005,9 @@ So let's look at a couple of the cryptanalysis techniques.
 
 \subsection{Differential Cryptanalysis}
 
-Biham and Shamir wrote a seminal paper, then an easy-to-read book on
-their rediscovery of differential cryptanalysis.  The goal of DC is to
+Biham and Shamir wrote a seminal paper~\cite{biham1991differential},
+then an easy-to-read book~\cite{biham1993differential-book} on their
+rediscovery of differential cryptanalysis.  The goal of DC is to
 recover the key used for a session, so it is potentially far more
 serious than the birthday attack.
 
@@ -1160,6 +1161,10 @@ I found Heys' tutorial to be clear and helpful in understanding LC.
 \outlinecomment{Parts of this will make more sense after getting
   through the below.  Maybe this section should be moved below the
   next section.  Also, some pictures will definitely help here.}
+
+\comment{This is fairly ad hoc, a set of rough notes I wrote up
+  explaining some ideas without enough rigor.  Would love to have
+  someone with more sense than me look this section over.}
 
 Modern HTTPS (web) and SMTP (email) connections have a lot of
 predictability in their content, with commands like 'HELO' and
@@ -1799,7 +1804,8 @@ this section into this subsection!
 This document began as a very long email to a group researchers,
 following up on a question from Renato Renner about cryptographic key
 lifetimes at the Network Games, Tropical Topology and Quantum
-Communication Workshop.  Thanks to Jens Eisert for inviting me.
+Communication Workshop in Berlin in 2019.  Thanks to Jens Eisert for
+inviting me.
 
 Thanks to Darrell Piper for insight into the early discussions of IKE
 and IPsec.
@@ -1964,12 +1970,6 @@ This was based in part on a paper by Luykx and Paterson, apparently,
 though the PDF is dated later than the Mozilla web page above.
 Atul Luykx and Kenneth G. Paterson
 Limits on Authenticated Encryption Use in TLS
-
-Following their seminal paper on the technique, Biham \& Shamir
-published an entire book on the topic:
-Biham \& Shamir, Differential Cryptanalysis of the Data Encryption
-Standard, Springer 1993.
-\url{http://www.cs.technion.ac.il/~biham/Reports/differential-cryptanalysis-of-the-data-encryption-standard-biham-shamir-authors-latex-version.pdf}
 
 Weak PRNGs, including Microsoft's, and RSA/NSA elliptic curve
 generator:
@@ -2804,4 +2804,10 @@ apply the equations.
 Most important reference:
 
 \url{https://sweet32.info/}
+
+Following their seminal paper on the technique, Biham \& Shamir
+published an entire book on the topic:
+Biham \& Shamir, Differential Cryptanalysis of the Data Encryption
+Standard, Springer 1993.
+\url{http://www.cs.technion.ac.il/~biham/Reports/differential-cryptanalysis-of-the-data-encryption-standard-biham-shamir-authors-latex-version.pdf}
 
