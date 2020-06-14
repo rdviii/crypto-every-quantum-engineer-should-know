@@ -264,8 +264,9 @@ right research questions, such as:
   \end{itemize}
 \item What mathematical techniques commonly used in cryptography might
   be adaptable to use in new quantum-based attacks?
-\item What is the response of the classical cryptographic community to
-  the potential development of quantum computers?
+\item What is the response of the classical cryptographic and Internet
+  protocol and operations communities to the potential development of
+  quantum computers?
 \end{itemize}
 
 Addressing all of these questions in depth in a single document is
@@ -276,7 +277,7 @@ practice and associated historical background:
 
 \begin{enumerate}
 \item the mathematics of encryption, including how math can be used to
-  attack encryptiion;
+  attack encryption;
 \item how encryption is incorporated into complete communication
   systems;
 \item how those systems are used to achieve the ``CIA'' goals of
@@ -291,7 +292,7 @@ What this document is \emph{not}:
 \item a survey or tutorial on either QKD or Shor's algorithm;
 \item a full survey of the massive amounts of clever research done in
   quantum security algorithms
-  (e.g.,~\cite{kimmel,buhrman14:_posit_based_quant_crypt,ben-or2005fast,crepeau:_secur_multi_party_qc});
+  (e.g.,~\cite{PhysRevA.100.052326,buhrman14:_posit_based_quant_crypt,ben-or2005fast,crepeau:_secur_multi_party_qc});
 \item a survey of techniques for certifying the quantumness of states~\cite{eisert2019cert}; or
 \item a full tutorial on cryptography.
 \end{itemize}
@@ -326,7 +327,7 @@ There are two fundamental reasons for periodic rekeying:
 
 \begin{enumerate}
 \item Having a long string of data encrypted with the same key increases
-the ability of an attacker to find the key.
+the probability of an attacker being able to find the key.
 \item As a practical matter, reducing the amount of data that is exposed
 in the event that a key is broken is good stewardship of your data.
 \end{enumerate}
@@ -397,7 +398,7 @@ We also need these definitions:
 
 \begin{itemize}
 \item brute force/exhaustive search: checking every possible key, which of
-  course is $2^n$ for an n-bit key, resulting in an expected hit time of
+  course is $2^n$ for an $n$-bit key, resulting in an expected hit time of
   half that number of trials; if you have a method that will find a
   key in substantially less than $2^{n-1}$ trials, you have "broken" the
   cipher, even if your attack isn't necessarily practical in the short
@@ -446,20 +447,20 @@ The tuple $\langle n,e\rangle$ is now your public key, and $d$ is your private k
 You can publish $\langle n,e\rangle$ any way you like, including in the New York
 Times. To send you a message $m$, I calculate the ciphertext $c$,
 
-	$c = m^e \bmod n$
+$c = m^e \bmod n$
 
 and send $c$ to you.  You can recover the message $m$ by
 
-    	$m = c^d \bmod n$
+$m = c^d \bmod n$
 
 That's all there is to it!  Except that it's expensive, so we don't
 use it for every message.  If I send you "Hi, Bob, it's Tuesday, let's
 use 42 as our key," using your public key and you reply, "Tuesday is
 beautiful, Alice, and 42 is fine," using my public key, we confirm
 that we are definitely Bob and Alice, known as authentication --
-assuming, of course, that you trust that the key <n,e> that you are
-holding really and truly belongs to me, and I haven't leaked it out
-somehow!
+assuming, of course, that you trust that the key $\langle n,e\rangle$
+that you are holding really and truly belongs to me, and I haven't
+leaked it out somehow!
 
 As you might guess from the publication of $n$, RSA is the one that's
 vulnerable to factoring larger integers, and hence of interest to
@@ -470,8 +471,9 @@ upgraded from 2048, for "near-term protection" (up to ten years).
 They recommend an extraordinary 15360 bits for "long-term protection"
 (thirty to fifty years). [Cloudflare, Keylength.com, Ecrypt, Lenstra]
 
-[See \url{https://en.wikipedia.org/wiki/Primality_test} for how hard it is
-to find primes big enough.]
+Finding prime numbers large enough to be used also requires a
+substantial amount of computation~\footnote{See
+  \url{https://en.wikipedia.org/wiki/Primality_test}.}.
 
 [called ECRYPT-CSA 2018, via Shigeya]
 
@@ -663,15 +665,36 @@ The S box in SubBytes is a single, byte-level, fixed operation, $1:1$, unlike th
 
 The ShiftRows operation rotates all rows but the first. The MixColumns operation is more complex, executed as a matrix multiplication using modulo-two integer arithmetic. These two operations maximize the diffusion of the original data. The AddRoundKey is a simple XOR of the 128-bit round key into the block.
 
-AES is easily implemented in either software or hardware. Some modern CPUs include special instructions to accelerate AES encryption, and even for those that don't, heavily optimized assembly language is achievable.  In the absence of special hardware, encrypting each 128-bit block of data requires several hundred CPU instructions. For example, my Mac laptop, with a 2.2GHz Intel Core i7 processor, encrypts AES-CBC at the following rates:
+AES is easily implemented in either software or hardware. Some modern
+CPUs include special instructions to accelerate AES
+encryption~\footnote{On recent Intel processors the instructions
+  \textsc{aesdec}, \textsc{aesdeclast}, \textsc{aesenc},
+  \textsc{aesenclast}, \textsc{aesimc}, and \textsc{aeskeygetnassist}
+  are custom-created for AES, and \textsc{pclmulqdq} is a more generic
+  instruction for lock-oriented encryption.} , and even for those that
+don't, heavily optimized assembly language is achievable.  In the
+absence of special hardware, encrypting each 128-bit block of data
+requires several hundred CPU instructions. Example encryption rates
+for a modern laptop are shown in Tab.~\ref{tab:mac-aes}
 
-\begin{widetext}
-\begin{verbatim}
-128-bit key: 1.25 Gbps for 16-byte chunks, 1.44 Gbps for 8192-byte chunks
-192-bit key: 1.06 Gbps for 16-byte chunks, 1.18 Gbps for 8192-byte chunks
-256-bit key: 912 Mbps for 16-byte chunks, 1.01 Gbps for 8192-byte chunks
-\end{verbatim}
-\end{widetext}
+% \begin{widetext}
+% \begin{verbatim}
+% 128-bit key: 1.25 Gbps for 16-byte chunks, 1.44 Gbps for 8192-byte chunks
+% 192-bit key: 1.06 Gbps for 16-byte chunks, 1.18 Gbps for 8192-byte chunks
+% 256-bit key: 912 Mbps for 16-byte chunks, 1.01 Gbps for 8192-byte chunks
+% \end{verbatim}
+% \end{widetext}
+
+\begin{table}
+\begin{tabular}{l | r | r}
+            & 16-byte chunks & 8,192-byte chunks \\\hline
+128-bit key & 1.25 Gbps & 1.44 Gbps \\
+192-bit key & 1.06 Gbps & 1.18 Gbps \\
+256-bit key & 912 Mbps & 1.01 Gbps
+\end{tabular}
+\caption{AES-CBC encryption rates on a Macintosh laptop with a 2.2GHz Intel Core i7 processor}
+\label{tab:mac-aes}
+\end{table}
 
 Despite two decades of effort, there are no known attacks on AES that allow recovery of the key in substantially less time than brute force; the best attacks roughly halve that cost, at the cost of requiring tremendous amounts of storage.
 
@@ -702,16 +725,18 @@ used mode.
   triangulation and being hard to jam; challenge response rfid and
   smart credit cards.}
 
-\comment{bitcoiin here or elsewhere?  Blockchain is an \emph{auditable
+\comment{bitcoin here or elsewhere?  Blockchain is an \emph{auditable
     communication channel}~\cite{suzuki2017blockchain}.}
 
-\comment{Internet security-oriented encryption not covered yet: ssh, DNSSEC, BGPsec}
+\comment{Internet security-oriented encryption not covered yet: ssh/scp, DNSSEC, BGPsec}
 
 \subsection{Notes \& References}
 
 To be added.
 
 \section{Cryptanalysis}
+
+\outlinecomment{Get Aono, Moriai or others to contribute here.}
 
 The general idea of trying to decode messages that are encrypted is
 known as cryptanalysis.  Some of the planet's smartest people have
@@ -791,32 +816,13 @@ plaintext; low entropy indicates a high probability that we have (at
 least partially) succeeded.
 
 The entropy is defined as
-$H_{2}(X)=-\sum_{i=1}^{N} \frac{\operatorname{count}_{i}}{N} \log
-_{2}\left(\frac{\operatorname{count}_{i}}{N}\right)$
+\begin{align}
+H_{2}(X)=-\sum_{i=1}^{N} \frac{\operatorname{count}_{i}}{N} \log
+_{2}\left(\frac{\operatorname{count}_{i}}{N}\right)
+\end{align}
 where $\operatorname{count}_i$ is the number of times that the $i$th
 value appeared in our data, and $N$ is the number of different values
 that show up in our data sequence.
-
-From the fantastic website RosettaCode.org, we have a simple example
-in Python of calculating the entropy in bits per byte:
-
-\begin{widetext}
-%\begin{verbatim}
-\begin{lstlisting}[language=Python]
-import math
-from collections import Counter
-
-def entropy(s):
-    p, lns = Counter(s), float(len(s))
-    return -sum( count/lns * math.log(count/lns, 2) for count in p.values())
-
-entropy("1223334444")
-\end{lstlisting}
-%\end{verbatim}
-\end{widetext}
-
-(This function can actually calculate entropy of strings of other
-types besides characters, as well.)
 
 Note that this definition of entropy does not take into account any
 long-range structure; it is purely based on the overall probability of
@@ -834,13 +840,14 @@ compressed effectively; this is especially good at sequences such as
 0101...01 or 000...01...111.
 
 (Taking still further advantage of brainpower, the ultimate in
-compression is measured using the \emph{Kolmogorov complexity}: the length
-of the shortest program that will reproduce the sequence.  This has
-very low complexity for anything highly regular, as well as seemingly
-irregular sequences such as the output of a pseudo-random number
-generator or the digits of $\pi$.  I am not aware of any automated
-form for calculating the Kolmogorov complexity of an arbitrary
-sequence of data.)
+compression is measured using the \emph{Kolmogorov complexity}: the
+length of the shortest program that will reproduce the sequence.  This
+has very low complexity for anything highly regular, as well as
+seemingly irregular sequences such as the output of a pseudo-random
+number generator or the digits of $\pi$.  I am not aware of any
+automated form for calculating the Kolmogorov complexity of an
+arbitrary sequence of data; in fact, it is known to be equivalent to
+the halting problem~\cite{chaitin1975theory,chaitin1995program}.)
 
 Many other tests for randomness are important and are used to validate
 experimentally how completely an encryption system hides its data.  If
@@ -873,12 +880,14 @@ bits with 50\% probability.
 \emph{The Handbook of Applied Cryptography} says the following (p. 20 in my
 edition):
 
-"A substitution in a round is said to add \emph{confusion} to the
+\begin{quote}
+A substitution in a round is said to add \emph{confusion} to the
 encryption process whereas a transposition [permutation] is said to
 add \emph{diffusion}. Confusion is intended to make the relationship
 between the key and the ciphertext as complex as possible.  Diffusion
 refers to rearranging or spreading out the bits in the message so that
-any redundancy in the plaintext is spread out over the ciphertext."
+any redundancy in the plaintext is spread out over the ciphertext.
+\end{quote}
 
 I haven't seen it written quite this directly (but then, I'm not that
 well read in crypto), but I think it's fair to say that confusion is
@@ -1213,12 +1222,7 @@ mount a chosen plaintext attack.
 
 Some of the references I used for this section:
 
-The Best Thing (TM):
-\url{https://sweet32.info/}
-\url{https://sweet32.info/SWEET32_CCS16.pdf}
-
-\url{https://danielmiessler.com/study/birthday_attack/}
-http://mathworld.wolfram.com/BirthdayAttack.html
+The best source on the current state of the birthday paradox is Bhargavan and Leurent~\cite{bhargavan2016practical}.  Other references include Miessler~\footnote{\url{https://danielmiessler.com/study/birthday_attack/}} and Wolfram Mathworld~\footnote{\url{http://mathworld.wolfram.com/BirthdayAttack.html}}.
 
 1. Howard M. Heys, "A tutorial on linear and differential
 cryptanalysis", undated but probably 1999ish?
@@ -1253,12 +1257,14 @@ apply the equations.
 In this section, we return to the original question about rekeying
 that sparked this whole venture, and answer three questions:
 
-1. What are the technical mechanisms in place for rekeying and
+\begin{enumerate}
+\item What are the technical mechanisms in place for rekeying and
    effective use of encryption in the Internet standard security
    protocol IPsec?
-2. What was known, at the time these protocols were developed, about
+\item What was known, at the time these protocols were developed, about
    the best practices for rekeying?
-3. What are best practices today?
+\item What are best practices today?
+\end{enumerate}
 
 \subsubsection{Background on IPsec, IETF and RFCs}
 
@@ -1300,14 +1306,14 @@ status.
 \subsubsection{IKE and IPsec}
 
 If you really want to dig into the key exchange protocol, RFC 7296
-(Oct. 2014) is the most modern reference.  Unless you're actually
-manually configuring or implementing the stuff, you probably won't
-care about the differences between it and the older versions.
-https://tools.ietf.org/html/rfc7296
+(Oct. 2014) is the most modern reference~\cite{RFC7296}.  Unless
+you're actually manually configuring or implementing the stuff, you
+probably won't care about the differences between it and the older
+versions.
 
 But you might want to start with RFC 4301 (Dec. 2005) (also a proposed
 standard), which is titled, "Security Architecture for the Internet
-Protocol."
+Protocol"~\cite{RFC4301}.
 
 IPsec has a couple of modes, but let's stick to what's called tunnel
 mode.  Two boxes, known as gateways, build one or more Security
@@ -1449,12 +1455,13 @@ preprint server~\cite{cryptoeprint:2012:623}.
 
 (This one is just a placeholder, but there is surprisingly little
 \emph{documented} about this kind of work.  Even e.g. the publications
-describing the recent Chinese QKD satellite experiment say, "We used
-AES plus QKD," or, "We used QKD-generated keys as a one-time pad," but
-they tell you nothing about the \emph{network} or \emph{transport} layer
-protocols used, so who knows?  Might be documented elsewhere on the
-web, or described in talks, but so far I've failed to track down
-anything authoritative.)
+describing the recent Chinese QKD satellite
+experiment~\cite{PhysRevLett.120.030501} say, "We used AES plus QKD,"
+or, "We used QKD-generated keys as a one-time pad," but they tell you
+nothing about the \emph{network} or \emph{transport} layer protocols
+used, so who knows?  Might be documented elsewhere on the web, or
+described in talks, but so far I've failed to track down anything
+authoritative.)
 
 Chip Elliott was the first to modify IPsec to work with QKD, as far as
 I'm aware, described in a 2003 SIGCOMM paper.  Shota Nagayama drafted
@@ -1472,26 +1479,28 @@ in Section 5.)
 
 Here we want to answer the same three questions we had above:
 
-1. What are the technical mechanisms in place for rekeying and
-   effective use of encryption?
-2. What was known, at the time these protocols were developed, about
+\begin{enumerate}
+\item What are the technical mechanisms in place for rekeying and
+   effective use of encryption in TLS?
+\item What was known, at the time this protocol was developed, about
    the best practices for rekeying?
-3. What are best practices today?
+\item What are best practices today?
+\end{enumerate}
 
 but this section will be much shorter, as I know so much less about
 TLS (despite the fact that it is the most important use of encryption
 on the Internet today).
 
-The current standard for Transport Layer Security, or TLS, is RFC8446,
-published in 2018.  It specifies version 1.3 of the protocol.  The
-main document itself is only 160 pages, not bad for something so
-complex and important.  (The 1.2 spec was only about 100 pages, so it
-has grown substantially.)
+The current standard for Transport Layer Security, or TLS, is
+RFC8446~\cite{RFC8446}, published in 2018.  It specifies version 1.3
+of the protocol.  The main document itself is only 160 pages, not bad
+for something so complex and important.  (The 1.2 spec was only about
+100 pages, so it has grown substantially.)
 
 ...oh, what is TLS?  It's the protocol that HTTPS runs over.  It's the
 successor to SSL, the Secure Sockets Layer, which was the first way to
 encrypt web browsing.  TLS originally built on top of a reliable
-transport protocol, such as TCP, though a later adaptation (RFC6347)
+transport protocol, such as TCP, though a later adaptation~\cite{RFC6347}
 lets it run over a datagram protocol.  We'll only worry about running
 it over TCP here.  TLS provides privacy, by encrypting all of your web
 browsing traffic for a particular connection.  It also provides data
@@ -1553,7 +1562,7 @@ what both ends really want.}
 
 One startling and potentially useful document is RFC7457, "Summarizing
 Known Attacks on Transport Layer Security (TLS) and Datagram TLS
-(DTLS)".  It details a couple of dozen attacks on TLS, most having to do
+(DTLS)"~\cite{RFC7457}.  It details a couple of dozen attacks on TLS, most having to do
 with protocol implementation issues such as failing to correctly
 verify all of the information you are given.  Some of them leak
 information or allow a connection to be take over, others allow an
@@ -1579,11 +1588,17 @@ with QKD, a full decade ago.
 
 \subsection{Other Internet Security Protocols}
 
+\outlinecomment{Get Woolf to contribute here.}
+
 \comment{Internet security-oriented encryption not covered yet: ssh, DNSSEC, BGPsec}
 
 \subsection{WiFi}
 
+\outlinecomment{Get yume or maybe koluke to contribute here?}
+
 \subsection{Cellular Phones}
+
+\outlinecomment{Who can contribute here?}
 
 \subsection{Notes \& References}
 
@@ -1718,7 +1733,24 @@ this section into this subsection!
 
 \section{Post-quantum cryptography}
 
-\comment{somebody besides me should write this.  Moriai-san?  Aono-san?  Jon?}
+\outlinecomment{somebody besides me should write this.  Moriai-san?
+  Aono-san?}
+
+\comment{Jon Dowling (RIP)'s opinions here were strong.  He believed that
+  post-quantum crypto is fundamentally impossible, that all of the
+  interesting asymmetric problems useful for authentication and key
+  generation will ultimately fall to quantum algorithms.}
+
+\comment{Aono: lattice crypto is very attractive because a) it reduces to
+shortest vector or other problems, and b) implementation is easy,
+basically a matrix times a vector.}
+
+\comment{learning w/ errors As + e = t mod q
+candidate for post-quantum crypto}
+
+\comment{(n.b.: cocori created a ipynb, but misunderstood the size of the
+matrix necessary)}
+
 
 Post-quantum cryptography is the attempt to find a public key
 cryptosystem that is resistant to quantum computing, Shor's algorithm
@@ -1756,6 +1788,8 @@ this section into this subsection!
 
 \section{Policy and Conclusions}
 
+\outlinecomment{Get Farber to contribute here.}
+
 \comment{Add a few paragraphs here on how national and corporate
   policy drive, and are driven by, advances in crypto, and in
   consequence quantum.}
@@ -1786,10 +1820,6 @@ Englightenment.
 \bibliography{paper-reviews.bib}
 
 \subsection{Not yet cited}
-
-Most important reference:
-
-\url{https://sweet32.info/}
 
 8.1 IPsec:
 
@@ -1945,13 +1975,12 @@ Weak PRNGs, including Microsoft's, and RSA/NSA elliptic curve
 generator:
 \url{https://en.wikipedia.org/wiki/Random_number_generator_attack}
 
-=====
-
 \appendix
+\onecolumngrid
 
 \section{Bitcoin and Quantum Computers}
 
-\comment{someone needs to take this one on, too...}
+\outlinecomment{someone needs to take this one on, too...}
 
 I promised those of you who stuck around some things on bitcoin and
 quantum.  Here are just a few random links, not stuff I have studied
@@ -1975,9 +2004,38 @@ and follow-ups, including
 
 % Good \nocommand \more
 
-\onecolumngrid
+% \onecolumngrid
 
-\section{Some Mathematica tinkering}
+\section{Simple Coding Examples}
+
+\outlinecomment{Get cocori to contribute here.}
+
+\subsection{Entropy}
+
+From the fantastic website
+RosettaCode.org~\footnote{\url{http://rosettacode.org/wiki/Entropy}},
+we have a simple example in Python of calculating the entropy in bits
+per byte:
+
+%\begin{widetext}
+%\begin{verbatim}
+\begin{lstlisting}[language=Python]
+import math
+from collections import Counter
+
+def entropy(s):
+    p, lns = Counter(s), float(len(s))
+    return -sum( count/lns * math.log(count/lns, 2) for count in p.values())
+
+entropy("1223334444")
+\end{lstlisting}
+%\end{verbatim}
+%\end{widetext}
+
+(This function can actually calculate entropy of strings of other
+types besides characters, as well.)
+
+\subsection{Birthday Paradox/Collision Probability}
 
 Some ad hoc Mathematica code for dinking around with some of the
 numbers:
@@ -2025,154 +2083,16 @@ N[1 - 1/Sqrt[E]]
 \end{lstlisting}
 % \end{verbatim}
 
-=======
+\subsection{QKD}
 
-\section{Some notes for my students}
-
-This might seem very far from linear algebra, but the terms "linear"
-and "affine" show up in linear cryptanalysis, with a special meaning
-derived from the same concepts we saw in class.
-
-We saw a hint of the relationship between graph theory and linear
-algebra.  In the Ritter literature survey, Buttyan and Vajda are cited
-as describing one important aspect of linear cryptanalysis as a graph
-problem that would take about a terabyte of memory.  That was out of
-the question when they wrote their paper in 1995, but 1TB of RAM is no
-big deal today.  I wonder if that is still a valid idea, and if anyone
-has followed up on it?
-
----
-
-comments/observations from AQUAcamp
-
-must understand layered communication protocols to follow this!
-
-Aono: lattice crypto is very attractive because a) it reduces to
-shortest vector or other problems, and b) implementation is easy,
-basically a martix times a vector.
-
-learning w/ errors As + e = t mod q
-candidate for post-quantum crypto
-
-(n.b.: cocori created a ipynb, but misunderstood the size of the
-matrix necessary)
-
-biclique is best attack against AES
-(but Aono-san says it's not practical)
-
-Markus Grassl, Martin Roetteler on AES via Grover:
-\url{https://arxiv.org/abs/1512.04965}
-requires tremendous resources.
-Only 3-7,000 logical qubits, but up to $2^{151}$ T gates?!?
-
-Jogenfors (the QKD hacker?) on bitcoin:
-\url{https://arxiv.org/abs/1604.01383}
-
------
-
-\url{https://news.yahoo.com/exclusive-russia-carried-out-a-stunning-breach-of-fbi-communications-system-escalating-the-spy-game-on-us-soil-090024212.html?soc_src=community&soc_trk=tw}
-
-Darrell says IKEv1 is believed to be stronger post-quantum than IKEv2,
-but he hasn't told me why yet.
-
-See Pirandola and Hoi-Kwong Lo for recent QKD reviews.
-
-\url{https://csrc.nist.gov/projects/post-quantum-cryptography}
-
-On Sept. 20, it was all over the news that Google is rumored to be
-claiming quantum supremacy:
-\url{https://www.cnet.com/news/google-reportedly-attains-quantum-supremacy/}
-
-\url{https://twitter.com/susurrusus/status/1142196496739291137?s=19}
-and substantial follow-on conversation, starting in part from some
-misguided post-quantum cryptocurrency:
-\url{https://twitter.com/mochimocrypto/status/1175134812862058496}
-\url{https://twitter.com/mochimocrypto/status/1175891543233708032}
-based on WOTS+.
-What are WOTS+ and XMSS?  I assume DSA is digital signature algorithm.
-\url{https://twitter.com/mochimocrypto/status/1175135848259624960}
-replied to by Biercuk
-\url{https://twitter.com/MJBiercuk/status/1175394127841615872}
-\url{https://twitter.com/jfitzsimons/status/1175919991322886145}
-
-\url{https://blog.cloudflare.com/towards-post-quantum-cryptography-in-tls/amp/?__twitter_impression=true}
-\url{https://medium.com/altcoin-magazine/quantum-resistant-blockchain-and-cryptocurrency-the-full-analysis-in-seven-parts-part-6-769973d3decf}
-\url{https://twitter.com/jtga_d/status/1175898478712635392}
-
-Might get either John Schanck or Douglas Stebila (recommended by Joe
-Fitzsimons) to review this.
-\url{https://www.douglas.stebila.ca/}
-jschanck@uwaterloo.ca
-
-New paper on AES and Grover
-\url{https://arxiv.org/abs/1910.01700}
-
-Good info on status of DES/3-DES at
-\url{https://en.wikipedia.org/wiki/Data_Encryption_Standard}
-
-Supplementary material listing all of the S-boxes, permutations and
-functions at
-\url{https://en.wikipedia.org/wiki/DES_supplementary_material}
-
-Perlner survey of post-quantum crypto
-
-pentesting (penetration testing)?
-
-My QuantumInternet tweetstorm:
-\url{https://twitter.com/rdviii/status/854443142304497665?s=19}
-
-PQC:
-\url{https://www.scientificamerican.com/article/new-encryption-system-protects-data-from-quantum-computers/}
-
-PUF (for making a key):
-\url{https://en.wikipedia.org/wiki/Physical_unclonable_function}
-
-A quantum PUF:
-\url{https://phys.org/news/2019-10-cryptography-secret-keys.html}
-
-\url{https://www.schneier.com/blog/archives/2019/10/factoring_2048-.html}
-
-Shannon's a mathematical theory of cryptography
-\url{https://www.iacr.org/museum/shannon45.html}
-
-Prof. Consheng DING's course on Cryptography and Security
-\url{https://home.cse.ust.hk/faculty/cding/CSIT571/}
-slides on confusion \& diffusion
-\url{https://www.cse.ust.hk/faculty/cding/CSIT571/SLIDES/confdiffu.pdf}
-
-Shannon 1949 paper:
-Shannon, Claude. "Communication Theory of Secrecy Systems", Bell System Technical Journal, vol. 28(4), page 656–715, 1949.
-\url{http://netlab.cs.ucla.edu/wiki/files/shannon1949.pdf}
-
-Scott Aaronson, certified RNG
-\url{https://arxiv.org/abs/1612.05903}
-also Mahadev, Vazirani, Vidick
-\url{https://arxiv.org/abs/1804.00640}
-\url{https://www.quantamagazine.org/how-to-turn-a-quantum-computer-into-the-ultimate-randomness-generator-20190619/}
-
-
-More on PQC:
-\url{https://blog.cloudflare.com/the-tls-post-quantum-experiment/}
-\url{https://www.johndcook.com/blog/2019/10/23/quantum-supremacy-and-pqc/}
-
-Program "ent" on Linux distros?
-
-Wow, entropy calculation in a bazillion languages:
-\url{http://rosettacode.org/wiki/Entropy}
-\begin{verbatim}
-import math
-from collections import Counter
-
-def entropy(s):
-    p, lns = Counter(s), float(len(s))
-    return -sum( count/lns * math.log(count/lns, 2) for count in p.values())
-
-entropy("1223334444")
-\end{verbatim}
+BB84 in Qiskit:
+\url{https://github.com/qiskit-community/may4_challenge_exercises/blob/master/ex03/Challenge3_BB84_Solutions.ipynb}
 
 \section{Performance Testing}
 
-Run on battery, 10/30:
+%\onecolumngrid
+
+The data in Tab.~\ref{tab:mac-aes} was taken using the \verb|openssl speed| command.
 
 \begin{verbatim}
 VanMetedneysMBP:what-crypto rdv$ openssl speed
@@ -2454,9 +2374,6 @@ dsa 2048 bits 0.000221s 0.000199s   4515.3   5029.3
 
 \section{Unsorted Notes}
 
-Shelby Kimmel on no-go bounds for quantum seals:
-\url{https://journals.aps.org/pra/accepted/45074N5dCa413a18c5645123e9b2b8363d15ea1fc}
-
 \url{https://brunorijsman.github.io/openssl-qkd/}
 
 quantum random number generators:
@@ -2511,7 +2428,7 @@ Replying to
  and 
 @rdviii
 Two quick comments on (https://rdvlivefromtokyo.blogspot.com/2019/11/21-playing-defense-211-entropy.html):
-1. Kolmogorov complexity is uncomputable (https://web.archive.org/web/20190326105001/http://www.nearly42.org/vdisk/articles/Program-size_Complexity_Computes_the_Halting_Problem.pdf)
+1. Kolmogorov complexity is uncomputable (https://web.archive.org/web/20190326105001/ http://www.nearly42.org/vdisk/articles/Program-size_Complexity_Computes_the_Halting_Problem.pdf)
 2. You hint at this in the post, but to be explicit, in crypto, we
 care about min-entropy and not entropy.
 \end{verbatim}
@@ -2572,7 +2489,6 @@ Refers to (original?) paper on leakage of info via
 compression-over-encryption:
 \url{https://link.springer.com/chapter/10.1007%2F3-540-45661-9_21}
 
------
 
 \subsection{From ddp}
 
@@ -2708,14 +2624,132 @@ SHA-1 is a Shambles:
 \url{https://sha-mbles.github.io/}
 \url{https://www.openssh.com/txt/release-8.3}
 
-BB84 in Qiskit:
-\url{https://github.com/qiskit-community/may4_challenge_exercises/blob/master/ex03/Challenge3_BB84_Solutions.ipynb}
-
 WeakDH is back online:
 \url{https://weakdh.org/}
 
 Elliott et al., SIGCOMM 2003:
 \url{https://arxiv.org/abs/quant-ph/0307049}
+
+-----
+
+This might seem very far from linear algebra, but the terms "linear"
+and "affine" show up in linear cryptanalysis, with a special meaning
+derived from the same concepts we saw in class.
+
+We saw a hint of the relationship between graph theory and linear
+algebra.  In the Ritter literature survey, Buttyan and Vajda are cited
+as describing one important aspect of linear cryptanalysis as a graph
+problem that would take about a terabyte of memory.  That was out of
+the question when they wrote their paper in 1995, but 1TB of RAM is no
+big deal today.  I wonder if that is still a valid idea, and if anyone
+has followed up on it?
+
+---
+
+comments/observations from AQUAcamp
+
+must understand layered communication protocols to follow this!
+
+
+biclique is best attack against AES
+(but Aono-san says it's not practical)
+
+Markus Grassl, Martin Roetteler on AES via Grover:
+\url{https://arxiv.org/abs/1512.04965}
+requires tremendous resources.
+Only 3-7,000 logical qubits, but up to $2^{151}$ T gates?!?
+
+Jogenfors (the QKD hacker?) on bitcoin:
+\url{https://arxiv.org/abs/1604.01383}
+
+-----
+
+\url{https://news.yahoo.com/exclusive-russia-carried-out-a-stunning-breach-of-fbi-communications-system-escalating-the-spy-game-on-us-soil-090024212.html?soc_src=community&soc_trk=tw}
+
+Darrell says IKEv1 is believed to be stronger post-quantum than IKEv2,
+but he hasn't told me why yet.
+
+See Pirandola and Hoi-Kwong Lo for recent QKD reviews.
+
+\url{https://csrc.nist.gov/projects/post-quantum-cryptography}
+
+On Sept. 20, it was all over the news that Google is rumored to be
+claiming quantum supremacy:
+\url{https://www.cnet.com/news/google-reportedly-attains-quantum-supremacy/}
+
+\url{https://twitter.com/susurrusus/status/1142196496739291137?s=19}
+and substantial follow-on conversation, starting in part from some
+misguided post-quantum cryptocurrency:
+\url{https://twitter.com/mochimocrypto/status/1175134812862058496}
+\url{https://twitter.com/mochimocrypto/status/1175891543233708032}
+based on WOTS+.
+What are WOTS+ and XMSS?  I assume DSA is digital signature algorithm.
+\url{https://twitter.com/mochimocrypto/status/1175135848259624960}
+replied to by Biercuk
+\url{https://twitter.com/MJBiercuk/status/1175394127841615872}
+\url{https://twitter.com/jfitzsimons/status/1175919991322886145}
+
+\url{https://blog.cloudflare.com/towards-post-quantum-cryptography-in-tls/amp/?__twitter_impression=true}
+\url{https://medium.com/altcoin-magazine/quantum-resistant-blockchain-and-cryptocurrency-the-full-analysis-in-seven-parts-part-6-769973d3decf}
+\url{https://twitter.com/jtga_d/status/1175898478712635392}
+
+Might get either John Schanck or Douglas Stebila (recommended by Joe
+Fitzsimons) to review this.
+\url{https://www.douglas.stebila.ca/}
+jschanck@uwaterloo.ca
+
+New paper on AES and Grover
+\url{https://arxiv.org/abs/1910.01700}
+
+Good info on status of DES/3-DES at
+\url{https://en.wikipedia.org/wiki/Data_Encryption_Standard}
+
+Supplementary material listing all of the S-boxes, permutations and
+functions at
+\url{https://en.wikipedia.org/wiki/DES_supplementary_material}
+
+Perlner survey of post-quantum crypto
+
+pentesting (penetration testing)?
+
+My QuantumInternet tweetstorm:
+\url{https://twitter.com/rdviii/status/854443142304497665?s=19}
+
+PQC:
+\url{https://www.scientificamerican.com/article/new-encryption-system-protects-data-from-quantum-computers/}
+
+PUF (for making a key):
+\url{https://en.wikipedia.org/wiki/Physical_unclonable_function}
+
+A quantum PUF:
+\url{https://phys.org/news/2019-10-cryptography-secret-keys.html}
+
+\url{https://www.schneier.com/blog/archives/2019/10/factoring_2048-.html}
+
+Shannon's a mathematical theory of cryptography
+\url{https://www.iacr.org/museum/shannon45.html}
+
+Prof. Consheng DING's course on Cryptography and Security
+\url{https://home.cse.ust.hk/faculty/cding/CSIT571/}
+slides on confusion \& diffusion
+\url{https://www.cse.ust.hk/faculty/cding/CSIT571/SLIDES/confdiffu.pdf}
+
+Shannon 1949 paper:
+Shannon, Claude. "Communication Theory of Secrecy Systems", Bell System Technical Journal, vol. 28(4), page 656–715, 1949.
+\url{http://netlab.cs.ucla.edu/wiki/files/shannon1949.pdf}
+
+Scott Aaronson, certified RNG
+\url{https://arxiv.org/abs/1612.05903}
+also Mahadev, Vazirani, Vidick
+\url{https://arxiv.org/abs/1804.00640}
+\url{https://www.quantamagazine.org/how-to-turn-a-quantum-computer-into-the-ultimate-randomness-generator-20190619/}
+
+
+More on PQC:
+\url{https://blog.cloudflare.com/the-tls-post-quantum-experiment/}
+\url{https://www.johndcook.com/blog/2019/10/23/quantum-supremacy-and-pqc/}
+
+Program "ent" on Linux distros?
 
 \end{document}
 
@@ -2730,3 +2764,44 @@ rekeying) on faith.  So, let's dig a little deeper...there won't be
 any \emph{new} knowledge in this, but I hope it helps bring together some
 information and organizes it to both save you the googling and
 calculating I've done and to provide a clear picture.
+
+Shelby Kimmel on no-go bounds for quantum seals:
+\url{https://journals.aps.org/pra/accepted/45074N5dCa413a18c5645123e9b2b8363d15ea1fc}
+
+The Best Thing (TM)~\cite{bhargavan2016practical}:
+\url{https://sweet32.info/}
+\url{https://sweet32.info/SWEET32_CCS16.pdf}
+
+Some of the references I used for this section:
+
+The best source on the current state of the birthday paradox is Bhargavan and Leurent~\cite{bhargavan2016practical}.  Other references include Miessler~\footnote{\url{https://danielmiessler.com/study/birthday_attack/}} and Wolfram Mathworld~\footnote{\url{http://mathworld.wolfram.com/BirthdayAttack.html}}.
+
+1. Howard M. Heys, "A tutorial on linear and differential
+cryptanalysis", undated but probably 1999ish?
+\url{http://www.engr.mun.ca/~howard/Research/Papers/ldc_tutorial.html}
+
+2. Abdalla and Bellare,
+\url{https://link.springer.com/chapter/10.1007/3-540-44448-3_42}
+\url{http://cseweb.ucsd.edu/~mihir/papers/rekey.html}
+found via
+\url{http://cseweb.ucsd.edu/~mihir/}
+
+That paper talks about differential/linear cryptanalysis and about the
+birthday paradox, saying block size $k$ needs to be rekeyed every
+$2^{k/2}$ blocks.
+
+Bellare et al, A concrete security treatment of symmetric encryption:
+analysis of the DES modes of operation
+abstract from STOC 1997
+https://ieeexplore.ieee.org/abstract/document/646128
+full paper at
+\url{http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.117.4734&rep=rep1&type=pdf}
+Focuses on DES, which was in the process of being superseded by AES
+even in 1997, but the content of the paper is valuable with respect to
+CBC.  I found the paper a tough read when trying to figure out how to
+apply the equations.
+
+Most important reference:
+
+\url{https://sweet32.info/}
+
