@@ -6,7 +6,7 @@
 %Control: page (1) range
 %Control: year (1) truncated
 %Control: production of eprint (0) enabled
-\begin{thebibliography}{61}%
+\begin{thebibliography}{62}%
 \makeatletter
 \providecommand \@ifxundefined [1]{%
  \@ifx{#1\undefined}
@@ -354,6 +354,19 @@
   \bibinfo {note} {\protect \url
   {https://en.wikipedia.org/wiki/Confusion_and_diffusion}}\BibitemShut
   {NoStop}%
+\bibitem [{\citenamefont {Webster}\ and\ \citenamefont
+  {Tavares}(1986)}]{webster86:avalanche}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.~F.}\ \bibnamefont
+  {Webster}}\ and\ \bibinfo {author} {\bibfnamefont {S.~E.}\ \bibnamefont
+  {Tavares}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {On the design
+  of s-boxes},}\ }in\ \href
+  {https://link.springer.com/chapter/10.1007/3-540-39799-X_41} {\emph {\bibinfo
+  {booktitle} {Advances in Cryptology --- CRYPTO '85 Proceedings}}},\ \bibinfo
+  {editor} {edited by\ \bibinfo {editor} {\bibfnamefont {H.~C.}\ \bibnamefont
+  {Williams}}}\ (\bibinfo  {publisher} {Springer Berlin Heidelberg},\ \bibinfo
+  {address} {Berlin, Heidelberg},\ \bibinfo {year} {1986})\ pp.\ \bibinfo
+  {pages} {523--534}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Biham}\ and\ \citenamefont
   {Shamir}(1991)}]{biham1991differential}%
   \BibitemOpen

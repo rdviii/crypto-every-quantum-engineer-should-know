@@ -346,8 +346,8 @@ Modern practice with digital communications effectively began in the
 1970s~\cite{schneier96:_applied_crypto,menezes1996handbook}.
 \emph{Computer security} often involves cryptography, but is a far
 broader field tasked with ensuring the confidentiality, integrity and
-availability of data, computing and communication resources
- and good  crypto/security references~\cite{bishop2002art}.
+availability of data, computing and communication
+resources~\cite{bishop2002art}.
 
 You probably all know that there are two major kinds of cryptography
 -- symmetric key and asymmetric key, also known as public key.  Due to
@@ -367,7 +367,7 @@ Some additional terminology:
 \item confidentiality or privacy: the data hasn't been disclosed to anyone unauthorized
 \item session keys: the keys used for one communication session
 \item forward secrecy: keeping your data secret in the future, esp. by
-  building a crypytosystem that doesn't reuse keys
+  building a cryptosystem that doesn't reuse keys
 \item rekeying: changing the keys used in the middle of a session
 \item subkeys: keys used for a portion of an encryption process, derived
   from a subset of the bits of the session key
@@ -446,12 +446,13 @@ The best-known and most-used form of public key crypto is RSA, developed by Rive
 The tuple $\langle n,e\rangle$ is now your public key, and $d$ is your private key.
 You can publish $\langle n,e\rangle$ any way you like, including in the New York
 Times. To send you a message $m$, I calculate the ciphertext $c$,
-
-$c = m^e \bmod n$
-
+\begin{align}
+c = m^e \bmod n
+\end{align}
 and send $c$ to you.  You can recover the message $m$ by
-
-$m = c^d \bmod n$
+\begin{align}
+m = c^d \bmod n.
+\end{align}
 
 That's all there is to it!  Except that it's expensive, so we don't
 use it for every message.  If I send you "Hi, Bob, it's Tuesday, let's
@@ -599,9 +600,9 @@ is:
       the schedule)
     \end{enumerate}
   \item XOR subkey $i$ with the left half of the block
-  \item split into 8 six-bit pieces
+  \item split into eight 6-bit pieces
   \item push each 6-bit piece through a $6\rightarrow 4$ S-box
-  \item permute and recombine the pieces (a fixed operation)
+  \item permute and recombine the eight 4-bit pieces (a fixed operation)
   \item XOR the left half with the right half of the block
   \item swap halves of the block
   \end{enumerate}
@@ -647,7 +648,11 @@ of a substitution-permutation network, but is not purely so. A
 well-designed s-p net will maximize Shannon's confusion (or the
 avalanche effect) and diffusion, which we will see shortly (Sec.~\ref{sec:diffusion}).
 
-AES begins by laying out the sixteen bytes in a $4\times 4$ array in column major form:the first byte in the upper left, then the next byte below it, with the fifth byte returning to the top of the second column. Most operations work on rows, however, increasing the mixing of the bytes.
+AES begins by laying out the sixteen bytes in a $4\times 4$ array in
+column major form: the first byte in the upper left, then the next
+byte below it, with the fifth byte returning to the top of the second
+column. Most operations work on rows, however, increasing the mixing
+of the bytes.
 
 First, in the KeyExpansion phase, the round keys are created from the original key.
 
@@ -873,13 +878,13 @@ better.  Shannon defined \emph{confusion} as making "the relation
 between...[the ciphertext] $E$ and the...[key] $K$ a very complex and
 involved one."
 
-Feistel, who designed DES, called diffusion the \emph{avalanche effect}.
-Webster and Tavares defined the \emph{strict avalanche criterion} (SAC),
-requiring that changing a single input bit flips each of the output
-bits with 50\% probability.
+Feistel, who designed DES, called diffusion the \emph{avalanche
+  effect}.  Webster and Tavares~\cite{webster86:avalanche} defined the
+\emph{strict avalanche criterion} (SAC), requiring that changing a
+single input bit flips each of the output bits with 50\% probability.
 
-\emph{The Handbook of Applied Cryptography} says the following (p. 20 in my
-edition):
+\emph{The Handbook of Applied Cryptography}~\cite{menezes1996handbook}
+says the following (p. 20 in my edition):
 
 \begin{quote}
 A substitution in a round is said to add \emph{confusion} to the
@@ -2393,7 +2398,9 @@ SHA-1 broken:
 \url{https://link.springer.com/chapter/10.1007%2F978-3-030-17659-4_18}
 \url{https://eurocrypt.iacr.org/2019/program.html}
 
-cocori's post-quantum crypto Python
+cocori's post-quantum crypto Python.  New version:
+\url{https://colab.research.google.com/drive/1jnAY-Jopo8t5Cb0_sT2cNuMORFYnkfl2?usp=sharing}
+Old version:
 \url{https://colab.research.google.com/drive/1a4sh9PYCOyZO9dRsJpT17scLS3eMWU0T}
 
 \subsection{A Twitter Exchange}
