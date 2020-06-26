@@ -6,7 +6,7 @@
 %Control: page (1) range
 %Control: year (1) truncated
 %Control: production of eprint (0) enabled
-\begin{thebibliography}{62}%
+\begin{thebibliography}{64}%
 \makeatletter
 \providecommand \@ifxundefined [1]{%
  \@ifx{#1\undefined}
@@ -557,6 +557,20 @@
   {QKD}},}\ } (\bibinfo {year} {2014}),\ \bibinfo {note} {internet Draft,
   draft-nagayama-ipsecme-ipsec-with-qkd-01; expired April 30, 2015}\BibitemShut
   {NoStop}%
+\bibitem [{\citenamefont {TANIZAWA}\ \emph {et~al.}(2016)\citenamefont
+  {TANIZAWA}, \citenamefont {TAKAHASHI}, \citenamefont {Hideaki}, \citenamefont
+  {DIXON},\ and\ \citenamefont {KAWAMURA}}]{tanizawa2016secure}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {Y.}~\bibnamefont
+  {TANIZAWA}}, \bibinfo {author} {\bibfnamefont {R.}~\bibnamefont {TAKAHASHI}},
+  \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont {Hideaki}}, \bibinfo
+  {author} {\bibfnamefont {A.~R.}\ \bibnamefont {DIXON}}, \ and\ \bibinfo
+  {author} {\bibfnamefont {S.}~\bibnamefont {KAWAMURA}},\ }\bibfield  {title}
+  {\enquote {\bibinfo {title} {A secure communication network infrastructure
+  based on quantum key distribution technology},}\ }\href@noop {} {\bibfield
+  {journal} {\bibinfo  {journal} {IEICE TRANSACTIONS on Communications}\
+  }\textbf {\bibinfo {volume} {99}},\ \bibinfo {pages} {1054--1069} (\bibinfo
+  {year} {2016})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Rescorla}(2018)}]{RFC8446}%
   \BibitemOpen
   \bibfield  {author} {\bibinfo {author} {\bibfnamefont {E.}~\bibnamefont
@@ -723,6 +737,14 @@
   {journal} {\bibinfo  {journal} {Scientific Reports}\ }\textbf {\bibinfo
   {volume} {7}},\ \bibinfo {pages} {43048} (\bibinfo {year}
   {2017})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Regev}(2009)}]{regev09:jacm}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {O.}~\bibnamefont
+  {Regev}},\ }\bibfield  {title} {\enquote {\bibinfo {title} {On lattices,
+  learning with errors, random linear codes, and cryptography},}\ }\href
+  {\doibase 10.1145/1568318.1568324} {\bibfield  {journal} {\bibinfo  {journal}
+  {J. ACM}\ }\textbf {\bibinfo {volume} {56}} (\bibinfo {year} {2009}),\
+  10.1145/1568318.1568324}\BibitemShut {NoStop}%
 \bibitem [{Note7()}]{Note7}%
   \BibitemOpen
   \bibinfo {note} {\protect \url
