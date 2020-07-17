@@ -1,0 +1,112 @@
+\section{Attacking classical cryptography using quantum computers}
+
+Naturally, my own interest in writing these notes stems from my
+experience in quantum computing and quantum networking.  The previous
+sections dealt primarily with classical attacks, with a little bit of
+quantum networking can be integrated with classical thrown into each
+section.  Here, let's look at the attacks on classical cryptography
+using quantum computers.
+
+\subsection{Shor 'Nuff}
+
+Obviously, the main thing we're talking about here is Shor's
+algorithm.  I have not been privy to the conversations of
+cryptographers in creating post-quantum crypto, though we'll take a
+short look at that below.  But there are very few people in the world
+who understand better than I do what it takes to actually run the full
+version of Shor's algorithm on a potentially real machine.
+
+A full implementation of Shor's algorithm consists of two quantum
+phases: modular exponentiation, followed by the quantum Fourier
+transform.  (I'm assuming you're familiar with the main ideas behind
+Shor, how it uses interference to build patterns in the quantum
+register that can reveal the period of a function that allows us to
+find the factors of a large semi-prime number.)
+
+The key insight may be the behavior of the QFT, but the bulk of the
+execution time will be in the modular exponentiation phase.  This is
+actually one of the areas that I worked on in my
+Ph.D. thesis~\cite{van-meter06:thesis}.  Some of the important parts
+of this were published in Physical Review
+A~\cite{van-meter04:fast-modexp}.
+
+In my thesis there is a plot that I think is useful, which we updated
+and published in our Communications of the ACM article~\cite{van-meter13:_blueprint}.
+
+We worked out detailed performance estimates, including hardware
+requirements and quantum error correction, in some of our papers~\cite{van-meter10:dist_arch_ijqi,PhysRevX.2.031007}.
+
+There were other, contemporary important papers on how to implement
+Shor, including Fowler et al.~\cite{fowler04:_shor_implem},
+who discussed Shor on a linear array, a few months ahead of my own
+Phys. Rev. A paper on the same topic.
+
+We both built on important, early work by Vedral, Barenco and Ekert
+(VBE)~\cite{vedral:quant-arith} and by Beckman, Chari, Devabhaktuni and Preskill (BCDP)~\cite{beckman96:eff-net-quant-fact}.
+
+If you are looking to broaden your reading on implementations of
+Shor’s algorithm, the following are useful:
+
+Pavlidis and Gizopoulous found an efficient division algorithm,
+accelerating the math~\cite{Pavlidis:2014:FQM:2638682.2638690}.
+
+Roetteler, Steinwandt focused on the applicability of Shor's algorithm
+to elliptic curve. I like the paper, except I think their survey of
+related research could have been better.
+\url{https://arxiv.org/abs/1306.1161}
+and Roetteler, Naehrig, Svore, Lauter:
+\url{https://arxiv.org/abs/1706.06752}
+
+Gidney and Ekera submitted to the arXiv a paper on factoring a
+2048-bit number using 20 million noisy quibits.  In this paper, one of
+their techniques is arithmetic "windowing" which is essentially
+identical to one of the techniques I proposed in my 2005 Phys. Rev. A
+paper.  \url{https://arxiv.org/abs/1905.09749}
+
+May and Schliper also recently uploaded a paper on period finding with
+a single qubit.
+\url{https://arxiv.org/abs/1905.10074}
+
+Ekeraa and Hastad also proposed a new period-finding algorithm
+variant, in 2017.
+\url{https://link.springer.com/chapter/10.1007/978-3-319-59879-6_20}
+\url{https://arxiv.org/abs/1702.00249}
+
+Smolin, Smith, Vargo wrote something of a warning about inferring too
+much from very simple demonstrations on a few qubits.
+\url{https://www.nature.com/articles/nature12290}
+
+Here is one early paper on how to assess errors in Shor’s algorithm,
+by Miquel, Paz and Perazzo~\cite{miquel1996fdq}.
+
+Chuang et al., also published an early examination of decoherence in
+factoring~\cite{chuang95:_factoring-decoherence}.
+
+Among random things, there is Dridi and Alghassi,
+factoring on D-Wave; I don’t think this paper tells us very much about factoring at scale~\cite{dridi2017prime}.
+
+That's more than enough for now, since it isn't really the focus of
+what we're after here, anyway.
+
+\subsection{Grover's amplifier}
+
+When learning about linear cryptanalysis (above), I naturally wondered
+I wonder how hard it would be to set up amplitude amplification for
+the bias in LC.  The bias we are looking for is certainly small.
+
+It turns out people have addressed that question:
+\url{https://arxiv.org/abs/1510.05836}
+\url{https://link.springer.com/article/10.1007/s11128-015-0983-3}
+\url{https://link.springer.com/chapter/10.1007/978-3-662-48683-2_5}
+
+One new one I hadn't seen before:
+Bernstein, Biasse, Mosca on low-resource quantum factoring, using
+Grover's algorithm and NFS:
+\url{https://research.tue.nl/en/publications/a-low-resource-quantum-factoring-algorithm}
+\url{https://cr.yp.to/papers/grovernfs-20170419.pdf}
+
+\subsection{Notes \& References}
+
+To be filled in eventually, mostly by moving the existing parts of
+this section into this subsection!
+

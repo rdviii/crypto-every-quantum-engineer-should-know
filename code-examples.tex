@@ -1,0 +1,82 @@
+\section{Simple Coding Examples}
+
+\outlinecomment{Get cocori to contribute here.}
+
+\subsection{Entropy}
+
+From the fantastic website
+RosettaCode.org~\footnote{\url{http://rosettacode.org/wiki/Entropy}},
+we have a simple example in Python of calculating the entropy in bits
+per byte:
+
+%\begin{widetext}
+%\begin{verbatim}
+\begin{lstlisting}[language=Python]
+import math
+from collections import Counter
+
+def entropy(s):
+    p, lns = Counter(s), float(len(s))
+    return -sum( count/lns * math.log(count/lns, 2) for count in p.values())
+
+entropy("1223334444")
+\end{lstlisting}
+%\end{verbatim}
+%\end{widetext}
+
+(This function can actually calculate entropy of strings of other
+types besides characters, as well.)
+
+\subsection{Birthday Paradox/Collision Probability}
+
+Some ad hoc Mathematica code for dinking around with some of the
+numbers:
+
+% \begin{verbatim}
+\begin{lstlisting}[language=Mathematica]
+NoCollisionProbability[n_, D_] := N[Factorial[D]/Factorial[D - n]/D^n]
+
+NoCollisionProbability[23, 365]
+0.492703
+
+NoCollisionProbability[2^10, 2^20]
+0.606728
+
+Stirling[n_] := Sqrt[2*\[Pi]*n]*(n/E)^n
+
+NoCollisionProbabilityApprox[n_, D_] := 
+ N[Stirling[D]/Stirling[D - n]/D^n]
+
+NoCollisionProbabilityApprox[2^10, 2^20]
+0.6067282267199
+
+NoCollisionProbabilityApprox[2^12, 2^24]
+0.606580027339
+\end{lstlisting}
+% \end{verbatim}
+(That last example took several minutes on my laptop.  Be very careful
+running the above code with larger numbers, it's very easy to start a
+computation that won't complete in your lifetime, and Mathematica
+isn't as friendly about stopping computations in a reasonable state as
+one might like.)
+
+A good analysis of the birthday bound appears in Sec. 2.2 of the
+SWEET32 paper by Bhargavan and Leurent.
+
+The square root limit as $n$ and $d$ grow large, in Mathematica:
+
+% \begin{verbatim}
+\begin{lstlisting}[language=Mathematica]
+N[Sqrt[E]]
+1.64827
+
+N[1 - 1/Sqrt[E]]
+0.393469
+\end{lstlisting}
+% \end{verbatim}
+
+\subsection{QKD}
+
+BB84 in Qiskit:
+\url{https://github.com/qiskit-community/may4_challenge_exercises/blob/master/ex03/Challenge3_BB84_Solutions.ipynb}
+

@@ -1,0 +1,318 @@
+\section{Encryption}
+
+Let's go phase by phase:
+
+\subsection{Authentication}
+
+The authentication phase can be accomplished using a pre-shared secret
+key and symmetric encryption of some message and
+response~\cite{needham:encrypt}, or it can be done via
+asymmetric, public-key cryptography~\cite{rivest78:_rsa}.
+
+The best-known and most-used form of public key crypto is RSA, developed by Rivest, Shamir and Adelman (but also previously discovered by Cocks, of a British intelligence agency):
+
+\begin{enumerate}
+\item Pick two large primes, $p$ and $q$, let $n = pq$.
+\item Calculate $\phi(p,q) = (p-1)(q-1)$.
+\item Pick $e$, prime relative to $\phi(p,q)$.
+\item Calculate $d$, s.t. $de = 1 \bmod \phi(p,q)$,
+  which we can call the inverse of $e$ modulo $\phi(p,q)$.
+\end{enumerate}
+
+The tuple $\langle n,e\rangle$ is now your public key, and $d$ is your private key.
+You can publish $\langle n,e\rangle$ any way you like, including in the New York
+Times. To send you a message $m$, I calculate the ciphertext $c$,
+\begin{align}
+c = m^e \bmod n
+\end{align}
+and send $c$ to you.  You can recover the message $m$ by
+\begin{align}
+m = c^d \bmod n.
+\end{align}
+
+That's all there is to it!  Except that it's expensive, so we don't
+use it for every message.  If I send you "Hi, Bob, it's Tuesday, let's
+use 42 as our key," using your public key and you reply, "Tuesday is
+beautiful, Alice, and 42 is fine," using my public key, we confirm
+that we are definitely Bob and Alice, known as authentication --
+assuming, of course, that you trust that the key $\langle n,e\rangle$
+that you are holding really and truly belongs to me, and I haven't
+leaked it out somehow!
+
+As you might guess from the publication of $n$, RSA is the one that's
+vulnerable to factoring larger integers, and hence of interest to
+spooks once Shor's algorithm came about.
+
+Current EU recommendations are for 3072-bit RSA keys, recently (2018)
+upgraded from 2048, for "near-term protection" (up to ten years).
+They recommend an extraordinary 15360 bits for "long-term protection"
+(thirty to fifty years). [Cloudflare, Keylength.com, Ecrypt, Lenstra]
+
+Finding prime numbers large enough to be used also requires a
+substantial amount of computation~\footnote{See
+  \url{https://en.wikipedia.org/wiki/Primality_test}.}.
+
+[called ECRYPT-CSA 2018, via Shigeya]
+
+\subsection{Key generation}
+
+The other algorithm we talk about a lot as being both important and
+vulnerable to Shor's factoring algorithm is Diffie-Hellman key
+exchange, which is used for creating the session key we will use for
+bulk data encryption.  It's important that every session have its own
+separate encryption key; we don't want multiple conversations sharing
+the same key, for a lot of obvious reasons.
+
+D-H works as follows:
+
+\begin{enumerate}
+  \item Alice and Bob publicly agree on a modulus $p$ and a base $g$ (in cleartext is okay)
+  \item Alice and Bob each pick a secret random number $a$ and $b$
+  \item Alice calculates $A = g^a \bmod p$, \\
+    Bob calculates $B = g^b \bmod p$
+  \item Alice sends Bob $A$, \\
+Bob sends Alice $B$ (in cleartext is okay)
+  \item Alice calculates $s = B^a \bmod p$, \\
+	   Bob calculates $s = A^b \bmod p$
+\end{enumerate}
+
+Both Alice and Bob now have the same secret $s$, which they can use as
+an encryption key.
+
+Note that, as-is, D-H is vulnerable to a man-in-the-middle attack, and
+so must be coupled with some form of authentication so that Alice and
+Bob each know that the other is who they say they are.
+
+\subsection{Bulk data encryption}
+
+D-H and RSA are pretty easy to understand, and known to be vulnerable
+to quantum computers, hence attract a lot of attention. The workhorse
+symmetric block ciphers for bulk encryption are actually much more
+complex mathematically, and hence harder to understand, but ultimately
+can be executed efficiently on modern microprocessors and dedicated
+chips.
+
+A block cipher takes the data to be encrypted, and breaks it into
+fixed-size chunks called blocks.  If the last block isn't full, it is
+filled out with meaningless data.  We also take a key, and using the
+key perform mathematical operations on the data block.  In a symmetric
+system, by definition, the decryption key is the same as the
+encryption key.  Generally, the output block is the same size as the
+input block.  There is no requirement that the block and key are the
+same size.
+
+Ideally, the output block (the ciphertext) will look completely
+random: about 50\% zeroes and 50\% ones, regardless of input, and with
+no detectable pattern.  That is, its entropy will be very high.  Of
+course, it cannot be completely random, as it must be possible for the
+data to be decrypted by someone holding the appropriate key.  A good
+cipher, however, will provide few clues to an attacker.  A single
+bit's difference in either the key or the original plaintext should
+result in about half of the ciphertext bits being flipped, so that
+being "close" offers no guidance on a next step.
+
+Thus, a symmetric key system's security is often linked to its key
+size; with $k$ key bits, it should require, on average, $2^{k-1}$
+trial decryptions to find the key and to be able to decrypt the
+message.  We will discuss this further when we get to cryptanalysis.
+
+Many encryption algorithms have been designed over the years, but two
+in particular are too important to ignore, so we will examine them:
+DES, the Data Encryption Standard, which is still in use in modified
+form but is primarily of historical interest now, and AES, the
+Advanced Encryption Standard, which is used for most communications
+today.
+
+\subsubsection{DES (the Data Encryption Standard)}
+
+DES, the Data Encryption Standard, was designed by IBM in the 1970s,
+consulting with the NSA.  DES is a type of cipher known as an
+iterative block cipher, which breaks data into to blocks and repeats a
+set of operations on them.  The operations in DES are called a Feistel
+network, after the inventor.
+
+DES uses a 56-bit key, though products exported from the U.S. were
+limited to using 40 meaningful key bits [wikipedia/40-bit-encryption].
+It was later upgraded to triple-DES, using three 56-bit key pieces and
+repeating DES three times, giving up to 168 bits of protection.  But
+it's not just the key size that matters in a block cipher.  The block
+size itself matters a great deal, as we'll see below.  For DES, that
+block size is only 64 bits.
+
+DES operates in sixteen rounds, each of which uses a 48-bit subkey
+generated from the original 56-bit key using a key scheduling
+algorithm.  In each round, half of the block is tweaked and half
+initially left alone, then XORed with the tweaked half.  The two
+halves are swapped before the next round.
+
+The "tweaking" of the right half of the block is done by first
+expanding the 32 bits into 48 by replicating half of the bits, XORing
+with the 48-bit subkey, then dividing it into 6-bit chunks and pushing
+each chunk through one of eight substitution boxes, or S boxes.  Each
+S box turns 6 bits into 4, using a lookup table defined as part of the
+algorithm (that is, this operation is not key-dependent).  The S boxes
+are nonlinear (but not affine), which is the source of the true
+security of DES; if the S boxes were linear, breaking DES would be
+easy (or so I am told).
+
+Decrypting DES is exactly the same operation as encrypting, except
+that the subkeys are used in reverse order.
+
+Slightly more formally, the sequence of operations in a DES encryption
+is:
+
+\begin{enumerate}
+\item Apply initial permutation (IP) (a fixed operation)
+\item For $i = 1$ to 16 do
+  \begin{enumerate}
+  \item divide the block into two 32-bit halves
+  \item expand the left half to 48 bits (a fixed operation)
+  \item calculate subkey $i$:
+    \begin{enumerate}
+    \item split key into two 28-bit halves
+    \item rotate each half 1 or 2 bits (a fixed operation according to
+      the key schedule)
+    \item select a subset of 48 bits (a fixed operation according to
+      the schedule)
+    \end{enumerate}
+  \item XOR subkey $i$ with the left half of the block
+  \item split into eight 6-bit pieces
+  \item push each 6-bit piece through a $6\rightarrow 4$ S-box
+  \item permute and recombine the eight 4-bit pieces (a fixed operation)
+  \item XOR the left half with the right half of the block
+  \item swap halves of the block
+  \end{enumerate}
+\item Apply the final permutation (FP) (a fixed operation)
+\end{enumerate}
+
+The $6 \rightarrow 4$ S boxes are obviously inherently non-reversible,
+but the earlier expansion guarantees that ultimately no information is
+lost as the block passes through the entire network.
+
+The success of cryptanalysis is often measured in terms of the number
+of rounds it can break in a multi-round cipher like DES.  e.g., if DES
+were six rounds instead of sixteen, we could do yea much.  Various
+attacks have been able to penetrate DES to different depths.  Of
+course, the more straightforward approach is sheer brute force; as
+early as 1977, Diffie and Hellman published a critique in which they
+argued that brute force stood at the edge of
+feasible~\cite{diffie1977special}, and indeed in 1999, a
+special-purpose machine named Deep Crack, built by the Electronic
+Freedom Foundation, cracked a DES key.  Further advances have made it
+possible even for dedicated hobbyists to crack.
+
+Triple-DES (also called 3DES) has several modes of operation, but is
+usually used with three independent 56-bit keys, $K1$, $K2$, and $K3$,
+with encryption performed as $C = E_{K3}(D_{K2}(E_{K1}(P)))$ where $P$
+is the plaintext, $E$ and $D$ are the encryption and decryption
+operations, and $C$ is the ciphertext.
+
+DES was withdrawn as a standard in 2005, after having been replaced by
+AES in 2001, although the U.S. government still allows 3DES until 2030
+for sensitive information.
+
+\subsubsection{AES (the Advanced Encryption Standard)}
+
+AES, the Advanced Encryption Standard, has replaced DES.  It is a type of block cipher known as a substitution-permutation cipher.  AES uses a block size of 128 bits, and a key size of 128, 192 or 256 bits. The key size affects the number of rounds of substitution-permutation, requiring 10, 12 or 14, respectively.
+
+AES began life in 1997 when NIST announced a competition for a successor to DES, due to the problems with DES described earlier and later. Two Belgian cryptographers, Vincent Rijmen and Joan Daemen, submitted a proposal they dubbed Rijndael, which ultimately beat out fourteen other serious competitors to become, with some modifications, the Advanced Encryption Standard, published as the standard in 2001.
+
+A substitution-permutation network, as you might guess, alternates
+substituting new bits for old ones with permuting (rearranging) the
+bits, conducted over a series of rounds. DES has some characteristics
+of a substitution-permutation network, but is not purely so. A
+well-designed s-p net will maximize Shannon's confusion (or the
+avalanche effect) and diffusion, which we will see shortly (Sec.~\ref{sec:diffusion}).
+
+AES begins by laying out the sixteen bytes in a $4\times 4$ array in
+column major form: the first byte in the upper left, then the next
+byte below it, with the fifth byte returning to the top of the second
+column. Most operations work on rows, however, increasing the mixing
+of the bytes.
+
+First, in the KeyExpansion phase, the round keys are created from the original key.
+
+Next, the appropriate number of rounds is performed. Each round consists of the following steps:
+
+\begin{enumerate}
+\item SubBytes
+\item ShiftRows
+\item MixColumns
+\item AddRoundKey
+\end{enumerate}
+
+In the first round, AddRoundKey is performed before the other operations as well as after. In the last round, the MixColumns step is omitted.
+
+The S box in SubBytes is a single, byte-level, fixed operation, $1:1$, unlike the DES S boxes, which are more complex and vary depending on the position within the block. The AES S box is nonlinear ($f(x+y) \ne f(x)+f(y)$) and was designed specifically to defeat both linear and differential cryptanalysis (which we will see later), but should you not trust the specific values they can be modified. The S box can be implemented as a straightforward 256-byte lookup table, with the input byte as the index, or as a simple bitwise matrix multiplication.
+
+The ShiftRows operation rotates all rows but the first. The MixColumns operation is more complex, executed as a matrix multiplication using modulo-two integer arithmetic. These two operations maximize the diffusion of the original data. The AddRoundKey is a simple XOR of the 128-bit round key into the block.
+
+AES is easily implemented in either software or hardware. Some modern
+CPUs include special instructions to accelerate AES
+encryption~\footnote{On recent Intel processors the instructions
+  \textsc{aesdec}, \textsc{aesdeclast}, \textsc{aesenc},
+  \textsc{aesenclast}, \textsc{aesimc}, and \textsc{aeskeygenassist}
+  are custom-created for AES, and \textsc{pclmulqdq} is a more generic
+  instruction for lock-oriented encryption.} , and even for those that
+don't, heavily optimized assembly language is achievable.  In the
+absence of special hardware, encrypting each 128-bit block of data
+requires several hundred CPU instructions. Example encryption rates
+for a modern laptop are shown in Tab.~\ref{tab:mac-aes}
+
+% \begin{widetext}
+% \begin{verbatim}
+% 128-bit key: 1.25 Gbps for 16-byte chunks, 1.44 Gbps for 8192-byte chunks
+% 192-bit key: 1.06 Gbps for 16-byte chunks, 1.18 Gbps for 8192-byte chunks
+% 256-bit key: 912 Mbps for 16-byte chunks, 1.01 Gbps for 8192-byte chunks
+% \end{verbatim}
+% \end{widetext}
+
+\begin{table}
+\begin{tabular}{l | r | r}
+            & 16-byte chunks & 8,192-byte chunks \\\hline
+128-bit key & 1.25 Gbps & 1.44 Gbps \\
+192-bit key & 1.06 Gbps & 1.18 Gbps \\
+256-bit key & 912 Mbps & 1.01 Gbps
+\end{tabular}
+\caption{AES-CBC encryption rates on a Macintosh laptop with a 2.2GHz Intel Core i7 processor}
+\label{tab:mac-aes}
+\end{table}
+
+Despite two decades of effort, there are no known attacks on AES that allow recovery of the key in substantially less time than brute force; the best attacks roughly halve that cost, at the cost of requiring tremendous amounts of storage.
+
+\subsubsection{Limitations of Block Ciphers}
+
+One obvious problem with the most straightforward application of a
+block cipher is that it's deterministic.  If you just apply the
+transform to each block independently, it's easy to implement; this is
+known as electronic code book (EBC) mode.  BUT: If you see the same
+ciphertext c in two different places in the message stream, you know
+that the two input blocks were the same!  This leaks a huge amount of
+information to a sophisticated attacker, and is considered
+unacceptable.
+
+One answer to this is to make the encryption slightly less
+deterministic by XORing in the ciphertext of the \emph{previous} block into
+the current one before performing the encryption.  This is cipher
+block chaining (CBC) mode, the standard mode of operation.  (There are
+at least two more modes that I know nothing about.)  CBC has the
+undesirable side effect of requiring encryption to be done serially,
+but attacks can be parallelized.  Nevertheless, it's the most commonly
+used mode.
+
+\subsection{Other Tasks}
+
+\comment{Crypto also used for signatures; integrity hashes (both
+  signed ans unsigned); spread spectrum for secrecy, difficulty of
+  triangulation and being hard to jam; challenge response rfid and
+  smart credit cards.}
+
+\comment{bitcoin here or elsewhere?  Blockchain is an \emph{auditable
+    communication channel}~\cite{suzuki2017blockchain}.}
+
+\comment{Internet security-oriented encryption not covered yet: ssh/scp, DNSSEC, BGPsec}
+
+\subsection{Notes \& References}
+
+To be added.
+

@@ -1,0 +1,417 @@
+\section{Unsorted Notes}
+
+\url{https://brunorijsman.github.io/openssl-qkd/}
+
+quantum random number generators:
+
+standalone: Tamura \& Shikano on 
+\url{https://arxiv.org/abs/1906.04410}
+
+Bell:
+Shen ... Nam, Scarani, Kuritseifer
+\url{https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.121.150402}
+\url{https://arxiv.org/abs/1805.02828}
+
+practical device-independent qcrypt via entropy
+Arnon-Friedman, ..., Renner, Vidick
+\url{https://www.nature.com/articles/s41467-017-02307-4}
+
+WIDE PKI certificate:
+SHA-256 with RSA Encryption ( 1.2.840.113549.1.1.11 )
+Exponent 65537
+key size 2048 bits
+
+(SHA-256 is one type of SHA-2; SHA-3 also exists? Why do we use 2?)
+
+EV = Extended Validation Certificate
+\url{gigazine.net/news/20190813-extended-validation-certificate/}
+
+SHA-1 broken:
+\url{https://sha-mbles.github.io/}
+\url{https://link.springer.com/chapter/10.1007%2F978-3-030-17659-4_18}
+\url{https://eurocrypt.iacr.org/2019/program.html}
+
+cocori's post-quantum crypto Python.  New version:
+\url{https://colab.research.google.com/drive/1jnAY-Jopo8t5Cb0_sT2cNuMORFYnkfl2?usp=sharing}
+Old version:
+\url{https://colab.research.google.com/drive/1a4sh9PYCOyZO9dRsJpT17scLS3eMWU0T}
+
+\subsection{A Twitter Exchange}
+
+\begin{verbatim}
+sanketh
+@__c1own
+Replying to 
+@rdviii
+Awesome series!! Quick comment on your statement in
+(https://rdvlivefromtokyo.blogspot.com/2019/10/aes-advanced-encryption-standard.html)
+that AES is easy to implement. It is not. See
+https://cr.yp.to/antiforgery/cachetiming-20050414.pdf
+
+https://twitter.com/__c1own/status/1216868406047191040
+sanketh
+@__c1own
+Replying to 
+@__c1own
+ and 
+@rdviii
+Two quick comments on (https://rdvlivefromtokyo.blogspot.com/2019/11/21-playing-defense-211-entropy.html):
+1. Kolmogorov complexity is uncomputable (https://web.archive.org/web/20190326105001/ http://www.nearly42.org/vdisk/articles/Program-size_Complexity_Computes_the_Halting_Problem.pdf)
+2. You hint at this in the post, but to be explicit, in crypto, we
+care about min-entropy and not entropy.
+\end{verbatim}
+
+\url{https://cr.yp.to/antiforgery/cachetiming-20050414.pdf}
+
+A nice blog article by \url{@__c1own} on hybrid quantum-classical computation, in the context of attacking crypto.
+\url{https://c1own.com/blog/2019/two-open-problems-hybrid-quantum-attacks-on-crypto/}
+
+ACK Sanketh (c1own)
+
+\url{https://cr.yp.to/snuffle/design.pdf}
+
+possible (elliptic?) curve vulnerability:
+\url{https://news.ycombinator.com/item?id=22048619&fbclid=IwAR0HTje3SlkFTaryK76gPDn_ss1k6n-yAGZlVF8bN6xvqLNBuZ33c8XTnnc}
+
+Grassl et al. on AES w/ Grover:
+\url{https://link.springer.com/chapter/10.1007/978-3-319-29360-8_3}
+AES
+\url{https://eprint.iacr.org/2019/272.pdf}
+new AES paper (with short but relevant refs):
+\url{https://ieeexplore.ieee.org/document/8961201}
+
+New factoring record:
+\url{https://www.johndcook.com/blog/2019/12/03/new-rsa-factoring/}
+\url{https://lists.gforge.inria.fr/pipermail/cado-nfs-discuss/2019-December/001139.html}
+\url{https://en.wikipedia.org/wiki/RSA_Factoring_Challenge}
+
+\url{https://arxiv.org/pdf/1804.00200.pdf}
+
+More M\$ on elliptic:
+\url{https://eprint.iacr.org/2017/598.pdf}
+
+87\% of web traffic was encrypted, as of Jan. 2019:
+\url{https://duo.com/decipher/encryption-privacy-in-the-internet-trends-report}
+
+and by October of that year it was 90\%:
+\url{https://meterpreter.org/https-encryption-traffic/}
+
+Both of those seem to point back to Fortinet reports, but don't link
+to the exact one.  Best I can find is 3Q18:
+\url{https://www.fortinet.com/content/dam/fortinet/assets/threat-reports/threat-report-q3-2018.pdf}
+which says hovered around 50\% throughout 2016, then rose sharply to
+72\% by 3Q18.
+
+Apparently *old* discussion of short keys in SSL:
+\url{http://www.geocities.ws/rahuljg/Attacks_on_SSL.htm}
+
+Browser Reconnaissance and Exfiltration via Adaptive Compression of
+Hypertext) is a security exploit against HTTPS when using HTTP
+compression. BREACH is built based on the CRIME security exploit.
+\url{https://en.wikipedia.org/wiki/BREACH}
+
+CRIME is maybe closer to what I'm looking for:
+\url{https://en.wikipedia.org/wiki/CRIME}
+
+Refers to (original?) paper on leakage of info via
+compression-over-encryption:
+\url{https://link.springer.com/chapter/10.1007%2F3-540-45661-9_21}
+
+
+\subsection{From ddp}
+
+just fast keying:
+\url{http://www1.cs.columbia.edu/~angelos/Papers/jfk-tissec.pdf}
+
+IKEv1 was a group compromise, almost no one liked it.  This was a valid criticism and probably should have been explored further.  I note that many of the subsequent enhancements in IKEv2 involve ideas found here:
+\url{http://www1.cs.columbia.edu/~angelos/Papers/jfk-tissec.pdf}
+
+But after three years of screaming at each other, it was time to ship
+something and see how it worked in the field.  It's also a fair
+criticism that perfect is the enemy of "it mostly works, and beats
+plaintext on the wire".
+
+"The keys used for the Child SAs, therefore, are the obvious target for traffic-based attacks, though the real prize is the keys for the IKE SA."
+
+The keys are equal, though you may think of the Phase 1 SA as being
+more important because the bulk keys are derived from it.
+
+"I'm having a hard time imagining how to mount an effective attack against the IKE SA."
+
+good news!
+
+Image of SKEYID:
+\url{https://twitter.com/ddp/status/1263165272082403328}
+
+again, this is IKEv1
+
+so the question you are posing is, what causes quantum keying material
+to wear out?  It is a very good question.
+
+Replying to 
+@rdviii
+ and 
+@ddp
+People like to talk about D-H, RSA and Shor, because D-H and RSA are
+pretty easy to understand, but the actual use of the keys matters.
+
+
+They both matter, but yes.  The Phase 1 keys are used by IKE for
+connection setup and rekeying, traffic is encrypted under the bulk
+sesssion keys that must be periodically rekeyed, but that's dependent
+on the amount of traffic.
+
+Depending on what algorithms you configure you may need to rekey more or less frequently, which is why it was left configurable on CryptoClusters.  I'm purposefully and wantonly ignoring the Red Book which probably would point out that the entire stream is a covert channel.
+
+Our TCSEC C2 and B1 evaluation stipulated that the network not be
+plugged in and DECwindows was disabled, there was a \verb|SECURITY_POLICY|
+system parameter that was a bitmap of features to be disabled when
+running in the evaluated configuration.
+
+\subsection{More Unsorted Stuff}
+
+\url{https://twitter.com/trimstray/status/1262985978618281986}
+Ethical hacking platforms/trainings/CTFs:
+
+\url{http://crackmes.one}
+\url{http://ringzer0ctf.com}
+\url{http://pwnable.kr}
+\url{http://ctflearn.com}
+\url{http://domgo.at}
+\url{http://pwnable.tw}
+\url{http://tryhackme.com}
+\url{http://ctfchallenge.co.uk}
+\url{http://cryptohack.org}
+
+-----
+
+Dan Boneh's papers on SSL/TLS:
+\url{http://crypto.stanford.edu/~dabo/pubs/pubsbytopic.html#S}
+including some on quantum, going back as far as 95!
+Wow, and a paper on cracking DES on a DNA computer!
+
+-----
+
+
+Kenn White
+@kennwhite
+Replying to 
+@rdviii
+ and 
+@danieljbaird
+I think 
+@hanno
+ or 
+@FiloSottile
+ might be able to point you in the right direction re a good corpus on
+ attacks.
+
+Daniel Baird
+@danieljbaird
+Replying to 
+@danieljbaird
+ 
+@JapanGraphica
+ and 
+@rdviii
+also 
+@kennwhite
+  
+\verb|@matthew_d_green|
+  
+@halvarflake
+
+\url{https://twitter.com/SteveBellovin/status/1256578124093022211}
+And then there was my mistake about sequence numbers in IPsec. 
+@mattblaze
+ wanted them; I said “no” and won. I then did some research that
+ showed that he was right and I was wrong , so I led the effort to put
+ them back in. See slide 43 of
+\url{https://cs.columbia.edu/~smb/talks/why-ipsec.pdf}.
+
+NSA Military Cryptanalysis:
+\url{https://www.nsa.gov/news-features/declassified-documents/military-cryptanalysis/}
+Friedman's guide to cryptanalysis from the war.
+
+Replying to 
+@rdviii
+i believe it would still be algorithm specific, so i'm not sure what can be drawn by looking at the specific cryptanalysis of des for example.  in cases like these, dan and i always deferred to the cryptographers in the room; we had 3-4 participating and several from the nsa.
+11:06 PM · May 22, 2020·Twitter Web App
+
+Replying to 
+@ddp
+ and 
+@rdviii
+again, we had the goal of algorithm flexibility
+
+Searching publicly available NSA quantum documents:
+\url{https://search.usa.gov/search?utf8=%E2%9C%93&affiliate=nsa_css&sort_by=&query=quantum}
+
+SHA-1 is a Shambles:
+\url{https://eprint.iacr.org/2020/014.pdf}
+\url{https://sha-mbles.github.io/}
+\url{https://www.openssh.com/txt/release-8.3}
+
+WeakDH is back online:
+\url{https://weakdh.org/}
+
+Elliott et al., SIGCOMM 2003:
+\url{https://arxiv.org/abs/quant-ph/0307049}
+
+-----
+
+This might seem very far from linear algebra, but the terms "linear"
+and "affine" show up in linear cryptanalysis, with a special meaning
+derived from the same concepts we saw in class.
+
+We saw a hint of the relationship between graph theory and linear
+algebra.  In the Ritter literature survey, Buttyan and Vajda are cited
+as describing one important aspect of linear cryptanalysis as a graph
+problem that would take about a terabyte of memory.  That was out of
+the question when they wrote their paper in 1995, but 1TB of RAM is no
+big deal today.  I wonder if that is still a valid idea, and if anyone
+has followed up on it?
+
+---
+
+comments/observations from AQUAcamp
+
+must understand layered communication protocols to follow this!
+
+
+biclique is best attack against AES
+(but Aono-san says it's not practical)
+
+Markus Grassl, Martin Roetteler on AES via Grover:
+\url{https://arxiv.org/abs/1512.04965}
+requires tremendous resources.
+Only 3-7,000 logical qubits, but up to $2^{151}$ T gates?!?
+
+Jogenfors (the QKD hacker?) on bitcoin:
+\url{https://arxiv.org/abs/1604.01383}
+
+-----
+
+\url{https://news.yahoo.com/exclusive-russia-carried-out-a-stunning-breach-of-fbi-communications-system-escalating-the-spy-game-on-us-soil-090024212.html?soc_src=community&soc_trk=tw}
+
+Darrell says IKEv1 is believed to be stronger post-quantum than IKEv2,
+but he hasn't told me why yet.
+
+See Pirandola and Hoi-Kwong Lo for recent QKD reviews.
+
+\url{https://csrc.nist.gov/projects/post-quantum-cryptography}
+
+On Sept. 20, it was all over the news that Google is rumored to be
+claiming quantum supremacy:
+\url{https://www.cnet.com/news/google-reportedly-attains-quantum-supremacy/}
+
+\url{https://twitter.com/susurrusus/status/1142196496739291137?s=19}
+and substantial follow-on conversation, starting in part from some
+misguided post-quantum cryptocurrency:
+\url{https://twitter.com/mochimocrypto/status/1175134812862058496}
+\url{https://twitter.com/mochimocrypto/status/1175891543233708032}
+based on WOTS+.
+What are WOTS+ and XMSS?  I assume DSA is digital signature algorithm.
+\url{https://twitter.com/mochimocrypto/status/1175135848259624960}
+replied to by Biercuk
+\url{https://twitter.com/MJBiercuk/status/1175394127841615872}
+\url{https://twitter.com/jfitzsimons/status/1175919991322886145}
+
+\url{https://blog.cloudflare.com/towards-post-quantum-cryptography-in-tls/amp/?__twitter_impression=true}
+\url{https://medium.com/altcoin-magazine/quantum-resistant-blockchain-and-cryptocurrency-the-full-analysis-in-seven-parts-part-6-769973d3decf}
+\url{https://twitter.com/jtga_d/status/1175898478712635392}
+
+Might get either John Schanck or Douglas Stebila (recommended by Joe
+Fitzsimons) to review this.
+\url{https://www.douglas.stebila.ca/}
+jschanck@uwaterloo.ca
+
+New paper on AES and Grover
+\url{https://arxiv.org/abs/1910.01700}
+
+Good info on status of DES/3-DES at
+\url{https://en.wikipedia.org/wiki/Data_Encryption_Standard}
+
+Supplementary material listing all of the S-boxes, permutations and
+functions at
+\url{https://en.wikipedia.org/wiki/DES_supplementary_material}
+
+Perlner survey of post-quantum crypto
+
+pentesting (penetration testing)?
+
+My QuantumInternet tweetstorm:
+\url{https://twitter.com/rdviii/status/854443142304497665?s=19}
+
+PQC:
+\url{https://www.scientificamerican.com/article/new-encryption-system-protects-data-from-quantum-computers/}
+
+PUF (for making a key):
+\url{https://en.wikipedia.org/wiki/Physical_unclonable_function}
+
+A quantum PUF:
+\url{https://phys.org/news/2019-10-cryptography-secret-keys.html}
+
+\url{https://www.schneier.com/blog/archives/2019/10/factoring_2048-.html}
+
+Shannon's a mathematical theory of cryptography
+\url{https://www.iacr.org/museum/shannon45.html}
+
+Prof. Consheng DING's course on Cryptography and Security
+\url{https://home.cse.ust.hk/faculty/cding/CSIT571/}
+slides on confusion \& diffusion
+\url{https://www.cse.ust.hk/faculty/cding/CSIT571/SLIDES/confdiffu.pdf}
+
+Shannon 1949 paper:
+Shannon, Claude. "Communication Theory of Secrecy Systems", Bell System Technical Journal, vol. 28(4), page 656–715, 1949.
+\url{http://netlab.cs.ucla.edu/wiki/files/shannon1949.pdf}
+
+Scott Aaronson, certified RNG
+\url{https://arxiv.org/abs/1612.05903}
+also Mahadev, Vazirani, Vidick
+\url{https://arxiv.org/abs/1804.00640}
+\url{https://www.quantamagazine.org/how-to-turn-a-quantum-computer-into-the-ultimate-randomness-generator-20190619/}
+
+
+More on PQC:
+\url{https://blog.cloudflare.com/the-tls-post-quantum-experiment/}
+\url{https://www.johndcook.com/blog/2019/10/23/quantum-supremacy-and-pqc/}
+
+Program "ent" on Linux distros?
+
+IEICE special issue on crypto (2006, so it's old):
+\url{https://d-nb.info/1170302556/34}
+
+Kawamura on RNS Montgomery reduction:
+\url{https://d-nb.info/1170302556/34}
+
+Corporate VPN clients (2018):
+\url{https://www.pcmag.com/picks/the-best-business-vpn-clients}
+
+\comment{NCP secure entry client for Win: IPsec tunnel, as well as
+  ``TCP encapsulation of IPSec with SSL headers''
+  \url{https://www.pcmag.com/reviews/ncp-secure-entry-client-for-win3264}.}
+
+\comment{OpenVPN: ``all purpose'' -- what protocols? \url{https://www.pcmag.com/reviews/openvpn-243}.}
+
+\comment{Greenbow IPsec VPN client: IPsec w/ a variety of keying
+  methods; mentions SSL, but not sure how that works
+  \url{https://www.pcmag.com/reviews/thegreenbow-ipsec-vpn-client}.}
+
+\comment{Microsoft VPN client}
+
+\comment{Woolf: Adding security decreases resilience.}
+
+\outlinecomment{What's a threat model, what does it mean, and who
+  cares?  Why does deploying this cost less than being threatened by
+  this does?}
+
+\comment{Woolf: Once again, the U.S. is trying to outlaw strong crypto.
+  Bellovin, ISOC, Farber.  We can't have modern society without strong
+crypto.}
+
+\url{https://www.nict.go.jp/en/quantum/roadmap.html}
+
+\comment{There's a great roadmap image somewhere; underneath \url{https://www.cryptrec.go.jp/index.html}?}
+
+\comment{Crypto quantum report at \url{https://www.cryptrec.go.jp/tech_reports.html}.}
