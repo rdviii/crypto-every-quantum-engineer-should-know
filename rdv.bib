@@ -1,5 +1,43 @@
 @string{pra = "Physical Review A"}
 
+@article{Alleaume201462,
+title = "Using quantum key distribution for cryptographic purposes: A survey ",
+journal = "Theoretical Computer Science ",
+volume = "560, Part 1",
+number = "",
+pages = "62 - 81",
+year = "2014",
+note = "Theoretical Aspects of Quantum Cryptography, celebrating 30 years of \{BB84\} ",
+issn = "0304-3975",
+doi = "http://doi.org/10.1016/j.tcs.2014.09.018",
+url = "http://www.sciencedirect.com/science/article/pii/S0304397514006963",
+author = "R. All\'eaume and C. Branciard and J. Bouda and T. Debuisschert and M. Dianati and N. Gisin and M. Godfrey and P. Grangier and T. L{\"a}nger and N. L{\"u}tkenhaus and C. Monyk and P. Painchault and M. Peev and A. Poppe and T. Pornin and J. Rarity and R. Renner and G. Ribordy and M. Riguidel and L. Salvail and A. Shields and H. Weinfurter and A. Zeilinger",
+keywords = "Key distribution",
+keywords = "Quantum cryptography ",
+abstract = "Abstract The appealing feature of quantum key distribution (QKD), from a cryptographic viewpoint, is the ability to prove the information-theoretic security (ITS) of the established keys. As a key establishment primitive, \{QKD\} however does not provide a standalone security service in its own: the secret keys established by \{QKD\} are in general then used by a subsequent cryptographic applications for which the requirements, the context of use and the security properties can vary. It is therefore important, in the perspective of integrating \{QKD\} in security infrastructures, to analyze how \{QKD\} can be combined with other cryptographic primitives. The purpose of this survey article, which is mostly centered on European research results, is to contribute to such an analysis. We first review and compare the properties of the existing key establishment techniques, \{QKD\} being one of them. We then study more specifically two generic scenarios related to the practical use of \{QKD\} in cryptographic infrastructures: 1) using \{QKD\} as a key renewal technique for a symmetric cipher over a point-to-point link; 2) using \{QKD\} in a network containing many users with the objective of offering any-to-any key establishment service. We discuss the constraints as well as the potential interest of using \{QKD\} in these contexts. We finally give an overview of challenges relative to the development of \{QKD\} technology that also constitute potential avenues for cryptographic research. "
+}
+
+@Article{beckman96:eff-net-quant-fact,
+  author = 	 {David Beckman and Amalavoyal N. Chari and Srikrishna
+                  Devabhaktuni and John Preskill},
+  title = 	 {Efficient networks for quantum factoring},
+  journal = 	 {Phys. Rev. A},
+  year = 	 1996,
+  volume =	 54,
+  pages =	 {1034--1063},
+  note =	 {http://arXiv.org/quant-ph/9602016},
+  comment =	 {Presents several points in the tradeoff between
+                  scratch space for the modular exponentiation and
+                  execution gate count.  Factoring 432b number takes
+                  2160 qubits and 3*10^10 laser pulses on an ion
+                  trap.  Doesn't give exact conversion of gates to
+                  laser pulses, but does give 10^4 ops/sec for ion
+                  trap.  If those are 1:1, that's a month for a 432b
+                  number.  Might be 1:5.5, in which case it's under a
+                  week.  Mod-exp takes 72K^3 gates or 396K^3 pulses on
+                  a machine with 5K+1 qubits storage space.}
+}
+
 @inproceedings{ben-or2005fast,
   title={{Fast quantum Byzantine agreement}},
   author={Ben-Or, M. and Hassidim, A.},
@@ -169,6 +207,18 @@
   publisher={IEEE}
 }
 
+@article{dridi2017prime,
+  title={Prime factorization using quantum annealing and computational algebraic geometry},
+  author={Dridi, Raouf and Alghassi, Hedayat},
+  journal={Scientific Reports},
+  volume={7},
+  pages={43048},
+  year={2017},
+  publisher={Nature Publishing Group},
+  comment = {factoring on D-Wave},
+  url={https://www.nature.com/articles/srep43048}
+}
+
 @article{eisert2019cert,
   title={Quantum certification and benchmarking},
   author={Eisert, Jens and Hangleiter, Dominik and Walk, Nathan and Roth, Ingo and Markham, Damian and Parekh, Rhea and Chabaud, Ulysse and Kashefi, Elham},
@@ -188,6 +238,13 @@
   comment={First QKD using entanglement proposal, I believe.  E91 original.}
 }
 
+@InProceedings{elliott:qkd-net,
+  author = 	 {Chip Elliott and David Pearson and Gregory Troxel},
+  title = 	 {Quantum cryptography in practice},
+  crossref =	 {sigcomm03},
+}
+
+
 @Article{fowler04:_shor_implem,
   author =	 {Austin G. Fowler and Simon J. Devitt and Lloyd
                   C. Hollenberg},
@@ -199,6 +256,21 @@
   pages = {237},
   year =	 2004,
    url = {https://arxiv.org/abs/quant-ph/0402196}
+}
+
+@article{PhysRevX.2.031007,
+  title = {Layered Architecture for Quantum Computing},
+  author = {Jones, N. Cody and Van Meter, Rodney and Fowler, Austin G. and McMahon, Peter L. and Kim, Jungsang and Ladd, Thaddeus D. and Yamamoto, Yoshihisa},
+  journal = {Phys. Rev. X},
+  volume = {2},
+  issue = {3},
+  pages = {031007},
+  numpages = {27},
+  year = {2012},
+  month = {Jul},
+  doi = {10.1103/PhysRevX.2.031007},
+  url = {http://link.aps.org/doi/10.1103/PhysRevX.2.031007},
+  publisher = {American Physical Society}
 }
 
 @book{kahn1996codebreakers,
@@ -222,6 +294,21 @@
   publisher = {American Physical Society},
   doi = {10.1103/PhysRevA.100.052326},
   url = {https://link.aps.org/doi/10.1103/PhysRevA.100.052326}
+}
+
+@article{PhysRevLett.120.030501,
+  title = {Satellite-Relayed Intercontinental Quantum Network},
+  author = {Liao, Sheng-Kai and Cai, Wen-Qi and Handsteiner, Johannes and Liu, Bo and Yin, Juan and Zhang, Liang and Rauch, Dominik and Fink, Matthias and Ren, Ji-Gang and Liu, Wei-Yue and Li, Yang and Shen, Qi and Cao, Yuan and Li, Feng-Zhi and Wang, Jian-Feng and Huang, Yong-Mei and Deng, Lei and Xi, Tao and Ma, Lu and Hu, Tai and Li, Li and Liu, Nai-Le and Koidl, Franz and Wang, Peiyuan and Chen, Yu-Ao and Wang, Xiang-Bin and Steindorfer, Michael and Kirchner, Georg and Lu, Chao-Yang and Shu, Rong and Ursin, Rupert and Scheidl, Thomas and Peng, Cheng-Zhi and Wang, Jian-Yu and Zeilinger, Anton and Pan, Jian-Wei},
+  journal = {Phys. Rev. Lett.},
+  volume = {120},
+  issue = {3},
+  pages = {030501},
+  numpages = {4},
+  year = {2018},
+  month = {Jan},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevLett.120.030501},
+  url = {https://link.aps.org/doi/10.1103/PhysRevLett.120.030501}
 }
 
 @article{PhysRevLett.108.130503,
@@ -263,6 +350,19 @@
   publisher={CRC press}
 }
 
+@Article{mink09:_qkd_and_ipsec,
+  author = 	 {Alan Mink and Sheila Frankel and Ray Perlner},
+  title = 	 {Quantum Key Distribution ({QKD}) and Commodity
+                  Security Protocols: Introduction and Integration},
+  journal = 	 {International Journal of Network Security \& Its
+                  Applications (IJNSA)},
+  year = 	 2009,
+  volume = 	 1,
+  number = 	 2,
+  month = 	 jul,
+  url={https://arxiv.org/abs/1004.0605}
+}
+
 @article{miquel1996fdq,
   title={Factoring in a dissipative quantum computer},
   author={Miquel, C. and Paz, J.P. and Perazzo, R.},
@@ -272,6 +372,17 @@
   pages={2605--2613},
   year={1996},
   publisher={APS}
+}
+
+
+@Unpublished{nagayama12:_ike_for_ipsec_with_qkd,
+  author = 	 {Shota Nagayama and Rodney Van{ }Meter},
+  title = 	 {{IKE} for {IPsec} with {QKD}},
+  note = 	 {Internet Draft,
+                  draft-nagayama-ipsecme-ipsec-with-qkd-01; expired
+                  April 30, 2015},
+  month = 	 oct,
+  year = 	 2014
 }
 
 @article{needham:encrypt,
@@ -417,6 +528,17 @@ keywords = {public key encryption, cryptography, average-case hardness, Lattice,
   organization={IEEE}
 }
 
+@article{tanizawa2016secure,
+  title={A Secure Communication Network Infrastructure Based on Quantum Key Distribution Technology},
+  author={TANIZAWA, Yoshimichi and TAKAHASHI, Ririka and Hideaki, SATO and DIXON, Alexander R and KAWAMURA, Shinichi},
+  journal={IEICE TRANSACTIONS on Communications},
+  volume={99},
+  number={5},
+  pages={1054--1069},
+  year={2016},
+  publisher={The Institute of Electronics, Information and Communication Engineers}
+}
+
 @Article{van-meter13:_blueprint,
   author = 	 {Rodney Van{ }Meter and Clare Horsman},
   title = 	 {A blueprint for building a quantum computer},
@@ -426,6 +548,18 @@ keywords = {public key encryption, cryptography, average-case hardness, Lattice,
   volume=53,
   number=10,
   pages = {84--93}
+}
+
+@Article{van-meter10:dist_arch_ijqi,
+  author = 	 {Rodney Van{ }Meter and Thaddeus D. Ladd and Austin
+                  G. Fowler and Yoshihisa Yamamoto},
+  title = 	 {Distributed Quantum Computation Architecture Using
+                  Semiconductor Nanophotonics},
+  journal = 	 {International Journal of Quantum Information},
+  year = 	 2010,
+  volume =	 8,
+  pages = 	 {295--323},
+  url = {https://www.worldscientific.com/doi/abs/10.1142/S0219749910006435}
 }
 
 @Article{van-meter04:fast-modexp,
@@ -466,6 +600,16 @@ keywords = {public key encryption, cryptography, average-case hardness, Lattice,
  publisher = {ACM},
  address = {New York, NY, USA},
 } 
+
+@Article{vedral:quant-arith,
+  author = 	 {Vlatko Vedral and Adriano Barenco and Artur Ekert},
+  title = 	 {Quantum networks for elementary arithmetic operations},
+  journal = 	 {Phys. Rev. A},
+  year = 	 {1996},
+  volume =       54,
+  pages =        {147--153},
+  note =	 {http://arXiv.org/quant-ph/9511018}
+}
 
 @InProceedings{webster86:avalanche,
 author="Webster, A. F.
@@ -579,5 +723,14 @@ url = {https://link.springer.com/chapter/10.1007/3-540-39799-X_41}
   issn = {2070-1721},
   publisher = {RFC Editor},
   institution = {RFC Editor},
+}
+
+@Proceedings{sigcomm03,
+  title = 	 "Proc. SIGCOMM 2003",
+  booktitle = 	 "Proc. SIGCOMM 2003",
+  year = 	 2003,
+  publisher =	 "ACM",
+  organization = "ACM",
+  month =	 aug
 }
 
