@@ -1,4 +1,190 @@
+
+\clearpage 
+
+\newcommand{\memo}[1]{{\color{red} #1 }}
+
+%%
+%%	memo0813 ディスクレーマーっているかな？
+%%
+
 \section{Post-quantum cryptography}
+
+\memo{Add some stuffs and citations}
+
+The post-quantum cryptography, sometimes referred as the quantum-resilient cryptography, is a wide class of cryptographic schemes which are believed to be secure against both classical and quantum computers in theory and practice.
+
+This section introduces a motivation of post-quantum cryptography
+from information theory and modern cryptographic schemes in the classical world.
+
+
+\subsection{Motivation of post-quantum cryptography}
+
+Since Shor's groundbreaking work, 
+it has been known that a reasonable size quantum circuit can be used as 
+an efficient oracle to solve a wide class of hidden subgroup problem,
+which is an important generic problem that captures 
+the integer factoring problem (ILP) and the discrete logarithm problem (DLP). 
+As a direct consequence, developed quantum computers will make 
+the most famous public-key cryptography such as RSA and DSA worthless.
+
+As the countermeasure, the cryptographers have been developing 
+new cryptographic schemes which they call ``post-quantum cryptography''
+or ``quantum-resilient cryptography.'' 
+It is widely believed that revealing secret information encrypted by a scheme is an intractable task even we have a large size of classical and quantum computers.
+
+To discuss the resilience of cryptography to quantum computers,
+we follow and extend the notion of security of cryptography in the classical world as follows.
+The mathematical notion of security has been formulated by Shannon's discussion on the symmetric cryptography in \cite{Sha49}.
+He defined the symmetric cryptography has the perfect security (information-theoretic security) if the eavesdropper that gets ciphertext will gain no information about the plaintext.
+This security notion can be described as the equivalent condition that 
+uses Turing machines (TM):
+for any (unlimited time and space) TM $\mathcal{G}$ that outputs a candidate of plaintext from a given ciphertext, there exists a TM $\mathcal{G}'$ with no input that satisfies
+%
+\begin{equation}
+	\label{eqn:ITalg}
+	\Pr[ \mathcal{G}(ct) = m ] = \Pr [\mathcal{G}'() = m ].
+\end{equation}
+%
+Here, the probability is over a fixed distribution of plaintext $m$ and key $k$, and $ct = Enc(k,ct)$.
+The equivalence of probabilities means that $\mathcal{G}$ needs not to use $ct$ to recover $m$, thus, $ct$ does not contain any information about $m$ intuitively.
+
+Shannon proved that the information-theoretic security 
+requires that the sender and receiver have to share 
+the secret key longer than the message itself.
+The source of such unwieldiness is from the tightness of perfect security that requires the eavesdropper can get no information, or it allows unlimited power to the Turing machines.
+It is easy to see any public-key cryptography does not satisfy
+the perfect security \cite[Sect. 5.5.2]{GolEnc2},
+and the followers tried to relax the notion.
+
+One of the relaxed notion, which is commonly referred as the semantic security against classical computers is obtained by relaxing TM in (\ref{eqn:ITalg}) to a probabilistic polynomial TM (PPTM) and by some modifications \cite{...}, and security against quantum computes is obtained via a similar way.
+
+\subsection{Guaranteeing the Security from the Hard Problems}
+
+\memo{Does the content overlap with cryptanalysis section?}
+
+As we explained above, each security notions are defined over each cryptographic system, this means that the developers have to prove their cryptographic scheme has some security property after proposing the scheme.
+Historically, it has been recognized that there are two difficulties with providing the security of the scheme: one have to consider each cryptographic scheme individually, and must take into account all the feasible attacking  (albeit they are limited with a polynomial) algorithms, that makes the proof impossibly difficult.
+In order to avoid the difficulty, reduction and assumption technique have been used.
+
+The reduction is, in a nutshell, 
+a mathematical technique to prove a computational problem $X$ 
+is harder than another problem $Y$.
+The proof has usually the following structure:
+assume an algorithm $\mathcal{A}$ (working in a polynomial time) that solves $X$ (with a high probability.)
+Then, provide an algorithm $\mathcal{B}$ to solve $Y$ in polynomial time with using polynomial number of calls to $\mathcal{A}$ as subroutines.
+This means any entity that can solve $X$ can also solve $Y$, but the inverse does not hold.
+Thus, $X$ is harder to solve than $Y$ in general.
+The proof is said to be a polynomial-time reduction from $Y$ to $X$
+and the notation $ X \ge_P Y$ is usually used.
+
+In the cryptographic area, the ``security proof,'' that is, 
+theorems to guarantee the security of a new cryptographic scheme,
+are actually a polynomial-time reduction 
+from the problem of breaking a semantic security (or other security properties) to a famous computational hard problems such as the discrete logarithm problem or the shortest vector problem.
+In other words, the security proofs can guarantee that attackers must solve a hard problems to reveal secret information.
+This turns out a more detailed characterization of the post-quantum cryptography, that is, a class of cryptographic schemes whose security basis is intractable for both classical and quantum computers.
+
+Due the the reduction mechanism, the security basis of many cryptographic schemes can be unified into the hardness of a single computational problem.
+However, showing the hardness of a computational problem is also a difficult problem; for example, the factoring problem is a famous widely assumed hard problem, but whether it is truly hard.
+No one has been discovered a very efficient classical algorithm to solve it is a strong evidence of the hardness.
+
+In order to concentrate the security issues, 
+cryptographers introduced the notion of hardness assumption,
+that is, 
+assuming such computational problems are not easy to solve in practical
+by using any known computers.
+
+Some of assumptions can be breaking by theory or by practical ways.
+The former case is the famous Shor's work \cite{Sh94} by using a polynomial-size quantum circuit, and the latter cases are the practical attacks for WEP or RC4 block ciphers \cite{??}.
+
+\subsection{Classification of Post-quantum cryptographes by the base problems}
+
+The representative post-quantum cryptographic schemes can be classified 
+into several groups with the types of basis computational problems\footnote{
+	They sometimes classify the scheme by the processing algorithms because two  classifications are almost overlapped.
+}: 
+they are all believed to be intractable by both classical and quantum computers.
+
+
+\memo{Too long?}
+
+
+\begin{itemize}
+	\item Lattice-based cryptography is widely researched cryptographic schemes
+	based on the learning with errors (LWE) problem or the shortest vector problem (SVP.)
+	The first lattice-based scheme introduced by Ajtai \cite{Aj96} in 1996 was  
+	the public-key cryptography, whose security basis is an approximate version of SVP.
+	Since its approximation level is too large, the scheme has unfortunately been broken by Nguyen \cite{Ng97} in practice and it turns out the keys, which are represented by integer vectors $\bm{b}_1,\ldots,\bm{b}_m$ which we refer them as ``lattice basis,'' must be very large to guarantee a reasonable security level.
+	
+	Major of lattice-based cryptography in this decade utilizes the LWE problem introduced by Regev \cite{Reg05} in 2005 as its security basis.
+	These cryptographic schemes are distinguished among the lattice-based cryptography, and are sometimes referred as the LWE-based cryptography.
+	
+	The basic form of LWE is the problem of finding secret vector $\bm{s} \in \mathbb{Z}_q^n$ 
+	from a given matrix $A\in \mathbb{Z}_q^{m\times n}$ and a vector $\bm{b}\in \mathbb{Z}^m$, which is computed by an oracle in the following way:
+	%
+	\[
+		\bm{b} = A\bm{s} + \bm{e} \ (\mod\ q).
+	\]
+	%
+	Here, $\bm{e}$ is a secret vector whose coordinates are sampled from 
+	a distribution $\Phi$ which outputs small integers under mod $q$.
+	One wants to solve the problem can take the dimensions $n,m$ and 
+	the specification of $\Phi$ as public parameters.
+	Under suitable parameter settings, it has been known that the LWE problem is as hard as the SVP \cite{...}.
+	
+	A typical form of LWE-based cryptography uses $(A, \bm{b})$ 
+	as a public key and $\bm{s}$ as the corresponding secret key. 
+	For a message $m$, the ciphertext is a pair $\bm{c}_1 = \bm{r}A$ and $\bm{c}_2 = \bm{r} \cdot \bm{b} + m$ where $\bm{r}$ a randomly-selected small element vector.
+	It is easy to see the receiver who knows $\bm{s}$ can recover $m$.
+
+	From the viewpoint of computing resource, one advantage is 
+	the simpleness of implementation, thus, the dominating part of encryption is the matrix-vector multiplication and it can be highly parallelized in implementation.
+	On the other hand, the memory consumption to store the matrix is too large compared to the major schemes like RSA at the time, and other candidates of post-quantum cryptographies.
+	
+	To solve the problem, it has been proposed some compression techniques to represent the matrix by a small data.
+	The ideal lattice is one of the most useful technique that represents 
+	the matrix by one polynomial.
+	The sender and receiver share a polynomial $f(X)$ as a public parameter, which is selected carefully, and then send a public polynomial $a(X)$ instead of $A$.
+	Then, the sender decompresses it by putting $(i,j)$-element of $A$ as the coefficient of $X^j$ of $X^i a(X)\ \mod\ f(X)$.
+	As the standard LWE can be reduced to SVP, this type LWE, sometimes are called the ideal-LWE problem, can also be reduced to the ideal-SVP which is an ideal analogue to the SVP.
+	However, as of 2020, it is still open whether the ideal-type problems are hard enough as a basis problem to cryptosystems.
+
+	
+
+	\item Code-based cryptography has a longer history than the lattice-based ones.
+	
+		
+	
+	\memo{TBW}
+	\item Multivariate, Isogeny, Hash
+
+\end{itemize}
+
+
+
+\memo{Abstract, representative basis problems (and major analysis methods?), major candidates, Solving challenges  }
+
+%As the theorists have proven the theoretical hardness of their cryptographic scheme from reasonable assumptions, one needs to estimate practical hardness to select the practical parameters.
+%\memo{SVP challenge}
+
+
+\subsection{Competition in NIST/CACR}
+
+
+
+
+
+%%-----------------------Aono 
+
+
+Besides the resilience against quantum computes, 
+some notable properties has been found around the cryptographies
+introduced above.
+
+The most interesting property is the homomorphic encrypton.
+
+\memo{Homomorphic encryption, but this is independent from quantum-resilient}
+
 
 \outlinecomment{somebody besides me should write this.  Moriai-san?
   Aono-san?}
