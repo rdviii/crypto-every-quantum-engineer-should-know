@@ -89,6 +89,18 @@
 \def\comment#1{{\color{ForestGreen}$\Rightarrow${\small\em #1}}}
 %\def\comment#1{}
 
+\def\aono#1{{\color{Red}$\Rightarrow$Aono-san, \ifx&#1& %
+    can you take a look at this?
+    \else
+    #1
+    \fi}}
+
+\def\ddp#1{{\color{Red}$\Rightarrow$ddp, \ifx&#1& %
+    can you take a look at this?
+    \else
+    #1
+    \fi}}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % rwd-quantum : helpful macros for writing about quantum theory
 %
