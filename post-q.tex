@@ -11,6 +11,9 @@
 
 \section{Post-quantum cryptography}
 
+% killed subsection?
+% \subsection{Motivation of post-quantum cryptography}
+
 The post-quantum cryptography, sometimes referred as the quantum-resilient or quantum-safe cryptography~\cite{NISTpq}, includes a wide class of cryptographic primitives which are believed to be secure against both classical and quantum computers in theory and practice.
 This section introduces a motivation of post-quantum cryptography, where do we use the quantum computers to attack them, and how do we model the world.
 
@@ -22,10 +25,46 @@ Concretely, the standardization criteria requires it must consume a large number
 of gates in the sense of both classical and quantum for the attacks~\cite[p.18]{NISTpq}.
 However, the resilience against other quantum computers such as quantum annealers are not usually considered because how to quantify their ability is not clear now and it is an important open problem.
 
+
+As the countermeasure, the cryptographers have been developing 
+new cryptographic schemes which they call ``post-quantum cryptography''
+or ``quantum-resilient cryptography.'' 
+It is widely believed that revealing secret information encrypted by a scheme is an intractable task even we have a large size of classical and quantum computers.
+
+\aono{what is parameter selection?}
 Besides the parameter selection, 
 there are several quantum arguments on security.
 Most of them are analogues of cryptography in the classical world, by replacing probabilistic polynomial Turing machine (PPTM) to quantum polynomial time Turing machine (QPTM), with suitable adaptations.
 We introduce which parts are replaced and should to argue by quantum peoples.
+
+\rule{\columnwidth}{1pt}
+\aono{could we move this to Sec.~\ref{sec:defense}?}
+
+The resilience of cryptography to the computers can be explained in the following way.
+The mathematical notion of security has been formulated by Shannon's discussion on the symmetric cryptography in~\cite{Sha49}.
+He defined the symmetric cryptography has the perfect security (information-theoretic security) if the eavesdropper that gets ciphertext will gain no information about the plaintext.
+This security notion can be described as the equivalent condition that 
+uses Turing machines (TM):
+for any (unlimited time and space) TM $\mathcal{G}$ that outputs a candidate of plaintext from a given ciphertext, there exists a TM $\mathcal{G}'$ with no input that satisfies
+%
+\begin{equation}
+	\label{eqn:ITalg}
+	\Pr[ \mathcal{G}(ct) = m ] = \Pr [\mathcal{G}'() = m ].
+\end{equation}
+%
+Here, the probability is over a fixed distribution of plaintext $m$ and key $k$, and $ct = Enc(k,ct)$.
+The equivalence of probabilities means that $\mathcal{G}$ needs not to use $ct$ to recover $m$, thus, $ct$ does not contain any information about $m$ intuitively.
+
+Shannon proved that the information-theoretic security 
+requires that the sender and receiver have to share 
+the secret key longer than the message itself.
+The source of such unwieldiness is from the tightness of perfect security that requires the eavesdropper can get no information, or it allows unlimited power to the Turing machines.
+It is easy to see any public-key cryptography does not satisfy
+the perfect security~\cite[Sect. 5.5.2]{GolEnc2}, 
+and the followers tried to relax the notion.
+
+\aono{the part I want to move ends here.}
+\rule{\columnwidth}{1pt}
 
 \subsection{Cryptanalyses and Base Problems}
 
@@ -198,54 +237,6 @@ However, as of 2020, it is still open whether the ideal-type problems are hard e
 
 
 
-% =======
-\clearpage 
-
-\section{Post-quantum cryptography}
-
-\subsection{Motivation of post-quantum cryptography}
-
-Since Shor's groundbreaking work, 
-it has been known that a reasonable size quantum circuit can be used as 
-an efficient oracle to solve a wide class of hidden subgroup problem,
-which is an important generic problem that captures 
-the integer factoring problem (ILP) \aono{IFP?} and the discrete logarithm problem (DLP). 
-As a direct consequence, developed quantum computers will make 
-the most famous public-key cryptography such as RSA and DSA worthless. \aono{DSA reference?}
-
-As the countermeasure, the cryptographers have been developing 
-new cryptographic schemes which they call ``post-quantum cryptography''
-or ``quantum-resilient cryptography.'' 
-It is widely believed that revealing secret information encrypted by a scheme is an intractable task even we have a large size of classical and quantum computers.
-
-\aono{could we move this to Sec.~\ref{sec:defense}?}
-
-The resilience of cryptography to the computers can be explained in the following way.
-The mathematical notion of security has been formulated by Shannon's discussion on the symmetric cryptography in~\cite{Sha49}.
-He defined the symmetric cryptography has the perfect security (information-theoretic security) if the eavesdropper that gets ciphertext will gain no information about the plaintext.
-This security notion can be described as the equivalent condition that 
-uses Turing machines (TM):
-for any (unlimited time and space) TM $\mathcal{G}$ that outputs a candidate of plaintext from a given ciphertext, there exists a TM $\mathcal{G}'$ with no input that satisfies
-%
-\begin{equation}
-	\label{eqn:ITalg}
-	\Pr[ \mathcal{G}(ct) = m ] = \Pr [\mathcal{G}'() = m ].
-\end{equation}
-%
-Here, the probability is over a fixed distribution of plaintext $m$ and key $k$, and $ct = Enc(k,ct)$.
-The equivalence of probabilities means that $\mathcal{G}$ needs not to use $ct$ to recover $m$, thus, $ct$ does not contain any information about $m$ intuitively.
-
-Shannon proved that the information-theoretic security 
-requires that the sender and receiver have to share 
-the secret key longer than the message itself.
-The source of such unwieldiness is from the tightness of perfect security that requires the eavesdropper can get no information, or it allows unlimited power to the Turing machines.
-It is easy to see any public-key cryptography does not satisfy
-the perfect security~\cite[Sect. 5.5.2]{GolEnc2}, 
-and the followers tried to relax the notion.
-
-\aono{part I want to move ends here.}
-
-One of the relaxed notion, which is commonly referred as the semantic security against classical computers is obtained by relaxing TM in (\ref{eqn:ITalg}) to a probabilistic polynomial TM (PPTM) and by some modifications \cite{...}, and security against quantum computes is obtained via a similar way.
 
 \subsection{Classification of Post-quantum cryptographes by the base problems}
 
@@ -310,6 +301,14 @@ The most interesting property is the homomorphic encrypton.
 
 
 % =======
+
+
+% =======
+% \clearpage 
+
+% \section{Post-quantum cryptography}
+
+\subsection{rdv's notes}
 
 \comment{Jon Dowling (RIP)'s opinions here were strong.  He believed that
   post-quantum crypto is fundamentally impossible, that all of the
