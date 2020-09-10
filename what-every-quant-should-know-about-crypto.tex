@@ -89,6 +89,18 @@
 \def\comment#1{{\color{ForestGreen}$\Rightarrow${\small\em #1}}}
 %\def\comment#1{}
 
+\def\aono#1{{\color{Red}$\Rightarrow$Aono-san, \ifx&#1& %
+    can you take a look at this?
+    \else
+    #1
+    \fi}}
+
+\def\ddp#1{{\color{Red}$\Rightarrow$ddp, \ifx&#1& %
+    can you take a look at this?
+    \else
+    #1
+    \fi}}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % rwd-quantum : helpful macros for writing about quantum theory
 %
@@ -172,6 +184,13 @@
  \email{rdv@sfc.wide.ad.jp.}
 \affiliation{
 Faculty of Environment and Information Studies, Keio University.%\\This line break forced with \textbackslash\textbackslash
+}%
+
+\author{Yoshinori Aono}
+%  \altaffiliation[Also at ]{}%Lines break automatically or can be forced with \\
+ \email{aono@nict.go.jp.}
+\affiliation{
+National Institute of Information and Communications Technology.%\\This line break forced with \textbackslash\textbackslash
 }%
 
 \date{\today}% It is always \today, today,

@@ -1,22 +1,14 @@
 \section{Cryptanalysis}
+\label{sec:cryptan}
 
 \outlinecomment{Get Aono, Moriai or others to contribute here.}
 
 The general idea of trying to decode messages that are encrypted is
-known as cryptanalysis.  Some of the planet's smartest people have
-worked on this for all of their lifetimes, building on work in
-progress since well before we were born, so my summary here is
-inevitably going to be superficial and perhaps wrong.  Comments
-welcome; there is a lot of \emph{bad} information about cryptography on the
-web, and I'd prefer to be corrected and make mine \emph{good} information
-for the web.
-
-(Somewhere, right now, maybe even as I type, employees of one or more
-of the world's major intelligence agencies are snickering at how naive
-my presentation here is.  We don't know how much they really know, but
-we do know that e.g. the RSA public key cryptosystem and the technique
-of differential analysis were known to U.S. agencies for years,
-perhaps decades, before they became public.)
+known as cryptanalysis.  Here, we can deal only in public information;
+we don't know how much more advanced intelligence agencies are.  We do
+know that e.g. the RSA public key cryptosystem and the technique of
+differential analysis were known to intelligence agencies for years,
+perhaps decades, before they became public. \comment{cite}
 
 \url{https://en.wikipedia.org/wiki/Advanced_Encryption_Standard#Known_attacks}
 says, "For cryptographers, a cryptographic "break" is anything faster
@@ -26,6 +18,7 @@ include results that are infeasible with current technology."
 The page then goes on to list quite a number of attacks on AES, none
 considered practical yet.
 
+\comment{informal}
 Given how long people have been working on cryptography, naturally
 there are many techniques for attacking the ciphers.  Here I'll
 mention just a couple of the modern techniques are known for what we
@@ -48,6 +41,7 @@ The second is linear crypanalysis, discovered by Mitsuru Matsui in
 1990~\cite{matsui1993linear}.
 \url{https://en.wikipedia.org/wiki/Linear_cryptanalysis}
 
+\aono{}
 (Other techniques that I know nothing about include integral,
 algebraic, and biclique.)
 
@@ -58,6 +52,7 @@ the cryptanalysis itself, let's look a little bit at how the designers
 built defenses into the block ciphers.
 
 \subsection{Playing Defense Using Math}
+\label{sec:defense}
 
 \subsubsection{Entropy}
 
@@ -153,20 +148,21 @@ refers to rearranging or spreading out the bits in the message so that
 any redundancy in the plaintext is spread out over the ciphertext.
 \end{quote}
 
+\comment{informal}
+\aono{}
 I haven't seen it written quite this directly (but then, I'm not that
 well read in crypto), but I think it's fair to say that confusion is
 achieved by the nonlinearity of the S-boxes.
 
-These two concepts don't seem to figure prominently in the
-cryptography books and papers I have been reading, but it seems to me
-that they ultimately underly much of the process of cryptanalysis:
-spreading data broadly reduces the relationship exhibited by two
-ciphertexts even when the plaintexts are closely related, expanding
-the search space; and the nonlinearity means that even a large set of
-straightforward equations is not enough to simply and mathematically
-relate the input and output.
+These two concepts ultimately underly much of the process of
+cryptanalysis: spreading data broadly reduces the relationship
+exhibited by two ciphertexts even when the plaintexts are closely
+related, expanding the search space; and the nonlinearity means that
+even a large set of straightforward equations is not enough to simply
+and mathematically relate the input and output.
 
 \subsection{The Birthday Paradox}
+\label{sec: birthday}
 
 (Also called the pigeonhole principle or the hash collision problem.)
 
@@ -249,7 +245,7 @@ Ah, but AES uses $n = 128$, a block size twice as large.  Now we only
 need $d \le 49$ for that one-in-a-billion probability.  $D = 2^{49}$
 times our block size of 16 bytes equals 8 terabytes, about 1,600
 seconds on our 40Gbps link.  So change the keys at least once every
-half hour, and you're good.
+half hour, and you're good. \comment{Tie this to intro, IPsec and TLS.}
 
 Keep in mind a few points:
 \begin{enumerate}
@@ -275,14 +271,15 @@ rediscovery of differential cryptanalysis.  The goal of DC is to
 recover the key used for a session, so it is potentially far more
 serious than the birthday attack.
 
-The book says, "An interesting feature of the new attack is that it
+The book says, ``An interesting feature of the new attack is that it
 can be applied with the same complexity and success probability even
 if the key is frequently changed and thus the collected ciphertexts
-are derived from many different keys."  That's pretty alarming.  This
+are derived from many different keys.''  \aono{} That's pretty alarming.  This
 appears in a paragraph discussing chosen plaintext, so it may be
 restricted to that case.  I infer from this that rather than needing
 the cumulative accretion of information, each trial is independent.
 
+\comment{rework this par}
 The attack works with either \emph{chosen} plaintext (in which the attacker
 says, "Please encrypt this message for me, and give me the
 ciphertext,") or \emph{known} plaintext (in which the attacker knows that
@@ -292,13 +289,13 @@ SMTP (email) connections have enough predictability in their content
 to provide a similar fulcrum for such a lever; see Sec. 2.x of these
 notes).  There is a substantial difference in the complexity of the
 two attacks (see Tab. 2.1 in the book).  Known plaintext takes *waaay*
-more trials to succeed.
+more trials to succeed.  \comment{informal}
 
 
 The key idea is the construction of \emph{differentials} (hence the name)
 from specific S boxes.  Take two possible inputs to an S box, $X_1$
 and $X_2$.  We can assume the subkey has been XORed into both $X_1$
-and $X_2$ already.  $Y1$ and $Y2$ are the corresponding outputs of the
+and $X_2$ already.  $Y_1$ and $Y_2$ are the corresponding outputs of the
 S box.  We know that if $X_1 = X_2$, then $Y_1 = Y_2$ and also $X_1 +
 X_2 = 0$ (again, here '+' is addition modulo two, or XOR).
 
@@ -307,15 +304,16 @@ should result in about half the output bits changing.  The S box
 should be similar; small changes in the input should mean large
 changes in the output.  In fact, the S box is small enough that we can
 exhaustively analyze its inputs.  We also know some rules that were
-chosen during the design phase, for example, changing \emph{one} bit in the
-six-bit input should result in changes to at \emph{two} bits in the
-four-bit output.
+chosen during the design phase, for example, changing \emph{one} bit
+in the six-bit input should result in changes to at least \emph{two}
+bits in the four-bit output.
 
 So a differential table for each S box is constructed by listing all
 $2^6$ possible XORs $X_1 + X_2$, and collecting the stats on $Y_1 +
 Y_2$.  From the differences found here, we can work backwards to find
 with "high" probability (slightly higher than completely random, at
-any rate) some characteristics of the outputs of the *previous* round.
+any rate) some characteristics of the outputs of the *previous*
+round. \comment{informal}
 
 The overall attack is performed by encrypting a bunch of
 randomly-chosen *pairs* of plaintexts (chosen as a pair; first a
@@ -380,8 +378,7 @@ $L = P_1 + P_3 + C_2 + C_4$
 combination has a bias if the probability of $L$ being 0 is noticeably
 different from 50\%.
 
-Such a combination is a \emph{linear} combination of bits.  It is known (by
-whom?) that if the S-boxes in our cipher are fully linear, then the
+Such a combination is a \emph{linear} combination of bits.  It is known (\aono{by whom?}) that if the S-boxes in our cipher are fully linear, then the
 cipher can be easily broken.  Therefore, designers always use
 nonlinear S-boxes, but some bias such as this may be discoverable.
 
@@ -398,7 +395,7 @@ $1/\epsilon^2$ plaintext-ciphertext pairs to find some bits of the
 subkey.
 
 This is done by taking multiple expressions like the above, combining
-them using Matsui's "Piling Up Principle" where you track the biases
+them using Matsui's ``Piling Up Principle'' where you track the biases
 multiplied together to make a linear approximation of the nonlinear
 S-box.
 
@@ -440,6 +437,7 @@ they are pretty predictable.  Thus, it's reasonable to consider
 attacks on TLS to be known-plaintext attacks, and in fact there are
 cases where we can create chosen-plaintext attacks.
 
+\aono{can you come up with a better example of how chosen-plaintext works?}
 Consider, for example, the connection between your laptop and your
 email server, whether Gmail or your organization's server.  Assume
 that I, an attacker, can send you email and can observe your encrypted
