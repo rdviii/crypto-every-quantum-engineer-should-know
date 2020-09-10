@@ -4,23 +4,22 @@
 \newcommand{\memo}[1]{{\color{red} #1 }}
 
 %\bibliography{../../../refsaono.bib}
-\bibliography{refsaono.bib}
+% \bibliography{refsaono.bib}
 
 
 \clearpage
 
 \section{Post-quantum cryptography}
 
-The post-quantum cryptography, sometimes referred as the quantum-resilient or quantum-safe cryptography \cite{NISTpq}, includes a wide class of cryptographic primitives which are believed to be secure against both classical and quantum computers in theory and practice.
+The post-quantum cryptography, sometimes referred as the quantum-resilient or quantum-safe cryptography~\cite{NISTpq}, includes a wide class of cryptographic primitives which are believed to be secure against both classical and quantum computers in theory and practice.
 This section introduces a motivation of post-quantum cryptography, where do we use the quantum computers to attack them, and how do we model the world.
 
 %What is pqcrypto?
-Since Shor's work \cite{Shor97} proved there exists polynomial time 
+Since Shor's work~\cite{Shor97} proved there exists polynomial time 
 quantum attacks to RSA public-key cryptography and DSA signature,
 the cryptographers have been developing countermeasure schemes.
 Concretely, the standardization criteria requires it must consume a large number 
-of gates in the sense of both classical and quantum for the attacks \cite
-[p.18]{NISTpq}.
+of gates in the sense of both classical and quantum for the attacks~\cite[p.18]{NISTpq}.
 However, the resilience against other quantum computers such as quantum annealers are not usually considered because how to quantify their ability is not clear now and it is an important open problem.
 
 Besides the parameter selection, 
@@ -183,8 +182,6 @@ As the standard LWE can be reduced to SVP, this type LWE, sometimes are called t
 However, as of 2020, it is still open whether the ideal-type problems are hard enough as a basis problem to cryptosystems.
 \fi
 
-\if0
-
 
 
 \memo{Too long?}
@@ -201,7 +198,7 @@ However, as of 2020, it is still open whether the ideal-type problems are hard e
 
 
 
-=======
+% =======
 \clearpage 
 
 \section{Post-quantum cryptography}
@@ -224,7 +221,7 @@ It is widely believed that revealing secret information encrypted by a scheme is
 \aono{could we move this to Sec.~\ref{sec:defense}?}
 
 The resilience of cryptography to the computers can be explained in the following way.
-The mathematical notion of security has been formulated by Shannon's discussion on the symmetric cryptography in \cite{Sha49}. \aono{can you fix reference, adding aono.bib or somehow?}
+The mathematical notion of security has been formulated by Shannon's discussion on the symmetric cryptography in~\cite{Sha49}.
 He defined the symmetric cryptography has the perfect security (information-theoretic security) if the eavesdropper that gets ciphertext will gain no information about the plaintext.
 This security notion can be described as the equivalent condition that 
 uses Turing machines (TM):
@@ -243,7 +240,7 @@ requires that the sender and receiver have to share
 the secret key longer than the message itself.
 The source of such unwieldiness is from the tightness of perfect security that requires the eavesdropper can get no information, or it allows unlimited power to the Turing machines.
 It is easy to see any public-key cryptography does not satisfy
-the perfect security \cite[Sect. 5.5.2]{GolEnc2}, \aono{can you fix this, e.g. by adding aono.bib?}
+the perfect security~\cite[Sect. 5.5.2]{GolEnc2}, 
 and the followers tried to relax the notion.
 
 \aono{part I want to move ends here.}
@@ -312,9 +309,7 @@ The most interesting property is the homomorphic encrypton.
 \memo{Homomorphic encryption, but this is independent from quantum-resilient}
 
 
-=======
-\outlinecomment{somebody besides me should write this.  Moriai-san?
-  Aono-san?}
+% =======
 
 \comment{Jon Dowling (RIP)'s opinions here were strong.  He believed that
   post-quantum crypto is fundamentally impossible, that all of the
