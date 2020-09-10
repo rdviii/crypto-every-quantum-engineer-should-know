@@ -9,16 +9,18 @@ Since Shor's groundbreaking work,
 it has been known that a reasonable size quantum circuit can be used as 
 an efficient oracle to solve a wide class of hidden subgroup problem,
 which is an important generic problem that captures 
-the integer factoring problem (ILP) and the discrete logarithm problem (DLP). 
+the integer factoring problem (ILP) \aono{IFP?} and the discrete logarithm problem (DLP). 
 As a direct consequence, developed quantum computers will make 
-the most famous public-key cryptography such as RSA and DSA worthless.
+the most famous public-key cryptography such as RSA and DSA worthless. \aono{DSA reference?}
 
 As the countermeasure, the cryptographers have been developing 
 new cryptographic schemes which they call ``post-quantum cryptography''
 or ``quantum-resilient cryptography.'' 
 It is widely believed that revealing secret information encrypted by a scheme is an intractable task even we have a large size of classical and quantum computers.
 
-A resilience of cryptography to the computers can be explained in the following way.
+\aono{could we move this to Sec.~\ref{sec:defense}?}
+
+The resilience of cryptography to the computers can be explained in the following way.
 The mathematical notion of security has been formulated by Shannon's discussion on the symmetric cryptography in \cite{Sha49}. \aono{can you fix reference, adding aono.bib or somehow?}
 He defined the symmetric cryptography has the perfect security (information-theoretic security) if the eavesdropper that gets ciphertext will gain no information about the plaintext.
 This security notion can be described as the equivalent condition that 
@@ -40,6 +42,8 @@ The source of such unwieldiness is from the tightness of perfect security that r
 It is easy to see any public-key cryptography does not satisfy
 the perfect security \cite[Sect. 5.5.2]{GolEnc2}, \aono{can you fix this, e.g. by adding aono.bib?}
 and the followers tried to relax the notion.
+
+\aono{part I want to move ends here.}
 
 One of the relaxed notion, which is commonly referred as the semantic security against classical computers is obtained by relaxing TM in (\ref{eqn:ITalg}) to a probabilistic polynomial TM (PPTM) and by some modifications \cite{...}, and security against quantum computes is obtained via a similar way.
 

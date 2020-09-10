@@ -2,9 +2,17 @@
 
 \subsection{IPsec and the IETF}
 \label{sec:ipsec}
+\begin{figure}
+  {\color{Magenta} IPsec picture; network-to-network, as well as hub-and-spoke for ``road warrior'' clients.}
+  \caption{The DES encryption process.}
+  \label{fig:ipsec}
+\end{figure}
 
-In this section, we return to the original question about rekeying
-that sparked this whole venture, and answer three questions:
+This paper was inspired in part by a discussion of the performance
+demands made of key generation and rekeying procedures, in the context
+of incorporating QKD as well as taking into consideration Shor's
+algorithm.  In this section, we return to that original topic and
+answer several questions:
 
 \begin{enumerate}
 \item What are the technical mechanisms in place for rekeying and
@@ -12,22 +20,26 @@ that sparked this whole venture, and answer three questions:
    protocol IPsec?
 \item What was known, at the time these protocols were developed, about
    the best practices for rekeying?
-\item What are best practices today?
+ \item What are best practices today?
+   \item In light of these topics, what are performance demands for
+     key generation or rekeying?
 \end{enumerate}
+
+To answer these, we begin with a discussion of IPsec itself, and
+introduce the organization through which the protocols are created.
 
 \subsubsection{Background on IPsec, IETF and RFCs}
 
 The Internet Engineering Task Force (IETF) is where protocol
 specifications for the Internet come from.  There is an entire Area
 within IETF (an "area" is the largest size organizational group in
-IETF, equivalent to a division of the American Physical Society, I
-would guess) dedicated to security, which charters many different
-working groups.  Security is *MUCH, MUCH MORE* than cryptography, but
-an important area of work is developing the network protocols that
-allow real systems to use the cryptographic techniques discovered by
-the mathematicians.  Moreover, theorists are inevitably naive about
-how much work it is to actually use their ideas.
-\url{https://trac.ietf.org/trac/sec/wiki}
+IETF) dedicated to security, which charters many different working
+groups~\footnote{\url{https://trac.ietf.org/trac/sec/wiki}.}.
+Security is much more than cryptography alone, but an important area
+of work is developing the network protocols that allow real systems to
+use the cryptographic techniques discovered by the mathematicians.
+Moreover, theorists are inevitably naive about how much work it is to
+actually use their ideas.
 
 One of the most important means of securing your communications is
 IPsec, which builds a "tunnel" inside of which ordinary IP packets can
@@ -40,8 +52,8 @@ IPsec is complex and has been updated many times.  The Wikipedia page
 on it (which might be an easier entry point than the IETF indices,
 which are organized chronologically) lists over 40 standards-track
 documents, probably totaling over a thousand pages, some of which are
-outdated and some of which are still current.
-https://en.wikipedia.org/wiki/IPsec
+outdated and some of which are still
+current~\footnote{\url{https://en.wikipedia.org/wiki/IPsec}.}.
 
 Those documents are what are known as RFCs, or Request for Comments
 documents.  They have different levels of authority, ranging from
@@ -134,6 +146,7 @@ quantum computing?
 
 \outlinecomment{Should part of the email search be relegated to an appendix?}
 
+\comment{informal}
 What is the recommended lifetime of an IPsec Security Association
 today?  This is the question that has proven to be so hard to answer,
 and that has led me wandering all across the web.  Probably the most
@@ -205,8 +218,16 @@ preprint server~\cite{cryptoeprint:2012:623}.
 \comment{Papers on actually integrating QKD into classical crypto~\cite{Alleaume201462,mink09:_qkd_and_ipsec}.}
 
 \comment{I have two major QKD reviews in my stacks somewhere, haven't
-  found either yet...}
+  found either yet...~\cite{Alleaume201462} isn't one, but is
+  related...}
 
+\comment{Xu-Ma-Zhang-Lo-Pan:
+https://arxiv.org/abs/1903.09051
+Pirandola-et-al:
+[1906.01645] Advances in Quantum Cryptography
+}
+
+\comment{informal}
 (This one is just a placeholder, but there is surprisingly little
 \emph{documented} about this kind of work.  Even e.g. the publications
 describing the recent Chinese QKD satellite

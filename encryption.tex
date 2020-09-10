@@ -34,6 +34,7 @@ and send $c$ to you.  You can recover the message $m$ by
 m = c^d \bmod n.
 \end{align}
 
+\comment{informal}
 The drawback to public key cryptography is that it is expensive, so it
 is not used for every message.  If I send you "Hi, Bob, it's Tuesday,
 let's use 42 as our key," using your public key and you reply,
@@ -43,6 +44,7 @@ confirm that we are definitely Bob and Alice, known as authentication
 n,e\rangle$ that you are holding really and truly belongs to me, and I
 haven't leaked it out somehow!
 
+\comment{informal}
 As you might guess from the publication of $n$, RSA is the one that's
 vulnerable to factoring larger integers, and hence of interest to
 spooks once Shor's algorithm came about.
@@ -60,12 +62,13 @@ substantial amount of computation~\footnote{See
 
 \subsection{Key generation}
 
-The other algorithm we talk about a lot as being both important and
+The other algorithm often mentioned as being both important and
 vulnerable to Shor's factoring algorithm is Diffie-Hellman key
 exchange, which is used for creating the session key we will use for
-bulk data encryption.  It's important that every session have its own
-separate encryption key; we don't want multiple conversations sharing
-the same key, for a lot of obvious reasons.
+bulk data encryption~\cite{diffie1976new}.  It is important that every
+communication session have its own separate encryption key;
+Diffie-Hellman provides a fairly efficient means of creating these
+keys in a distributed fashion.
 
 D-H works as follows:
 
@@ -330,7 +333,7 @@ used mode.
 
 \subsection{Other Tasks}
 
-\comment{Crypto also used for signatures; integrity hashes (both
+\comment{Crypto also used for passwords; signatures; integrity hashes (both
   signed ans unsigned); spread spectrum for secrecy, difficulty of
   triangulation and being hard to jam; challenge response rfid and
   smart credit cards.}

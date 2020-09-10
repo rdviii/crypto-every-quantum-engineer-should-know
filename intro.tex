@@ -145,12 +145,12 @@ broader field tasked with ensuring the confidentiality, integrity and
 availability of data, computing and communication
 resources~\cite{bishop2002art}.
 
-You probably all know that there are two major kinds of cryptography
--- symmetric key and asymmetric key, also known as public key.  Due to
-the high costs of computation for public key, bulk data encryption is
-done using symmetric key.  Symmetric encryption comes in two kinds,
-block ciphers and stream ciphers.  These days pretty much everything
-seems to be block, but I'm not sure why.  \aono{}
+There are two major kinds of cryptography: symmetric key and
+asymmetric key, also known as public key.  Due to the high costs of
+computation for public key, bulk data encryption is done using
+symmetric key.  Symmetric encryption comes in two kinds, block ciphers
+and stream ciphers.  These days pretty much everything seems to be
+block, but I'm not sure why.  \aono{}
 
 Some additional terminology:
 
@@ -175,10 +175,15 @@ Attacks on encrypted communications generally fall into one of three
 categories:
 
 \begin{itemize}
-\item {\bf unknown plaintext:} the hardest problem; how do you recognize when
-  you've found the message?  With many but not all systems, failure
+\item {\bf unknown plaintext:} this is the most basic form of the
+  problem, and the hardest, for two reasons.  First, with no knowledge
+  of the original input, it is impossible to work the encryption
+  forward to test key candidates.  Second, when trying decryption
+  using a candidate key, how can the attacker recognize when they have
+  found the message (and hence the key)?  Failure to decrypt properly
   will leave only unintelligible, random data, while success will
-  produce words from the dictionary or other recognizable text.
+  produce words from the dictionary or other recognizable text, or
+  more generally, data with low \emph{entropy} (Sec.~\ref{sec:defense}).
 \item {\bf known plaintext:} when an attacker knows what the plaintext
   corresponding to a particular ciphertext is, and attempts to find
   the key; not uncommon given the regularity of communications such as
