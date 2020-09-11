@@ -44,17 +44,17 @@ confirm that we are definitely Bob and Alice, known as authentication
 n,e\rangle$ that you are holding really and truly belongs to me, and I
 haven't leaked it out somehow!
 
-\comment{informal}
-As you might guess from the publication of $n$, RSA is the one that's
-vulnerable to factoring larger integers, and hence of interest to
-spooks once Shor's algorithm came about.
+As the publication of $n$ makes clear, RSA is vulnerable to advances
+in factoring larger integers, hence interest from intelligence
+agencies and security researchers was immediate when Shor's algorithm
+was announced.
 
 Current EU recommendations are for 3072-bit RSA keys, recently (2018)
 upgraded from 2048, for "near-term protection" (up to ten years).
 They recommend an extraordinary 15360 bits for "long-term protection"
 (thirty to fifty years). [Cloudflare, Keylength.com, Ecrypt, Lenstra]
 
-Finding prime numbers large enough to be used also requires a
+Finding prime numbers large enough to be used in RSA also requires a
 substantial amount of computation~\footnote{See
   \url{https://en.wikipedia.org/wiki/Primality_test}.}.
 
@@ -139,7 +139,7 @@ today.
 \end{figure}
 
 DES, the Data Encryption Standard, was designed by IBM in the 1970s,
-consulting with the NSA.  DES is a type of cipher known as an
+consulting with the NSA~\cite{standard199946}.  DES is a type of cipher known as an
 iterative block cipher, which breaks data into to blocks and repeats a
 set of operations on them.  The operations in DES are called a Feistel
 network, after the inventor.
@@ -147,10 +147,10 @@ network, after the inventor.
 DES uses a 56-bit key, though products exported from the U.S. were
 limited to using 40 meaningful key bits [wikipedia/40-bit-encryption].
 It was later upgraded to triple-DES, using three 56-bit key pieces and
-repeating DES three times, giving up to 168 bits of protection.  But
-it's not just the key size that matters in a block cipher.  The block
-size itself matters a great deal, as we'll see below.  For DES, that
-block size is only 64 bits.
+repeating DES three times, giving up to 168 bits of protection.
+However, in a block cipher, not only does the key size matter, the
+block size also matters, as we'll see below.  For DES, that block size
+is only 64 bits.
 
 DES operates in sixteen rounds, each of which uses a 48-bit subkey
 generated from the original 56-bit key using a key scheduling

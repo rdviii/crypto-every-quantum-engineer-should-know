@@ -4,7 +4,7 @@
 \outlinecomment{Get Aono, Moriai or others to contribute here.}
 
 The general idea of trying to decode messages that are encrypted is
-known as cryptanalysis.  Here, we can deal only in public information;
+known as \emph{cryptanalysis}.  Here, we can deal only in public information;
 we don't know how much more advanced intelligence agencies are.  We do
 know that e.g. the RSA public key cryptosystem and the technique of
 differential analysis were known to intelligence agencies for years,
@@ -165,7 +165,7 @@ and mathematically relate the input and output.
 \label{sec: birthday}
 
 (Also called the pigeonhole principle or the hash collision problem.)
-
+\comment{informal}
 You're probably familiar with the basic idea of the birthday paradox:
 If you have $n$ people in a room, what's the probability of two of
 them sharing a birthday?  More concretely, how many people have to be
@@ -186,22 +186,26 @@ probability that we will find two blocks that have the same
 ciphertext.  We call that a \emph{collision}.  If the two blocks were
 encrypted with the same key, we gain information about the plaintext.
 
+\comment{informal}
 (Side question: How can you \emph{have} birthday paradox collisions of the
 ciphertext?  Wouldn't that mean that the encryption process is lossy,
 and that it would be impossible to reliably *decrypt* that ciphertext
 back to both original blocks?
 
+\comment{informal}
 Answer: there is more information involved in both the encryption and
 decryption than just that specific block and the key.  This is the
 cipher block chaining mentioned at the end of Sec. 1.)
 
+\comment{informal}
 In CBC mode, what you gain is the XOR of two plaintext blocks.  If you
 get to choose which two, this could be incredibly valuable
 information; given that it's just two random blocks, it's less so, but
 not unimportant.  As it happens, if block numbers $i$ and $j$ have the
 same ciphertext $c[i] = c[j]$, then you get the XOR of the plaintext of
-blocks $i-1$ and $j-1$.
+blocks $i-1$ and $j-1$.  \comment{notation probably needs to be explained, maybe back up in Intro, or where block ciphers are explained.}
 
+\comment{informal}
 I spent quite a bit of time working through the math of the birthday
 paradox, only to come back to one of the first sources I found: the
 2016 SWEET32 paper by Bhargavan and Leurent.  Sec. 2.2 of that paper
@@ -213,8 +217,9 @@ ciphertexts, and if the number of blocks encrypted is the square root
 of that number, $2^{n/2}$, the probability of at least one collision
 is above 39\%, which arises in the limit as the expression
 $1-1/e^{1/2}$.  (See the appendix of these notes for some example
-calculations of this and the following to play around with.)
+calculations.)
 
+\comment{informal}
 Assuming you consider a 39\% chance of disclosing some information to
 be an unacceptably large probability, when should you rekey?  That's
 the first-level answer to our ultimate question of when to rekey using
@@ -223,17 +228,20 @@ for example, we want the probability of an attacker recovering a
 plaintext block using the birthday attack to be less than (for
 example) one in a billion.
 
+\comment{informal}
 If we have some power of two $D = 2^d$ ciphertext blocks, then the
 expected number of collisions is approximately $2^{2d-n-1}$.  For our
 one-in-a-billion probability, using $log_2(10^9) \approx 30$, we need
 to set up our session lifetime such that $2d-n-1 < -30$, or $d <
 (n-29)/2$.
 
+\comment{informal}
 Since DES has only a 64-bit block, we should set $d \le 17$.  That's a
 startlingly small number: $D = 2^{17}$ blocks and each block is eight
 bytes, so we should limit the use of a single key to one megabyte!
 An impractically small size.
 
+\comment{informal}
 If, on the other hand, you are okay with a disclosure probability of
 one in a million, we can raise that by a factor of a thousand and
 change keys once every gigabyte instead.  But if you are trying to
@@ -241,12 +249,14 @@ protect a 40Gbps link -- a common backbone bandwidth today, and coming
 to the home in the foreseeable future -- that still means changing
 keys once every 200msec or so!
 
+\comment{informal}
 Ah, but AES uses $n = 128$, a block size twice as large.  Now we only
 need $d \le 49$ for that one-in-a-billion probability.  $D = 2^{49}$
 times our block size of 16 bytes equals 8 terabytes, about 1,600
 seconds on our 40Gbps link.  So change the keys at least once every
 half hour, and you're good. \comment{Tie this to intro, IPsec and TLS.}
 
+\comment{informal}
 Keep in mind a few points:
 \begin{enumerate}
 \item what's disclosed here is not the key but is plaintext-related, but
@@ -261,7 +271,7 @@ Keep in mind a few points:
    data under any given encryption key is still good practice.
 \end{enumerate}
 
-So let's look at a couple of the cryptanalysis techniques.
+Next, we look at some cryptanalysis techniques.
 
 \subsection{Differential Cryptanalysis}
 
@@ -332,7 +342,7 @@ the table we are looking for, which may be quite small.
 (This seems to me that keeping a history of things you've already
 tried would increase the probability of finding a pair you like, so
 I'm still puzzled by the assertion above that this works even if the
-key is being changed frequently.)
+key is being changed frequently.) \aono{}
 
 Ultimately, this attack is considered practical against ordinary DES.
 Biham and Shamir estimated (p. 8, p. 61) that DES and DES-like
@@ -347,6 +357,7 @@ obsolete due to the birthday paradox attack above.  AES is stronger
 against DC, so this attack is of less help against
 properly-implemented, modern systems.
 
+\aono{} \comment{informal}
 I know this is a very rough explanation; I have only a wobbly
 understanding of the process myself!  The differential tables are
 pretty straightforward, once you understand them, but working from
@@ -356,9 +367,9 @@ there to a full-on attack is a big jump.
 
 Linear cryptanalysis (LC) is a known plaintext attack, developed by
 Mitsuru Matsui in 1990 after being inspired by differential
-cryptanalysis~\cite{matsui1993linear}.  The key(!)  idea is to build a
-linear approximation of an S box, allowing you to calculate possible
-keys in reverse more quickly.
+cryptanalysis~\cite{matsui1993linear}.  The key idea is to build a
+linear approximation of an S box, allowing the attacker to calculate
+possible keys in reverse more quickly.
 
 If a cipher is good, every individual bit of the output should have a
 50\% probability of being 0 and a 50\% probability of being 1.
@@ -388,11 +399,11 @@ used in the last round of the cipher, rinse and repeat.  The trick is
 to find the right relationships showing a detectable bias, as was done
 with differential analysis.  This is done by examining the math of the
 S-boxes in detail; as far as I can tell, this phase of the operation
-is done by very smart humans.
+is done by very smart humans. \aono{}
 
-If you can find a combination with a bias of $\epsilon$, then you need
-$1/\epsilon^2$ plaintext-ciphertext pairs to find some bits of the
-subkey.
+If the attacker can find a combination with a bias of $\epsilon$, then
+$1/\epsilon^2$ plaintext-ciphertext pairs are required to find some bits
+of the subkey.
 
 This is done by taking multiple expressions like the above, combining
 them using Matsui's ``Piling Up Principle'' where you track the biases
@@ -409,12 +420,14 @@ or the plaintext, but substantially reduces the work needed to find
 the full key by guiding a search, rather than just testing keys at
 random.
 
+\aono{}
 Linear cryptanalysis is considered to be a very general technique, but
 I don't see extensive attempts to apply it to AES.  Indeed, AES (which
 was developed in the 1990s from the proposed cipher known as Rijndael)
 was developed specifically with the idea of not being vulnerable to
 either DC or LC.
 
+\comment{informal}
 I found Heys' tutorial to be clear and helpful in understanding LC.
 
 \subsection{Known and chosen plaintexts in real systems}
@@ -461,29 +474,31 @@ assuming an attacker can force the choice of plaintext passed between
 two nodes through an encrypted connection is not unreasonable in
 today's richly interwoven distributed systems.
 
-Especially for IPsec (Sec.~\ref{sec:ipsec}), there is another big
-vulnerability: one encrypted connection between two gateways (known as
-a \emph{Security Association}, which we will see below) may carry data
-encrypted for a \emph{bunch} of machines.  So if an attacker manages
-to install a program on only one laptop (say, via email, or while
-you're sitting at Starbucks), they can cause your system to send out
-arbitrarily chosen packets that will cross the tunnel, so they can
-execute a chosen plaintext attack pretty easily.  Since IPsec encrypts
-the whole packet, they may not be able to tell immediately which
-packets came from your laptop and which from a colleague's laptop, but
-that distinction is a relatively minor overhead.
+IPsec (Sec.~\ref{sec:ipsec}) presents another potential vulnerability:
+one encrypted connection between two gateways (known as a
+\emph{Security Association}, which we will see below) may carry data
+encrypted for many machines, providing a broad attack surface for
+attempts to execute chosen plaintext attacks.  If an attacker manages
+to install a program on only one laptop (e.g., via email, or while the
+user is on an unprotected network such as at a coffeeshop), they can
+cause a system to send out arbitrarily chosen packets that will cross
+the tunnel, controlling the content if not always the sequence of
+packets, which may be interleaved with traffic from other applications
+or end systems.  Because IPsec encrypts the whole packet, the attacker
+may not be able to tell immediately which packets came from the
+compromised laptop and which from an unaffected laptop.
 
-Also, for every IP packet from your laptop to the email server passing
+For every IP packet from a laptop to e.g. an email server passing
 through the IPsec tunnel, the IP header portion is going to be exactly
 the same, and its position in the encrypted stream is very easy to
 identify.  This led to some of the decisions around the use of CBC, I
 believe; I'm not aware of any deeper features intended to further
-obscure the location of such predictable data.
+obscure the location of such predictable data.  \ddp{}
 
-In short, as a defender, you should work on the assumption that a
-noticeable fraction of your plaintext is known under benign
-circumstances, and that it's not all that hard for an attacker to
-mount a chosen plaintext attack.
+In short, defenders should work on the assumption that a noticeable
+fraction of the plaintext carried in a tunnel is known even under
+benign circumstances, and that it is not hard for an attacker
+to mount a chosen plaintext attack.
 
 \subsection{Notes \& References}
 
