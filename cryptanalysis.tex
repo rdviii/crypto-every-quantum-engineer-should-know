@@ -345,19 +345,15 @@ obsolete due to the birthday paradox attack above.  AES is stronger
 against DC, so this attack is of less help against
 properly-implemented, modern systems.
 
-\aono{} \comment{informal}
-I know this is a very rough explanation; I have only a wobbly
-understanding of the process myself!  The differential tables are
-pretty straightforward, once you understand them, but working from
-there to a full-on attack is a big jump.
+\aono{}
 
 \subsection{Linear Cryptanalysis}
 
 Linear cryptanalysis (LC) is a known plaintext attack, developed by
 Mitsuru Matsui in 1990 after being inspired by differential
-cryptanalysis~\cite{matsui1993linear}.  The key idea is to build a
-linear approximation of an S box, allowing the attacker to calculate
-possible keys in reverse more quickly.
+cryptanalysis~\cite{matsui1993linear,heys:tutorial}.  The key idea is
+to build a linear approximation of an S box, allowing the attacker to
+calculate possible keys in reverse more quickly.
 
 If a cipher is good, every individual bit of the output should have a
 50\% probability of being 0 and a 50\% probability of being 1.
@@ -408,14 +404,12 @@ or the plaintext, but substantially reduces the work needed to find
 the full key by guiding a search, rather than just testing keys at
 random.
 
-\aono{}
-Linear cryptanalysis is considered to be a very general technique, but
-I don't see extensive attempts to apply it to AES.  Indeed, AES (which
-was developed in the 1990s from the proposed cipher known as Rijndael)
-was developed specifically with the idea of not being vulnerable to
-either DC or LC.
+\aono{} Linear cryptanalysis is considered to be a very general
+technique, but there do not appear to have been extensive attempts to
+apply it to AES.  Indeed, AES (which was developed in the 1990s from
+the proposed cipher known as Rijndael) was developed specifically with
+the idea of not being vulnerable to either DC or LC.
 
-\comment{informal}
 I found Heys' tutorial to be clear and helpful in understanding LC.
 
 \subsection{Known and chosen plaintexts in real systems}
@@ -494,9 +488,7 @@ Some of the references I used for this section:
 
 The best source on the current state of the birthday paradox is Bhargavan and Leurent~\cite{bhargavan2016practical}.  Other references include Miessler~\footnote{\url{https://danielmiessler.com/study/birthday_attack/}} and Wolfram Mathworld~\footnote{\url{http://mathworld.wolfram.com/BirthdayAttack.html}}.
 
-1. Howard M. Heys, "A tutorial on linear and differential
-cryptanalysis", undated but probably 1999ish?
-\url{http://www.engr.mun.ca/~howard/Research/Papers/ldc_tutorial.html}
+1.
 
 2. Abdalla and Bellare,
 \url{https://link.springer.com/chapter/10.1007/3-540-44448-3_42}

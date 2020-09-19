@@ -66,15 +66,12 @@ status.
 
 \subsubsection{IKE and IPsec}
 
-\comment{informal}
-If you really want to dig into the key exchange protocol, RFC 7296
-(Oct. 2014) is the most modern reference~\cite{RFC7296}.  Unless
-you're actually manually configuring or implementing the stuff, you
-probably won't care about the differences between it and the older
-versions.
-
-\comment{informal}
-But you might want to start with RFC 4301 (Dec. 2005) (also a proposed
+To study the key exchange protocol, RFC 7296 (Oct. 2014) is the most
+modern reference~\cite{RFC7296}.  However, the similarities are more
+important than the differences between versions unless the reader is
+actually manually configuring or implementing the protocol.  Rather
+than focusing directly on key exchange, however, it is more
+appropriate to start with RFC 4301 (Dec. 2005) (also a proposed
 standard), which is titled, "Security Architecture for the Internet
 Protocol"~\cite{RFC4301}.
 
@@ -148,15 +145,19 @@ quantum computing?
 
 \outlinecomment{Should part of the email search be relegated to an appendix?}
 
-\comment{informal}
+One of the key questions that determines performance requirements for
+key generation protocols, whether classical or quantum, is
+\begin{quote}
 What is the recommended lifetime of an IPsec Security Association
-today?  This is the question that has proven to be so hard to answer,
-and that has led me wandering all across the web.  Probably the most
-relevant source is, naturally, the mailing list where most of the
-design work is documented.
+today?
+\end{quote}
+This question has proved to be hard to answer definitively; best
+practice seems to be a matter of lore and seems not to be written down
+in an authoritative document.  Probably the most relevant source is
+the archives of the mailing list that documents over a quarter of a
+century of design work.
 
-One early, relevant message
-(\url{https://mailarchive.ietf.org/arch/msg/ipsec/_dSgUvW6WiUFvw5aoyu7rJo5Kgc})
+One early, relevant message~\footnote{\url{https://mailarchive.ietf.org/arch/msg/ipsec/_dSgUvW6WiUFvw5aoyu7rJo5Kgc}.}
 from 08 March 1995 carries the quote:
 
 \begin{widetext}
@@ -177,14 +178,13 @@ from 08 March 1995 carries the quote:
 \end{widetext}
 referring, although not by name, to both the birthday paradox and the
 differential cryptanalysis limits discussed above.  Keep in mind that
-at $2^{32}$ blocks, we are at a 39\% probability of there being at least
-one ciphertext collision revealing some information.
+a stream of $2^{32}$ blocks will result in a 39\% probability of there
+being at least one ciphertext collision revealing some information.
 
-Searching the archives for "birthday" also turned up some relevant
-messages, e.g. the relatively recent (21 April 2015) message
-\url{https://mailarchive.ietf.org/arch/msg/ipsec/T1woQuwh1Ccoz6fWWFDBETBllaY}
-quoting the earlier message
-\url{https://mailarchive.ietf.org/arch/msg/ipsec/De46HNR1h4lGXZnxlIVpNSfs5p0}
+Searching the archives for ``birthday'' also turned up some relevant
+messages, e.g. the relatively recent (21 April 2015)
+message~\footnote{\url{https://mailarchive.ietf.org/arch/msg/ipsec/T1woQuwh1Ccoz6fWWFDBETBllaY}.}
+quoting an earlier message~\footnote{\url{https://mailarchive.ietf.org/arch/msg/ipsec/De46HNR1h4lGXZnxlIVpNSfs5p0}.}
 
 \begin{widetext}
 \begin{verbatim}
@@ -204,13 +204,13 @@ quoting the earlier message
 
 This is interesting, particularly given its newness.  The author (Yoav
 Nir, one of the long-time leaders of the IPsec community) considers
-3DES plus very frequent rekeying to be sufficient, at least for some use
-cases, and it's important for backwards compatibility.  However, in a
-slightly earlier (2012) exchange on the mailing list, David McGrew
-(another key IPsec person) and Nir covered the same issue, with McGrew
-arguing that no more than 50 megabytes should be encrypted with the
-same key even using 3DES, due to the birthday paradox.  McGrew went so
-far as to write up a 16-page analysis posted on the Cryptology
+3DES plus very frequent rekeying to be sufficient, at least for some
+use cases, and values the backwards compatibility of 3DES.  However,
+in a slightly earlier (2012) exchange on the mailing list, David
+McGrew (another key IPsec person) and Nir covered the same issue, with
+McGrew arguing that no more than 50 megabytes should be encrypted with
+the same key even using 3DES, due to the birthday paradox.  McGrew
+went so far as to write up a 16-page analysis posted on the Cryptology
 preprint server~\cite{cryptoeprint:2012:623}.
 
 \comment{Need a summary here, and tie it back to the intro, where I said ``half an hour''.}
@@ -318,16 +318,12 @@ the complete reasoning, so going one level deeper in the reading is
 really necessary.
 
 In April 2016, Mozilla moved to limit the length of a connection,
-based on those results:
-\url{https://bugzilla.mozilla.org/show_bug.cgi?id=1268745}
-They set AES-CBC to about $2^{34.5}$, or about 24 billion records, about
-400 terabytes max.  That should give a probability of $2^{-57}$ of
-"ciphertext integrity [being] breached", though I'm a little unclear
-on exactly what that means here -- is this just birthday bound leaking
-some plaintext, or is this compromise of the entire session key?
-Figuring that out will take more digging, since they express things
-differently than most of the resources I used above.
-\comment{informal}
+based on those
+results~\footnote{\url{https://bugzilla.mozilla.org/show_bug.cgi?id=1268745}.}.
+They set AES-CBC to about $2^{34.5}$, or about 24 billion records,
+roughly upper limit of around 400 terabytes.  That should give a
+probability of $2^{-57}$ of ``ciphertext integrity [being] breached'',
+although the exact meaning of this phrase is left unclear.
 
 \subsubsection{Keying and Rekeying}
 \label{sec:tls-rekeying}
