@@ -18,7 +18,6 @@ include results that are infeasible with current technology."
 The page then goes on to list quite a number of attacks on AES, none
 considered practical yet.
 
-% \comment{informal}
 Given how long people have been working on cryptography, naturally
 there are many techniques for attacking the ciphers.  We will address
 just a couple of the modern techniques are known for what we might
@@ -149,11 +148,10 @@ refers to rearranging or spreading out the bits in the message so that
 any redundancy in the plaintext is spread out over the ciphertext.
 \end{quote}
 
-\comment{informal}
-\aono{}
-I haven't seen it written quite this directly (but then, I'm not that
-well read in crypto), but I think it's fair to say that confusion is
-achieved by the nonlinearity of the S-boxes.
+\aono{} In DES, confusion is achieved by the nonlinearity of the
+S-boxes.  Diffusion is achieved by the shuffling of the bits between
+S-box operations, coupled with the fact that the S-boxes use multiple
+bits in an operation.
 
 These two concepts ultimately underly much of the process of
 cryptanalysis: spreading data broadly reduces the relationship
@@ -165,7 +163,6 @@ and mathematically relate the input and output.
 \subsection{The Birthday Paradox}
 \label{sec: birthday}
 
-% \comment{informal}
 The basic idea of the birthday paradox is a familiar problem in
 elementary probability:
 With $n$ people in a room, what is the probability of two of
@@ -252,9 +249,8 @@ A few points are worth emphasizing:
   things with small amounts of data;
 \item this depends only on the block size of a block cipher, not on the
    key length;
-\item part of this arises due to the CBC (cipher block chain) mode, but
-   ECB (electronic code book) mode is worse; there are other modes
-   that I haven't looked at closely; and \comment{informal}
+\item part of this arises due to the CBC (cipher block chain) mode,
+  but ECB (electronic code book) mode is worse; and
 \item given that there are still other attacks, minimizing the amount of
    data under any given encryption key is still good practice.
 \end{enumerate}
@@ -306,15 +302,15 @@ chosen during the design phase, for example, changing \emph{one} bit
 in the six-bit input should result in changes to at least \emph{two}
 bits in the four-bit output.
 
-So a differential table for each S box is constructed by listing all
+A differential table for each S box is constructed by listing all
 $2^6$ possible XORs $X_1 + X_2$, and collecting the stats on $Y_1 +
 Y_2$.  From the differences found here, we can work backwards to find
-with "high" probability (slightly higher than completely random, at
-any rate) some characteristics of the outputs of the *previous*
-round. \comment{informal}
+with ``high'' probability (slightly higher than completely random)
+some characteristics of the outputs of the \emph{previous}
+round of the encryption.
 
 The overall attack is performed by encrypting a bunch of
-randomly-chosen *pairs* of plaintexts (chosen as a pair; first a
+randomly-chosen \emph{pairs} of plaintexts (chosen as a pair; first a
 completely random one, then a second by XORing in a specific value)
 and comparing their ciphertexts until we find an output pair of
 ciphertexts that fit comfortably with the difference tables we have
@@ -325,12 +321,12 @@ on that guess, we can narrow down the set of subkeys for the
 next-to-last round, rinse and repeat.  It's still a computationally
 intensive, tedious process, but much less than brute force.  Roughly,
 the probability of getting the ciphertext pairs we need is
-proportional to $1/p_D$, where $p_D$ is the differential probability in
-the table we are looking for, which may be quite small.
-(This seems to me that keeping a history of things you've already
-tried would increase the probability of finding a pair you like, so
-I'm still puzzled by the assertion above that this works even if the
-key is being changed frequently.) \aono{}
+proportional to $1/p_D$, where $p_D$ is the differential probability
+in the table we are looking for, which may be quite small.  (This
+seems to me that keeping a history of things you've already tried
+would increase the probability of finding a pair you like, so I'm
+still puzzled by the assertion above that this works even if the key
+is being changed frequently.) \aono{}
 
 Ultimately, this attack is considered practical against ordinary DES.
 Biham and Shamir estimated (p. 8, p. 61) that DES and DES-like

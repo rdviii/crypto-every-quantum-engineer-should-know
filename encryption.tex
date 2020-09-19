@@ -29,20 +29,29 @@ $m$, the sender calculates the ciphertext $c$,
 \begin{align}
 c = m^e \bmod n
 \end{align}
-and send $c$ to you.  You can recover the message $m$ by
+and sends $c$ to the creator.  The creator can recover the message $m$
+by
 \begin{align}
 m = c^d \bmod n.
 \end{align}
 
-\comment{informal}
 The drawback to public key cryptography is that it is expensive, so it
-is not used for every message.  If I send you "Hi, Bob, it's Tuesday,
-let's use 42 as our key," using your public key and you reply,
-"Tuesday is beautiful, Alice, and 42 is fine," using my public key, we
-confirm that we are definitely Bob and Alice, known as authentication
--- assuming, of course, that you trust that the key $\langle
-n,e\rangle$ that you are holding really and truly belongs to me, and I
-haven't leaked it out somehow!
+is not used to encrypt the content of every message.  But because of
+the asymmetry, a catalog of public keys can be published, and anyone
+can find the public key for anyone else and use that key to initiate a
+conversation by sending a short message that is encrypted using the
+public key.  If the recipient of the message can prove that they can
+read the message, then we believe that they hold the private key to
+match the public key, \emph{authenticating} their identity.
+
+If Alice sends the message, ``Hi, Bob, it's Tuesday, and I'm Alice,''
+encrypted using Bob's public key, and Bob replies, ``Tuesday is
+beautiful, Alice, tell me about Wednesday,'' using Alice's public key,
+and Alice again replies, ``Wednesday it will rain,'' then the parties
+have confirmed confirm their identities as Bob and Alice -- assuming,
+of course, that they trust that the key $\langle n,e\rangle$ truly
+belongs to the appropriate party, and that it hasn't leaked out
+somehow!
 
 As the publication of $n$ makes clear, RSA is vulnerable to advances
 in factoring larger integers, hence interest from intelligence
