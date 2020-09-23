@@ -3,33 +3,46 @@
 
 \newcommand{\memo}[1]{{\color{red} #1 }}
 
-%\bibliography{../../refsaono.bib}
-\bibliography{refsaono.bib}
+
+%\bibliography{../../../refsaono.bib}
+% \bibliography{refsaono.bib}
 
 
 \clearpage
 
 \section{Post-quantum cryptography}
 
-%rdv: Also, please delete anything from post-q.tex that you don’t want, except the %last subsection with some of my notes.
 
-The post-quantum cryptography, sometimes referred as the quantum-resilient or quantum-safe cryptography \cite{NISTpq}, includes a wide class of cryptographic primitives which are believed to be secure against both classical and quantum computers in theory and practice.
-This section introduces a motivation of post-quantum cryptography, where do cryptographers model the quantum computers to discuss the security.
-
-%What is pqcrypto?
-Since Shor \cite{Shor97} proved there exists polynomial time 
-quantum attacks to RSA public-key cryptography and DSA signature,
-the cryptographers have been developing countermeasure schemes.
-Concretely, the standardization criteria by NIST requires it must consume a large number of gates in the sense of both classical and quantum to reveal secret information \cite[p.18]{NISTpq}.
-However, the resilience against other quantum computer models such as quantum annealers are not usually considered because how to quantify their ability is not clear.
-Discussing the resilience against post-Moore computers\cite{MM11}, not only quantum-type computers, is an important open future work.
-
-There are several quantum arguments on security on cryptography;
-a major topic is how do we set the parameters to ensure it has adequate security,
-also, how do we model the relation between secret information and attackers have been recognized an important topic.
-Most of them are analogues of cryptography in the classical world, by replacing probabilistic polynomial-time Turing machine (PPTM) to its quantum version
-polynomial-time quantum Turing machine (PQTM), with suitable adaptations.
 We introduce which parts are replaced and should to argue by quantum peoples.
+
+\rule{\columnwidth}{1pt}
+\aono{could we move this to Sec.~\ref{sec:defense}?}
+
+The resilience of cryptography to the computers can be explained in the following way.
+The mathematical notion of security has been formulated by Shannon's discussion on the symmetric cryptography in~\cite{Sha49}.
+He defined the symmetric cryptography has the perfect security (information-theoretic security) if the eavesdropper that gets ciphertext will gain no information about the plaintext.
+This security notion can be described as the equivalent condition that 
+uses Turing machines (TM):
+for any (unlimited time and space) TM $\mathcal{G}$ that outputs a candidate of plaintext from a given ciphertext, there exists a TM $\mathcal{G}'$ with no input that satisfies
+%
+\begin{equation}
+	\label{eqn:ITalg}
+	\Pr[ \mathcal{G}(ct) = m ] = \Pr [\mathcal{G}'() = m ].
+\end{equation}
+%
+Here, the probability is over a fixed distribution of plaintext $m$ and key $k$, and $ct = Enc(k,ct)$.
+The equivalence of probabilities means that $\mathcal{G}$ needs not to use $ct$ to recover $m$, thus, $ct$ does not contain any information about $m$ intuitively.
+
+Shannon proved that the information-theoretic security 
+requires that the sender and receiver have to share 
+the secret key longer than the message itself.
+The source of such unwieldiness is from the tightness of perfect security that requires the eavesdropper can get no information, or it allows unlimited power to the Turing machines.
+It is easy to see any public-key cryptography does not satisfy
+the perfect security~\cite[Sect. 5.5.2]{GolEnc2}, 
+and the followers tried to relax the notion.
+
+\aono{the part I want to move ends here.}
+\rule{\columnwidth}{1pt}
 
 \subsection{Cryptanalyses and Base Problems}
 
@@ -199,9 +212,15 @@ Since the security completely relies on the property of base hash function, it i
 
 
 
-=======
-\outlinecomment{somebody besides me should write this.  Moriai-san?
-  Aono-san?}
+% =======
+
+
+% =======
+% \clearpage 
+
+% \section{Post-quantum cryptography}
+
+\subsection{rdv's notes}
 
 \comment{Jon Dowling (RIP)'s opinions here were strong.  He believed that
   post-quantum crypto is fundamentally impossible, that all of the

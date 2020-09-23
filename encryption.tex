@@ -29,32 +29,41 @@ $m$, the sender calculates the ciphertext $c$,
 \begin{align}
 c = m^e \bmod n
 \end{align}
-and send $c$ to you.  You can recover the message $m$ by
+and sends $c$ to the creator.  The creator can recover the message $m$
+by
 \begin{align}
 m = c^d \bmod n.
 \end{align}
 
-\comment{informal}
 The drawback to public key cryptography is that it is expensive, so it
-is not used for every message.  If I send you "Hi, Bob, it's Tuesday,
-let's use 42 as our key," using your public key and you reply,
-"Tuesday is beautiful, Alice, and 42 is fine," using my public key, we
-confirm that we are definitely Bob and Alice, known as authentication
--- assuming, of course, that you trust that the key $\langle
-n,e\rangle$ that you are holding really and truly belongs to me, and I
-haven't leaked it out somehow!
+is not used to encrypt the content of every message.  But because of
+the asymmetry, a catalog of public keys can be published, and anyone
+can find the public key for anyone else and use that key to initiate a
+conversation by sending a short message that is encrypted using the
+public key.  If the recipient of the message can prove that they can
+read the message, then we believe that they hold the private key to
+match the public key, \emph{authenticating} their identity.
 
-\comment{informal}
-As you might guess from the publication of $n$, RSA is the one that's
-vulnerable to factoring larger integers, and hence of interest to
-spooks once Shor's algorithm came about.
+If Alice sends the message, ``Hi, Bob, it's Tuesday, and I'm Alice,''
+encrypted using Bob's public key, and Bob replies, ``Tuesday is
+beautiful, Alice, tell me about Wednesday,'' using Alice's public key,
+and Alice again replies, ``Wednesday it will rain,'' then the parties
+have confirmed confirm their identities as Bob and Alice -- assuming,
+of course, that they trust that the key $\langle n,e\rangle$ truly
+belongs to the appropriate party, and that it hasn't leaked out
+somehow!
+
+As the publication of $n$ makes clear, RSA is vulnerable to advances
+in factoring larger integers, hence interest from intelligence
+agencies and security researchers was immediate when Shor's algorithm
+was announced.
 
 Current EU recommendations are for 3072-bit RSA keys, recently (2018)
 upgraded from 2048, for "near-term protection" (up to ten years).
 They recommend an extraordinary 15360 bits for "long-term protection"
 (thirty to fifty years). [Cloudflare, Keylength.com, Ecrypt, Lenstra]
 
-Finding prime numbers large enough to be used also requires a
+Finding prime numbers large enough to be used in RSA also requires a
 substantial amount of computation~\footnote{See
   \url{https://en.wikipedia.org/wiki/Primality_test}.}.
 
@@ -139,7 +148,7 @@ today.
 \end{figure}
 
 DES, the Data Encryption Standard, was designed by IBM in the 1970s,
-consulting with the NSA.  DES is a type of cipher known as an
+consulting with the NSA~\cite{standard199946}.  DES is a type of cipher known as an
 iterative block cipher, which breaks data into to blocks and repeats a
 set of operations on them.  The operations in DES are called a Feistel
 network, after the inventor.
@@ -147,10 +156,10 @@ network, after the inventor.
 DES uses a 56-bit key, though products exported from the U.S. were
 limited to using 40 meaningful key bits [wikipedia/40-bit-encryption].
 It was later upgraded to triple-DES, using three 56-bit key pieces and
-repeating DES three times, giving up to 168 bits of protection.  But
-it's not just the key size that matters in a block cipher.  The block
-size itself matters a great deal, as we'll see below.  For DES, that
-block size is only 64 bits.
+repeating DES three times, giving up to 168 bits of protection.
+However, in a block cipher, not only does the key size matter, the
+block size also matters, as we'll see below.  For DES, that block size
+is only 64 bits.
 
 DES operates in sixteen rounds, each of which uses a 48-bit subkey
 generated from the original 56-bit key using a key scheduling
@@ -313,6 +322,7 @@ the best attacks roughly halve that cost, at the cost of requiring
 tremendous amounts of storage. \comment{cite}
 
 \subsubsection{Limitations of Block Ciphers}
+\label{sec:limitations}
 
 One problem with the most straightforward application of a block
 cipher is that it is deterministic.  The transform can be applied to

@@ -4,7 +4,7 @@
 \outlinecomment{Get Aono, Moriai or others to contribute here.}
 
 The general idea of trying to decode messages that are encrypted is
-known as cryptanalysis.  Here, we can deal only in public information;
+known as \emph{cryptanalysis}.  Here, we can deal only in public information;
 we don't know how much more advanced intelligence agencies are.  We do
 know that e.g. the RSA public key cryptosystem and the technique of
 differential analysis were known to intelligence agencies for years,
@@ -18,18 +18,18 @@ include results that are infeasible with current technology."
 The page then goes on to list quite a number of attacks on AES, none
 considered practical yet.
 
-\comment{informal}
 Given how long people have been working on cryptography, naturally
-there are many techniques for attacking the ciphers.  Here I'll
-mention just a couple of the modern techniques are known for what we
-might call "honest" attacks on block cipher cryptography, granting the
+there are many techniques for attacking the ciphers.  We will address
+just a couple of the modern techniques are known for what we might
+call ``honest'' attacks on block cipher cryptography, granting the
 assumption that the algorithm has no flaws and ignoring side channel
 attacks (such as measuring the power consumed during encryption) and
-attacks on infrastructure, people, etc. (some of which are known as
-"black bag", or burglary, attacks, and some of which are "rubber hose"
-attacks, extracting information from humans by coercion or torture).
-David Kahn referred to these latter attacks as "practical
-cryptanalysis" in his classic book, \emph{The Codebreakers}.
+attacks on infrastructure, people, etc.  (Some of these other attacks
+are known as "black bag", or burglary, attacks, and some of which are
+"rubber hose" attacks, extracting information from humans by coercion
+or torture).  David Kahn referred to these latter attacks as
+"practical cryptanalysis" in his classic book, \emph{The
+  Codebreakers}.)
 
 The older one of the two is differential cryptanalysis, apparently
 discovered indepedently at least three times, publicly by Biham and
@@ -148,11 +148,10 @@ refers to rearranging or spreading out the bits in the message so that
 any redundancy in the plaintext is spread out over the ciphertext.
 \end{quote}
 
-\comment{informal}
-\aono{}
-I haven't seen it written quite this directly (but then, I'm not that
-well read in crypto), but I think it's fair to say that confusion is
-achieved by the nonlinearity of the S-boxes.
+\aono{} In DES, confusion is achieved by the nonlinearity of the
+S-boxes.  Diffusion is achieved by the shuffling of the bits between
+S-box operations, coupled with the fact that the S-boxes use multiple
+bits in an operation.
 
 These two concepts ultimately underly much of the process of
 cryptanalysis: spreading data broadly reduces the relationship
@@ -162,17 +161,16 @@ even a large set of straightforward equations is not enough to simply
 and mathematically relate the input and output.
 
 \subsection{The Birthday Paradox}
-\label{sec: birthday}
+\label{sec:birthday}
 
-(Also called the pigeonhole principle or the hash collision problem.)
-
-You're probably familiar with the basic idea of the birthday paradox:
-If you have $n$ people in a room, what's the probability of two of
+The basic idea of the birthday paradox is a familiar problem in
+elementary probability:
+With $n$ people in a room, what is the probability of two of
 them sharing a birthday?  More concretely, how many people have to be
 in the room before the probability of two sharing a birthday exceeds
 50\%?  It's a surprisingly small number, but it's not a true paradox in
-the logical sense.  (This is also called the pigeonhole principle or
-hash collision probability.)
+the logical sense.  This is also called the \emph{pigeonhole principle} or
+the \emph{hash collision probability}.
 
 Modern ciphers are designed so that the ciphertext (output of the
 encryption) looks random; we can say that the ciphertext has very high
@@ -186,82 +184,78 @@ probability that we will find two blocks that have the same
 ciphertext.  We call that a \emph{collision}.  If the two blocks were
 encrypted with the same key, we gain information about the plaintext.
 
-(Side question: How can you \emph{have} birthday paradox collisions of the
-ciphertext?  Wouldn't that mean that the encryption process is lossy,
-and that it would be impossible to reliably *decrypt* that ciphertext
-back to both original blocks?
+The occurence of collisions may seem counterintuitive: if two
+different plaintext blocks have the same ciphertext, wouldn't that
+mean that the encryption process is lossy, making it impossible to
+reliably decrypt that ciphertext back to both original blocks?  As
+will will see in Sec.~\ref{sec:limitations}, more information is
+involved in both the encryption and decryption than just that specific
+block and the key when using \emph{cipher block chaining} (CBC mode)/
 
-Answer: there is more information involved in both the encryption and
-decryption than just that specific block and the key.  This is the
-cipher block chaining mentioned at the end of Sec. 1.)
-
-In CBC mode, what you gain is the XOR of two plaintext blocks.  If you
-get to choose which two, this could be incredibly valuable
-information; given that it's just two random blocks, it's less so, but
-not unimportant.  As it happens, if block numbers $i$ and $j$ have the
-same ciphertext $c[i] = c[j]$, then you get the XOR of the plaintext of
-blocks $i-1$ and $j-1$.
-
-I spent quite a bit of time working through the math of the birthday
-paradox, only to come back to one of the first sources I found: the
-2016 SWEET32 paper by Bhargavan and Leurent.  Sec. 2.2 of that paper
-has a compact description of the commonly-quoted square root limit, as
-well as why and how much to be conservative relative to that value.
+In CBC mode, the information gained on the occurence of a collusion is
+the XOR of two plaintext blocks.  If block numbers $i$ and $j$ have
+the same ciphertext $c[i] = c[j]$, then the ciphertext is the XOR of
+the plaintext of the predecessor blocks, $p[i-1]$ and $p[j-1]$.  If
+the attacker could choose which two blocks, this could be incredibly
+valuable information; given that it's just two random blocks, it's
+less so, but not unimportant.  \comment{notation probably needs to be
+  explained, maybe back up in Intro, or where block ciphers are
+  explained.}
 
 If the block size is $n$ bits, there are $N = 2^n$ possible
 ciphertexts, and if the number of blocks encrypted is the square root
 of that number, $2^{n/2}$, the probability of at least one collision
 is above 39\%, which arises in the limit as the expression
 $1-1/e^{1/2}$.  (See the appendix of these notes for some example
-calculations of this and the following to play around with.)
+calculations.)  Sec. 2.2 of Bhargavan and Leurent has a compact
+description of the commonly-quoted square root limit, as well as
+describing why and how much to be conservative relative to that
+value~\cite{bhargavan2016practical}~\footnote{\url{https://sweet32.info/}.}
 
-Assuming you consider a 39\% chance of disclosing some information to
-be an unacceptably large probability, when should you rekey?  That's
-the first-level answer to our ultimate question of when to rekey using
-QKD, which is of course back where we started this conversation.  Say,
-for example, we want the probability of an attacker recovering a
-plaintext block using the birthday attack to be less than (for
-example) one in a billion.
+A 39\% chance of disclosing some information will generally be
+considered to be an unacceptably large probability, leaving us with
+the question of when to rekey.  Let us assume, for example, that we
+want the probability of an attacker recovering a plaintext block using
+the birthday attack to be less than (for example) one in a billion.
 
-If we have some power of two $D = 2^d$ ciphertext blocks, then the
-expected number of collisions is approximately $2^{2d-n-1}$.  For our
-one-in-a-billion probability, using $log_2(10^9) \approx 30$, we need
-to set up our session lifetime such that $2d-n-1 < -30$, or $d <
-(n-29)/2$.
+Given $D = 2^d$ ciphertext blocks, then the expected number of
+collisions is approximately $2^{2d-n-1}$.  For our one-in-a-billion
+probability, using $log_2(10^9) \approx 30$, we need to set up our
+session lifetime such that $2d-n-1 < -30$, or $d < (n-29)/2$.
 
 Since DES has only a 64-bit block, we should set $d \le 17$.  That's a
-startlingly small number: $D = 2^{17}$ blocks and each block is eight
-bytes, so we should limit the use of a single key to one megabyte!
-An impractically small size.
+startlingly small number: $D = 2^{17}$ blocks of eight bytes each
+would requires us should limit the use of a single key to one
+megabyte, an impractically small size.  If we are trying to protect a
+40Gbps link -- a common backbone bandwidth today, and coming to the
+home in the foreseeable future -- the key would have to be changed
+once every 200$\mu$sec.
 
-If, on the other hand, you are okay with a disclosure probability of
-one in a million, we can raise that by a factor of a thousand and
-change keys once every gigabyte instead.  But if you are trying to
-protect a 40Gbps link -- a common backbone bandwidth today, and coming
-to the home in the foreseeable future -- that still means changing
-keys once every 200msec or so!
+If, on the other hand, we relax the disclosure probability to one in a
+million, we can raise our limit by a factor of a thousand and change
+keys once every gigabyte.  On our hypothetical 40Gbps link, that still
+means changing keys once every 200msec.
 
-Ah, but AES uses $n = 128$, a block size twice as large.  Now we only
-need $d \le 49$ for that one-in-a-billion probability.  $D = 2^{49}$
+AES uses $n = 128$, a block size twice as large.  Now we only need $d
+\le 49$ to achieve the one-in-a-billion probability.  $D = 2^{49}$
 times our block size of 16 bytes equals 8 terabytes, about 1,600
-seconds on our 40Gbps link.  So change the keys at least once every
-half hour, and you're good. \comment{Tie this to intro, IPsec and TLS.}
+seconds on our 40Gbps link, giving a recommended cryptoperiod of just
+under half an hour. \comment{Tie this to intro, IPsec and TLS.}
 
-Keep in mind a few points:
+A few points are worth emphasizing:
 \begin{enumerate}
-\item what's disclosed here is not the key but is plaintext-related, but
-   not even pure plaintext; however, the insanely smart and devious
-   cryptanalysts can do amazing things with small amounts of data;
+\item what's disclosed here is not the key but is plaintext-related,
+  but not even pure plaintext; however, cryptanalysts can do amazing
+  things with small amounts of data;
 \item this depends only on the block size of a block cipher, not on the
    key length;
-\item part of this arises due to the CBC (cipher block chain) mode, but
-   ECB (electronic code book) mode is worse; there are other modes
-   that I haven't looked at closely; and
+\item part of this arises due to the CBC (cipher block chain) mode,
+  but ECB (electronic code book) mode is worse; and
 \item given that there are still other attacks, minimizing the amount of
    data under any given encryption key is still good practice.
 \end{enumerate}
 
-So let's look at a couple of the cryptanalysis techniques.
+Next, we look at some cryptanalysis techniques.
 
 \subsection{Differential Cryptanalysis}
 
@@ -308,15 +302,15 @@ chosen during the design phase, for example, changing \emph{one} bit
 in the six-bit input should result in changes to at least \emph{two}
 bits in the four-bit output.
 
-So a differential table for each S box is constructed by listing all
+A differential table for each S box is constructed by listing all
 $2^6$ possible XORs $X_1 + X_2$, and collecting the stats on $Y_1 +
 Y_2$.  From the differences found here, we can work backwards to find
-with "high" probability (slightly higher than completely random, at
-any rate) some characteristics of the outputs of the *previous*
-round. \comment{informal}
+with ``high'' probability (slightly higher than completely random)
+some characteristics of the outputs of the \emph{previous}
+round of the encryption.
 
 The overall attack is performed by encrypting a bunch of
-randomly-chosen *pairs* of plaintexts (chosen as a pair; first a
+randomly-chosen \emph{pairs} of plaintexts (chosen as a pair; first a
 completely random one, then a second by XORing in a specific value)
 and comparing their ciphertexts until we find an output pair of
 ciphertexts that fit comfortably with the difference tables we have
@@ -327,12 +321,12 @@ on that guess, we can narrow down the set of subkeys for the
 next-to-last round, rinse and repeat.  It's still a computationally
 intensive, tedious process, but much less than brute force.  Roughly,
 the probability of getting the ciphertext pairs we need is
-proportional to $1/p_D$, where $p_D$ is the differential probability in
-the table we are looking for, which may be quite small.
-(This seems to me that keeping a history of things you've already
-tried would increase the probability of finding a pair you like, so
-I'm still puzzled by the assertion above that this works even if the
-key is being changed frequently.)
+proportional to $1/p_D$, where $p_D$ is the differential probability
+in the table we are looking for, which may be quite small.  (This
+seems to me that keeping a history of things you've already tried
+would increase the probability of finding a pair you like, so I'm
+still puzzled by the assertion above that this works even if the key
+is being changed frequently.) \aono{}
 
 Ultimately, this attack is considered practical against ordinary DES.
 Biham and Shamir estimated (p. 8, p. 61) that DES and DES-like
@@ -347,18 +341,15 @@ obsolete due to the birthday paradox attack above.  AES is stronger
 against DC, so this attack is of less help against
 properly-implemented, modern systems.
 
-I know this is a very rough explanation; I have only a wobbly
-understanding of the process myself!  The differential tables are
-pretty straightforward, once you understand them, but working from
-there to a full-on attack is a big jump.
+\aono{}
 
 \subsection{Linear Cryptanalysis}
 
 Linear cryptanalysis (LC) is a known plaintext attack, developed by
 Mitsuru Matsui in 1990 after being inspired by differential
-cryptanalysis~\cite{matsui1993linear}.  The key(!)  idea is to build a
-linear approximation of an S box, allowing you to calculate possible
-keys in reverse more quickly.
+cryptanalysis~\cite{matsui1993linear,heys:tutorial}.  The key idea is
+to build a linear approximation of an S box, allowing the attacker to
+calculate possible keys in reverse more quickly.
 
 If a cipher is good, every individual bit of the output should have a
 50\% probability of being 0 and a 50\% probability of being 1.
@@ -388,11 +379,11 @@ used in the last round of the cipher, rinse and repeat.  The trick is
 to find the right relationships showing a detectable bias, as was done
 with differential analysis.  This is done by examining the math of the
 S-boxes in detail; as far as I can tell, this phase of the operation
-is done by very smart humans.
+is done by very smart humans. \aono{}
 
-If you can find a combination with a bias of $\epsilon$, then you need
-$1/\epsilon^2$ plaintext-ciphertext pairs to find some bits of the
-subkey.
+If the attacker can find a combination with a bias of $\epsilon$, then
+$1/\epsilon^2$ plaintext-ciphertext pairs are required to find some bits
+of the subkey.
 
 This is done by taking multiple expressions like the above, combining
 them using Matsui's ``Piling Up Principle'' where you track the biases
@@ -409,11 +400,11 @@ or the plaintext, but substantially reduces the work needed to find
 the full key by guiding a search, rather than just testing keys at
 random.
 
-Linear cryptanalysis is considered to be a very general technique, but
-I don't see extensive attempts to apply it to AES.  Indeed, AES (which
-was developed in the 1990s from the proposed cipher known as Rijndael)
-was developed specifically with the idea of not being vulnerable to
-either DC or LC.
+\aono{} Linear cryptanalysis is considered to be a very general
+technique, but there do not appear to have been extensive attempts to
+apply it to AES.  Indeed, AES (which was developed in the 1990s from
+the proposed cipher known as Rijndael) was developed specifically with
+the idea of not being vulnerable to either DC or LC.
 
 I found Heys' tutorial to be clear and helpful in understanding LC.
 
@@ -461,29 +452,31 @@ assuming an attacker can force the choice of plaintext passed between
 two nodes through an encrypted connection is not unreasonable in
 today's richly interwoven distributed systems.
 
-Especially for IPsec (Sec.~\ref{sec:ipsec}), there is another big
-vulnerability: one encrypted connection between two gateways (known as
-a \emph{Security Association}, which we will see below) may carry data
-encrypted for a \emph{bunch} of machines.  So if an attacker manages
-to install a program on only one laptop (say, via email, or while
-you're sitting at Starbucks), they can cause your system to send out
-arbitrarily chosen packets that will cross the tunnel, so they can
-execute a chosen plaintext attack pretty easily.  Since IPsec encrypts
-the whole packet, they may not be able to tell immediately which
-packets came from your laptop and which from a colleague's laptop, but
-that distinction is a relatively minor overhead.
+IPsec (Sec.~\ref{sec:ipsec}) presents another potential vulnerability:
+one encrypted connection between two gateways (known as a
+\emph{Security Association}, which we will see below) may carry data
+encrypted for many machines, providing a broad attack surface for
+attempts to execute chosen plaintext attacks.  If an attacker manages
+to install a program on only one laptop (e.g., via email, or while the
+user is on an unprotected network such as at a coffeeshop), they can
+cause a system to send out arbitrarily chosen packets that will cross
+the tunnel, controlling the content if not always the sequence of
+packets, which may be interleaved with traffic from other applications
+or end systems.  Because IPsec encrypts the whole packet, the attacker
+may not be able to tell immediately which packets came from the
+compromised laptop and which from an unaffected laptop.
 
-Also, for every IP packet from your laptop to the email server passing
+For every IP packet from a laptop to e.g. an email server passing
 through the IPsec tunnel, the IP header portion is going to be exactly
 the same, and its position in the encrypted stream is very easy to
 identify.  This led to some of the decisions around the use of CBC, I
 believe; I'm not aware of any deeper features intended to further
-obscure the location of such predictable data.
+obscure the location of such predictable data.  \ddp{}
 
-In short, as a defender, you should work on the assumption that a
-noticeable fraction of your plaintext is known under benign
-circumstances, and that it's not all that hard for an attacker to
-mount a chosen plaintext attack.
+In short, defenders should work on the assumption that a noticeable
+fraction of the plaintext carried in a tunnel is known even under
+benign circumstances, and that it is not hard for an attacker
+to mount a chosen plaintext attack.
 
 \subsection{Notes \& References}
 
@@ -491,9 +484,7 @@ Some of the references I used for this section:
 
 The best source on the current state of the birthday paradox is Bhargavan and Leurent~\cite{bhargavan2016practical}.  Other references include Miessler~\footnote{\url{https://danielmiessler.com/study/birthday_attack/}} and Wolfram Mathworld~\footnote{\url{http://mathworld.wolfram.com/BirthdayAttack.html}}.
 
-1. Howard M. Heys, "A tutorial on linear and differential
-cryptanalysis", undated but probably 1999ish?
-\url{http://www.engr.mun.ca/~howard/Research/Papers/ldc_tutorial.html}
+1.
 
 2. Abdalla and Bellare,
 \url{https://link.springer.com/chapter/10.1007/3-540-44448-3_42}
