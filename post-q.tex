@@ -3,6 +3,7 @@
 
 \newcommand{\memo}[1]{{\color{red} #1 }}
 
+
 %\bibliography{../../../refsaono.bib}
 % \bibliography{refsaono.bib}
 
@@ -11,30 +12,7 @@
 
 \section{Post-quantum cryptography}
 
-% killed subsection?
-% \subsection{Motivation of post-quantum cryptography}
 
-The post-quantum cryptography, sometimes referred as the quantum-resilient or quantum-safe cryptography~\cite{NISTpq}, includes a wide class of cryptographic primitives which are believed to be secure against both classical and quantum computers in theory and practice.
-This section introduces a motivation of post-quantum cryptography, where do we use the quantum computers to attack them, and how do we model the world.
-
-%What is pqcrypto?
-Since Shor's work~\cite{Shor97} proved there exists polynomial time 
-quantum attacks to RSA public-key cryptography and DSA signature,
-the cryptographers have been developing countermeasure schemes.
-Concretely, the standardization criteria requires it must consume a large number 
-of gates in the sense of both classical and quantum for the attacks~\cite[p.18]{NISTpq}.
-However, the resilience against other quantum computers such as quantum annealers are not usually considered because how to quantify their ability is not clear now and it is an important open problem.
-
-
-As the countermeasure, the cryptographers have been developing 
-new cryptographic schemes which they call ``post-quantum cryptography''
-or ``quantum-resilient cryptography.'' 
-It is widely believed that revealing secret information encrypted by a scheme is an intractable task even we have a large size of classical and quantum computers.
-
-\aono{what is parameter selection?}
-Besides the parameter selection, 
-there are several quantum arguments on security.
-Most of them are analogues of cryptography in the classical world, by replacing probabilistic polynomial Turing machine (PPTM) to quantum polynomial time Turing machine (QPTM), with suitable adaptations.
 We introduce which parts are replaced and should to argue by quantum peoples.
 
 \rule{\columnwidth}{1pt}
@@ -70,11 +48,10 @@ and the followers tried to relax the notion.
 
 Attacks to cryptographic schemes, i.e., revealing secret information from public information, is roughly classified into two ways: cryptanalysis to a specific scheme, and solving a base problem.
 Both are studied to set suitable parameters or to check to see if the scheme is safe or not.
-
 We mainly focus on the theoretical works
-because there are very limited quantum works on real cryptanalyses to schemes to our best knowledge.
+because there are very limited quantum (and its analogues) work \cite{LBC+12,War19,BPF+19} on real cryptanalyses to schemes to our best knowledge.
 
-Standard techniques to guarantee the security of cryptographic scheme 
+In theory, standard techniques to guarantee the security of cryptographic scheme 
 are security reduction and hardness assumption.
 The former is mathematical argument to prove that breaking scheme is harder than solving a hard problem.
 Thus, with the assumption that the problem is intractable, 
@@ -83,7 +60,7 @@ the cryptographic scheme is believed to be secure.
 To show it, they prove any attacker that can solve the scheme can also solve the intractable problem.
 During the proof, it is considered the model of attack, i.e., how the attacker can access to the oracles.
 They usually consider three types of oracles to discuss the security:  
-encryption, decryption and random.
+encryption, decryption and random oracles.
 
 The encryption oracle and decryption oracle are virtual functions which return
 a result of encryption function and decryption function from its input.
@@ -91,36 +68,52 @@ With these oracles, the security against chosen plaintext attack (CPA) \cite{GM8
 and chosen ciphertext attack (CCA) \cite{NY90,DDN91} are typically 
 formulated by that any attacker cannot reveal any useful information in a short time from the output of oracles even if one can choose inputs to the oracles; see textbooks \cite{Gol06book,Gol09book} for example.
 
-Under the classical world, the attacker, usually called as ``adversary,'' is regarded as a PPTM and can access to the oracles in a classical way,
+Under the classical world, the attacker, usually called as ``adversary,'' is regarded as a PPTM.
+Also, it is assumed to access to the oracles in a classical way,
 i.e., it gets a bit sequence on each input bit sequence deterministically.
-In order to the quantum security there are some ways to consider the quantum version of adversary and oracles.
-The situation where adversary is QTM whereas the access is classical
-\cite{AJOP20} %qCCA1 classical access,
-,
-which is considered as a cryptographic model in the NISQ era.
-We should note that the NIST post-quantum competition 
+In order to argue the quantum security there are some ways to consider the quantum version of adversary and oracles.
+
+The situation where adversary is QTM whereas the access to oracles is classical which is considered as a cryptographic model in the NISQ era.
+Though there are a few number of works \cite{BHN+19} on this situation, 
+we should note that the NIST post-quantum competition 
 recommends to consider such situation \cite{NISTpqcriteria} for the candidates.
 
-The other situation is both adversary and access are quantum.
-\cite{BZCG13,GHS16} % qCPA, superposition
-\memo{To be extended}.
+The other situation is both adversary and access are quantum
+\cite{KM10,BZCG13,GHS16}.
+It has been known \cite{AJOP20} that a quantum query has a enough power 
+to break a textbook-style IND-CPA secure LWE-based encryption, that is, 
+a kind of post-quantum cryptography efficiently.
+One of important work is to construct secure cryptographic primitives 
+against such situation.
+
 
 %細山田さんレポートの短いまとめ
-A similar problem can be arisen in the symmetric key situation.
+Also, the difference of oracle types can arise a similar security problem in the symmetric key situation.
 Kaplan et al. \cite{KLLN16} modeled the ability of QTM attackers.
 The Q1 (resp. Q2) model is the situation where the attacker can post classical (resp. quantum superposition) queries to the encryption oracle.
+They also showed a wide class of block cipher  within a specific mode of operations can be broken in a polynomial-time under the Q2 model, 
+while there are a limited number of works about attacks under the Q1 model.
 As of 2020, the latter model is not realistic since it assumes a symmetric key hardware that inputs quantum superposition, but it is expected to be developed in the future.
 
 Besides encryption/decryption oracles, 
-other considered issue is a random oracle \cite{BR93}.
+other considered component is a random oracle \cite{BR93}.
 This is also a virtual function that returns uniformly random values from every unique query.
-The asymmetric key cryptosystem must have randomness in their encrypting functions since the deterministic public-key cryptsystem is inherently not secure
-\cite{Gol09book}.	%add page numbers
-In the real-world systems, cryptographic hash functions such as AES have been used for constructing to introduce the randomness, that makes the rigid proof difficult.
-Bellare and Rogaway \cite{BR93} showed that assuming random oracle is useful to carry out the rigid security proof of schemes and their techniques have been used in many situations. 
+Any asymmetric key cryptosystem must have randomness in their encrypting functions since the deterministic public-key cryptsystem is inherently not secure
+in the sense of ciphertext indistinguishability \cite[Sect. 5.2.2]{Gol09book}.
 
-To discuss the quantum security, it needs to discuss the situation where 
-the attacker can access the quantum version of random oracle by classical or quantum queries \cite{BDFL+11}.
+In the real-world systems, cryptographic hash functions such as AES have been used to introduce the randomness.
+However, it can be a barrier to carry out the rigid security proofs.
+Bellare and Rogaway \cite{BR93} showed that assuming random oracle is 
+useful to avoid the problem and their techniques have been used in many situations. 
+
+In the context of post-quantum cryptography, 
+another problem have been arisen.
+Boneh et al. \cite{BDFL+11} showed that 
+there exists a cryptographic protocol
+that is secure against both classical and quantum attackers accessing to random oracle classically, but not secure against quantum attackers accessing to random oracle that returns quantum superposition.
+They also noticed that a protocol based on a post-quantum intractable problem with classical security proof does not provide quantum security.
+How to construct efficient and secure cryptographic protocol in the post-quantum world has been widely attracted \cite{JZM19}.
+
 %To be extended
 
 
@@ -128,176 +121,95 @@ the attacker can access the quantum version of random oracle by classical or qua
 \subsection{Representative Candidates}
 
 The reduction and assumption tricks allows us to discuss the security of different type of schemes by a single intractable problem.
-Hence, it is also important to investigate 
-how intractable the problem is against classical/quantum attacks.
+This is the reason why peoples working on the security evaluation 
+investigate how intractable the problem is against classical/quantum attacks.
 
 This section introduces the representative post-quantum cryptographic schemes 
 which can be classified into several groups with the types of basis computational problems.
 As of now, they are all believed to be secure against both classical and quantum attacks, however, it has been found some subclass problems are easily solved. 
 
+
 As of August 2020, there are 7 public-key encryption/Key-establishment/digital signature algorithms as the round 3 finalists of NIST post-quantum competition.
 Besides, alternative 8 algorithms have been remained.
-%CACR states?
-These securities rely on hard problems on lattice, coding theory, multivariate equations, and isogeny.
+These securities rely on hard problems on lattice, coding theory, multivariate equations, isogeny, and hash function or symmetric key primitives.
 
 The lattice-based cryptography is a generic term for cryptographic schemes 
 whose security assumptions are lattice problems.
-The first lattice based public-key cryptography relied on the shortest vector problem (SVP) \cite{Aj96} and practically broken by a classical computer \cite{Nguyen97}.
+It is also widely discussed and many issues are arisen \cite{DS18} 
+to its implementation in the real world.
+
+The first lattice based public-key cryptography relied on the shortest vector problem (SVP) \cite{AD97} and practically broken by a classical computer \cite{NS98}.
 Today, SVP-based schemes are considered obsolete and successor two lattice assumptions, LWE and NTRU have been used for construction.
 
 The learning with errors (LWE) problem \cite{Regev05} is a problem to solve noisy simultaneous linear equation defined over a ring: $ \langle \bm{a}_i , \bm{s}_i\rangle  \approx b_i $ for $i=1,\ldots$ where $\bm{a}_i$'s and $\bm{s}_i$'s are vectors.
 The problem harder than SVP with suitable parameter settings \cite{BLPRS13} and 
-believed to be hard against quantum computers.
+believed to be hard against quantum computers \cite{Regev05}.
 One drawback of standard LWE-based schemes is key size to store/send elements $\{ (\bm{a}_i,b_i) \} $ used as a public key.
-Schemes based on Ring-LWE problem \cite{} and NTRU problem \cite{} are considered to avoid it.
+
+Schemes based on Ring-LWE problem \cite{LPR13} and NTRU problem \cite{HPS98,SS11} are considered to avoid it.
 They compress the public keys by using mathematical structure, but however, 
 it has been still open whether it is secure against classical/quantum computers.
 In fact, some subclass of the problems is solved efficiently \cite{Duc17}.
 The main open problem is to investigate structures that satisfies both efficiency and quantum resilience.
 
-\memo{To be extended}
+The parameter setting on lattice-based cryptsystems 
+is mainly from the hardness estimation of SVP besides vulnerabilities from special structures.
+Following the classical setting, the hardness estimations in quantum setting
+are due to the lattice vector enumeration \cite{Kannan83,GNR10} and sieve algorithm \cite{AKS01}.
+The former \cite{ANS18} is an adaptation of quantum tree search \cite{Mon18} using quantum walk, and the latter \cite{LMP15,KMP+19} is 
+the near-collision searching by an adaptation of Grover search.
 
 The code-based cryptography is the class of cryptographic schemes 
 based on the hardness of syndrome decoding of linear codes, which is one of NP-hard problem \cite{BMvT78,Has01}.
 It has a long history since McEliece \cite{McE78}.
-A fundamental idea is to use the generator matrix $G$ and $G'$ as the secret and public keys respectively;
+public keys respectively;
 here, $G'$ is computed from $G$ and how to compute it is also secret.
 For a plaintext $m$ and its code $mG'$, ciphertext is $c=mG'+e$ where $e$ is an error bits which is randomly generated by the sender.
 Similar to the lattice-based cryptography, 
 the code based cryptography has the key size drawbacks
 and consider several structure in generator matrices.
 
-As of now, no polynomial-time quantum algorithm to solve general syndrome decoding problem, however, a quantum speed up is possible \cite{KT17}.
-
-%In particular, it is usually considered identical to the learning with parity noises (LPN) problem of which the LWE problem is generalization.
+A fundamental idea is to use the generator matrix $G$ and $G'$ as the secret and 
+As of now, although the syndrome decoding is used many situations in communication, no polynomial-time classical or quantum algorithm to solve it in general setting.
+However, quantum speed up from the classical using Grover and quantum walk have been discovered \cite{KT17}.
 
 Multivariate cryptography is the generic class of cryptographic primitives whose security is based on the problem to solve multivariate algebraic equations over a finite field.
-The modern style multivariate cryptsystem is proposed by Matsumoto-Imai \cite{MI88}.
+The modern style multivariate cryptosystem is proposed by Matsumoto-Imai \cite{MI88} and a practical polynomial attack \cite{Pat95} has been discovered
+and propose a countermeasure \cite{Pat96}.
+As of now, multivariate cryptgraphic primitives are mainly used to construct digital signatures \cite{NISTpqround3}.
+The parameters are mainly from the estimation of classical attacks \cite{}
+while a few works on quantum analyses \cite{FHK+17,BY18} based on the Grover search.
 
- 
 Isogeny-based cryptography is a class of cryptosystem whose security base is computational problems on supersingular elliptic curves.
 Jao and De Feo introduced a post-quantum key-exchange scheme SIDH \cite{JF11}
-and it was extended to a public key scheme SIKE \cite{SIKEweb} which is one NIST candidate.
+and it was extended to a public key scheme SIKE \cite{SIKEweb} which is remained as an alternative candidate in round 3 \cite{NISTpqround3}.
+Here, SIKE and SIDH stand for supersingular isogeny key encapsulation
+and supersingular isogeny Diffie–Hellman, respectively.
 
+Since the Diffie-Hellman key exchange (DHKX) protocol can work over many group structures, it has been a long-standing problem to search a structure that has both efficiency and security.
+The SIDH protocol is an analogue of DHKX that utilizes 
+the walks in a supersingular isogeny graph \cite{JF11}.
+The shared element is computed from an invariant of a supersingular elliptic curve instead of group elements,
+and security relies on the SIDH problem.
+Similar to the situation of standard Diffie-Hellman,
+this is a mathematical formulation of the problem that computes 
+shared data from the public elements on SIDH protocol;
+for the detailed mathematical arguments, see \cite{Feo17,GV18}.
+
+The hardness of SIDH depends on the characteristic $p$ of field to define the curves.
+The best known algorithms achieves the classical time $O(p^{1/4})$ (also requires the same magnitude of space) by meet-in-the-middle approach \cite{GPST16,ACC+19} and quantum time $O(p^{1/6})$ via Tani's claw finding \cite{Tani09}.
+Thus, it has been believed that the problem is intractable against quantum computers.
+
+Hash-based cryptography is the set of cryptogrpahic primitives whose securities are from the security of hash functions like SHA-3 \cite{SHA3}.
+Despite of its long history \cite{Lam79}, 
+as of 2020, applications are only digital signature schemes using a tree structure \cite{BHH+15}.
+Since the security completely relies on the property of base hash function, it is widely believed to be secure against quantum computers.
 
 ********** Aono part end ***********
 
 
 %-----------------------------------------------------Here end of my section
 
-\if0
-
-\subsection{Standardization}
-
-The most famous competition is NIST's post-quantum cryptography.
-
- - PKE/Key exchange/signature
-
-At the same time, CACR (Chinese Association for Cryptologic Research) in had been held another competition.
-
-
-\fi
-
-\if0
-
-
-\memo{ここまで書いた}
-
-A typical form of LWE-based cryptography uses $(A, \bm{b})$ 
-as a public key and $\bm{s}$ as the corresponding secret key. 
-For a message $m$, the ciphertext is a pair $\bm{c}_1 = \bm{r}A$ and $\bm{c}_2 = \bm{r} \cdot \bm{b} + m$ where $\bm{r}$ a randomly-selected small element vector.
-It is easy to see the receiver who knows $\bm{s}$ can recover $m$.
-
-From the viewpoint of computing resource, one advantage is 
-the simpleness of implementation, thus, the dominating part of encryption is the matrix-vector multiplication and it can be highly parallelized in implementation.
-On the other hand, the memory consumption to store the matrix is too large compared to the major schemes like RSA at the time, and other candidates of post-quantum cryptographies.
-
-To solve the problem, it has been proposed some compression techniques to represent the matrix by a small data.
-The ideal lattice is one of the most useful technique that represents 
-the matrix by one polynomial.
-The sender and receiver share a polynomial $f(X)$ as a public parameter, which is selected carefully, and then send a public polynomial $a(X)$ instead of $A$.
-Then, the sender decompresses it by putting $(i,j)$-element of $A$ as the coefficient of $X^j$ of $X^i a(X)\ \mod\ f(X)$.
-As the standard LWE can be reduced to SVP, this type LWE, sometimes are called the ideal-LWE problem, can also be reduced to the ideal-SVP which is an ideal analogue to the SVP.
-However, as of 2020, it is still open whether the ideal-type problems are hard enough as a basis problem to cryptosystems.
-\fi
-
-
-
-\memo{Too long?}
-
-
-	
-
-
-
-\memo{Abstract, representative basis problems (and major analysis methods?), major candidates, Solving challenges  }
-
-%As the theorists have proven the theoretical hardness of their cryptographic scheme from reasonable assumptions, one needs to estimate practical hardness to select the practical parameters.
-%\memo{SVP challenge}
-
-
-
-
-\subsection{Classification of Post-quantum cryptographes by the base problems}
-
-As we explained above, each security notions are defined over each cryptographic system, i.e., developers have to prove their cryptographic scheme has some property of security after the scheme proposing.
-However, the rigid proof is difficult since we have to consider all types of algorithms (albeit they are limited with a polynomial) to show to have a  security notion of the scheme.
-
-To solve the difficulty, a reduction technique has been used.
-
- - TBW
- 
- - Classification of schemes by the base problems (lattice, code, multivariate, isogeny, etc.)
-
-\subsection{Competition in NIST/CACR}
-
-
-\subsection{Applications?}
-
- - Homomorphic encryption?
-
-%・暗号屋は量子計算機がすぐにでもできると仮定している
-
-%・しかし他の分野では？
-
-
-\if0
-
-if there exists a (classical) algorithm A that can break
-a proposed cryptographic scheme (i.e., the algorithm A makes the scheme not IND-CPA et al.),
-there also exists an algorithm B that solves a hard problem (factoring, DLP, shortest vector, etc.) efficiently.
-It means that breaking the cryptographic scheme is harder than solving the hard problem, and the proof guarantees
-the security of the scheme against attackers.
-Also, estimating the hardness of solving the hard problem provides us a lower bound of the hardness of breaking the cryptographic scheme.
-This is the motivation of security estimation and why we want to solve hard problems by using computers.
-
-5. To discuss the security notions in quantum, it replaces the polynomial TM by the polynomial QTM  (of course, after the replacement, some modifications are necessary.)
-With the same argument, estimating the quantum hardness of hard problems is also necessary.
-
-6. Post-quantum cryptography is a class of cryptographic algorithms that are secure against both classical and quantum computers.
-That is, the scheme must have a security reduction from the scheme to a hard problem that is thought to be not easy to solve by both classical and quantum computers.
-
-7. The phrase "secure against quantum computers" is used by the crypto people to mean "the success probability of breaking the scheme by using
-a polynomial-size quantum circuit is exponentially low."
-Thus, they didn't consider any other type of quantum computers or other analog-type computers.
-
-8. introduce representative post-quantum cryptos.
-
-9. Applications?
-
-\fi
-
-
-%%-----------------------Aono 
-
-
-Besides the resilience against quantum computes, 
-some notable properties has been found around the cryptographies
-introduced above.
-
-The most interesting property is the homomorphic encrypton.
-
-\memo{Homomorphic encryption, but this is independent from quantum-resilient}
 
 
 % =======

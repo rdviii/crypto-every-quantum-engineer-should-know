@@ -1,4 +1,4 @@
-﻿@inproceedings{Al17,
+@inproceedings{Al17,
   author    = {Martin R. Albrecht},
   title     = {On Dual Lattice Attacks Against Small-Secret {LWE} and Parameter Choices
                in HElib and {SEAL}},
@@ -1156,6 +1156,11 @@ language="English",
   bibsource = {DBLP, http://dblp.uni-trier.de}
 }
 
+@misc{SHA3,
+  author = {{National Institute of Standards and Technology (NIST)}},
+  title = { SHA-3 Standard: Permutation-Based Hash and Extendable-Output Functions},
+  howpublished = {Website: \url{https://www.nist.gov/publications/sha-3-standard-permutation-based-hash-and-extendable-output-functions}}
+}
 
 
 
@@ -1177,6 +1182,13 @@ language="English",
   title = { Submission Requirements and Evaluation Criteria for the Post-Quantum Cryptography Standardization Process},
   howpublished = {Website: \url{http://csrc.nist.gov/groups/ST/post-quantum-crypto/documents/call-for-proposals-final-dec-2016.pdf}}
 }
+
+@misc{NISTpqround3,
+  author = {{National Institute of Standards and Technology (NIST)}},
+  title = { Post-Quantum Cryptography PQC Round 3 Submissions},
+  howpublished = {Website: \url{https://csrc.nist.gov/Projects/post-quantum-cryptography/round-3-submissions }}
+}
+
 
 @misc{NISTpqcriteria,
   author = {{National Institute of Standards and Technology (NIST)}},
@@ -2745,8 +2757,6 @@ title = {Fast Approximate Union Volume in High Dimensions with Line Samples},
 author = {Mitchell, Scott A. and Awad, Muhammad A. and Ebeida, Mohamed S. and Swiler, Laura P.},
 doi = {10.2172/1464880},
 journal = {},
-number = ,
-volume = ,
 place = {United States},
 year = {2018},
 month = {8}
@@ -2998,10 +3008,6 @@ publisher = {M.I.T. Press},
   pages     = {1484--1509},
   year      = {1997},
   url       = {https://doi.org/10.1137/S0097539795293172},
-  doi       = {10.1137/S0097539795293172},
-  timestamp = {Wed, 14 Nov 2018 10:45:08 +0100},
-  biburl    = {https://dblp.org/rec/journals/siamcomp/Shor97.bib},
-  bibsource = {dblp computer science bibliography, https://dblp.org}
 }
 
 @article{AJOP20,
@@ -3140,12 +3146,11 @@ isbn="978-3-642-25385-0"
 @article{Duc17,
   title={Advances on quantum cryptanalysis of ideal lattices},
   journal={NieuwArchief voor Wiskunde},
-  volume={5,
+  volume={5},
   pages={184-189},
   url={http://www.nieuwarchief.nl/serie5/pdf/naw5-2017-18-3-184.pdf},
-  year=2017
+  year="2017"
 }
-
 
 
 @InProceedings{KT17,
@@ -3162,7 +3167,6 @@ pages="69--89",
 abstract="The security of code-based cryptosystems such as the McEliece cryptosystem relies primarily on the difficulty of decoding random linear codes. The best decoding algorithms are all improvements of an old algorithm due to Prange: they are known under the name of information set decoding techniques. It is also important to assess the security of such cryptosystems against a quantum computer. This research thread started in [23] and the best algorithm to date has been Bernstein's quantising [5] of the simplest information set decoding algorithm, namely Prange's algorithm. It consists in applying Grover's quantum search to obtain a quadratic speed-up of Prange's algorithm. In this paper, we quantise other information set decoding algorithms by using quantum walk techniques which were devised for the subset-sum problem in [6]. This results in improving the worst-case complexity of {\$}{\$}2^{\{}0.06035n{\}}{\$}{\$}of Bernstein's algorithm to {\$}{\$}2^{\{}0.05869n{\}}{\$}{\$}with the best algorithm presented here (where n is the codelength).",
 isbn="978-3-319-59879-6"
 }
-
 
 @InProceedings{JF11,
 author="Jao, David
@@ -3196,4 +3200,623 @@ doi = "https://doi.org/10.1016/0022-0000(84)90070-9",
 url = "http://www.sciencedirect.com/science/article/pii/0022000084900709",
 author = "Shafi Goldwasser and Silvio Micali",
 abstract = "A new probabilistic model of data encryption is introduced. For this model, under suitable complexity assumptions, it is proved that extracting any information about the cleartext from the cyphertext is hard on the average for an adversary with polynomially bounded computational resources. The proof holds for any message space with any probability distribution. The first implementation of this model is presented. The security of this implementation is proved under the interactability assumptin of deciding Quadratic Residuosity modulo composite numbers whose factorization is unknown."
+}
+
+@article{Eke18,
+  author    = {Martin Eker{\aa}},
+  title     = {Quantum algorithms for computing general discrete logarithms and orders
+               with tradeoffs},
+  journal   = {{IACR} Cryptol. ePrint Arch.},
+  volume    = {2018},
+  pages     = {797},
+  year      = {2018},
+  url       = {https://eprint.iacr.org/2018/797},
+  timestamp = {Mon, 11 May 2020 16:00:18 +0200},
+  biburl    = {https://dblp.org/rec/journals/iacr/Ekera18.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+@article{Eke16,
+  author    = {Martin Eker{\aa}},
+  title     = {Modifying Shor's algorithm to compute short discrete logarithms},
+  journal   = {{IACR} Cryptol. ePrint Arch.},
+  volume    = {2016},
+  pages     = {1128},
+  year      = {2016},
+  url       = {http://eprint.iacr.org/2016/1128},
+  timestamp = {Mon, 11 May 2020 15:58:56 +0200},
+  biburl    = {https://dblp.org/rec/journals/iacr/Ekera16.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+
+
+@inproceedings{EH17,
+  author    = {Martin Eker{\aa} and
+               Johan H{\aa}stad},
+  editor    = {Tanja Lange and
+               Tsuyoshi Takagi},
+  title     = {Quantum Algorithms for Computing Short Discrete Logarithms and Factoring
+               {RSA} Integers},
+  booktitle = {Post-Quantum Cryptography - 8th International Workshop, PQCrypto 2017,
+               Utrecht, The Netherlands, June 26-28, 2017, Proceedings},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {10346},
+  pages     = {347--363},
+  publisher = {Springer},
+  year      = {2017},
+  url       = {https://doi.org/10.1007/978-3-319-59879-6\_20},
+  doi       = {10.1007/978-3-319-59879-6\_20},
+  timestamp = {Tue, 14 May 2019 10:00:42 +0200},
+  biburl    = {https://dblp.org/rec/conf/pqcrypto/EkeraH17.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+
+
+@article{Eke17,
+  author    = {Martin Eker{\aa}},
+  title     = {On post-processing in the quantum algorithm for computing short discrete
+               logarithms},
+  journal   = {{IACR} Cryptol. ePrint Arch.},
+  volume    = {2017},
+  pages     = {1122},
+  year      = {2017},
+  url       = {http://eprint.iacr.org/2017/1122},
+  timestamp = {Mon, 11 May 2020 15:56:01 +0200},
+  biburl    = {https://dblp.org/rec/journals/iacr/Ekera17.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+
+
+@article{Eke19,
+  author    = {Martin Eker{\aa}},
+  title     = {Revisiting Shor's quantum algorithm for computing general discrete
+               logarithms},
+  journal   = {CoRR},
+  volume    = {abs/1905.09084},
+  year      = {2019},
+  url       = {http://arxiv.org/abs/1905.09084},
+  archivePrefix = {arXiv},
+  eprint    = {1905.09084},
+  timestamp = {Wed, 29 May 2019 11:27:50 +0200},
+  biburl    = {https://dblp.org/rec/journals/corr/abs-1905-09084.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+
+@article{HRS17,
+author = {H\"{a}ner, Thomas and Roetteler, Martin and Svore, Krysta M.},
+title = {Factoring Using 2n + 2 Qubits with Toffoli Based Modular Multiplication},
+year = {2017},
+issue_date = {June 2017},
+publisher = {Rinton Press, Incorporated},
+address = {Paramus, NJ},
+volume = {17},
+number = {7–8},
+issn = {1533-7146},
+journal = {Quantum Info. Comput.},
+month = jun,
+pages = {673–684},
+numpages = {12},
+keywords = {Shor's algorithm, quantum arithmetic, quantum circuits}
+}
+
+@techreport{OTU+19,
+	author		= "大西健斗，田中智樹，宇野隼平，山本直樹，國廣　昇",
+	title		= "効率的な量子剰余加算回路の提案とその実装,
+	booktitle	= "信学技報",
+	volume		= "QIT41",
+	year		= "2019"
+}
+
+@misc{MGM20,
+    title={Finding Small and Large k-Clique Instances on a Quantum Computer},
+    author={Sara Ayman Metwalli and Francois Le Gall and Rodney Van Meter},
+    year={2020},
+    eprint={2008.12525},
+    archivePrefix={arXiv},
+    primaryClass={quant-ph}
+}
+
+@article{CBS+19,
+  title = {Validating quantum computers using randomized model circuits},
+  author = {Cross, Andrew W. and Bishop, Lev S. and Sheldon, Sarah and Nation, Paul D. and Gambetta, Jay M.},
+  journal = {Phys. Rev. A},
+  volume = {100},
+  issue = {3},
+  pages = {032328},
+  numpages = {11},
+  year = {2019},
+  month = {Sep},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevA.100.032328},
+  url = {https://link.aps.org/doi/10.1103/PhysRevA.100.032328}
+}
+
+@book{MM11,
+author = {Moore, Cristopher and Mertens, Stephan},
+title = {The Nature of Computation},
+year = {2011},
+isbn = {0199233217},
+publisher = {Oxford University Press, Inc.},
+address = {USA},
+abstract = {Computational complexity is one of the most beautiful fields of modern mathematics, and it is increasingly relevant to other sciences ranging from physics to biology. But this beauty is often buried underneath layers of unnecessary formalism, and exciting recent results like interactive proofs, cryptography, and quantum computing are usually considered too "advanced" to show to the typical student. The aim of this book is to bridge both gaps by explaining the deep ideas of theoretical computer science in a clear and enjoyable fashion, making them accessible to non computer scientists and to computer scientists who finally want to understand what their formalisms are actually telling. This book gives a lucid and playful explanation of the field, starting with P and NP-completeness. The authors explain why the P vs. NP problem is so fundamental, and why it is so hard to resolve. They then lead the reader through the complexity of mazes and games; optimization in theory and practice; randomized algorithms, interactive proofs, and pseudorandomness; Markov chains and phase transitions; and the outer reaches of quantum computing. At every turn, they use a minimum of formalism, providing explanations that are both deep and accessible. The book is intended for graduates and undergraduates, scientists from other areas who have long wanted to understand this subject, and experts who want to fall in love with this field all over again.}
+}
+
+@article{War19,
+author = {Warren, Richard H.},
+title = {Factoring on a Quantum Annealing Computer},
+year = {2019},
+issue_date = {March 2019},
+publisher = {Rinton Press, Incorporated},
+address = {Paramus, NJ},
+volume = {19},
+number = {3–4},
+issn = {1533-7146},
+abstract = {This paper is about quantum factoring all integers in an interval. Our goal is to be able to factor all positive integers N < 1,000. We reached this goal on a D-Wave 2000 qubit processor by minimizing (N – (p \texttimes{} q))2 by using one routine that calls the interface software dw. We sized p < 32 and q < 256 as Boolean variables. We factored seven semiprimes that could not be factored by the method in a 2016 D-Wave report. We did not use information about the factors for a specific N. The inputs to our routine are N and values for two parameters.},
+journal = {Quantum Info. Comput.},
+month = mar,
+pages = {252–261},
+numpages = {10},
+keywords = {quantum annealing, factoring, integer factorization problem, ising model, quantum computing}
+}
+  
+
+@INPROCEEDINGS{LBC+12,
+    author = {Erik Lucero and R. Barends and Y. Chen and J. Kelly and M. Mariantoni and A. Megrant and D. Sank and A. Vainsencher and J. Wenner and T. White and Y. Yin and A. N. Clel and John M. Martinis},
+    title = {Computing prime factors with a Josephson phase qubit quantum processor. Nature Physics, advance on},
+    booktitle = {ISSN 1745-2473. doi: 10.1038/nphys2385. URL http://dx.doi.org/10.1038/nphys2385},
+    year = {2012}
+}
+
+@article{BPF+19,
+author = {Borders, William and Pervaiz, Ahmed and Fukami, Shunsuke and Camsari, Kerem and Ohno, Hideo},
+year = {2019},
+month = {09},
+pages = {390-393},
+title = {Integer factorization using stochastic magnetic tunnel junctions},
+volume = {573},
+journal = {Nature},
+doi = {10.1038/s41586-019-1557-9}
+}
+
+@INPROCEEDINGS{KM10,
+  author={H. {Kuwakado} and M. {Morii}},
+  booktitle={2010 IEEE International Symposium on Information Theory}, 
+  title={Quantum distinguisher between the 3-round Feistel cipher and the random permutation}, 
+  year={2010},
+  volume={},
+  number={},
+  pages={2682-2685}
+}
+
+@InProceedings{BHN+19,
+author="Bonnetain, Xavier
+and Hosoyamada, Akinori
+and Naya-Plasencia, Mar{\'i}a
+and Sasaki, Yu
+and Schrottenloher, Andr{\'e}",
+editor="Galbraith, Steven D.
+and Moriai, Shiho",
+title="Quantum Attacks Without Superposition Queries: The Offline Simon's Algorithm",
+booktitle="Advances in Cryptology -- ASIACRYPT 2019",
+year="2019",
+publisher="Springer International Publishing",
+address="Cham",
+pages="552--583",
+abstract="In symmetric cryptanalysis, the model of superposition queries has led to surprising results, with many constructions being broken in polynomial time thanks to Simon's period-finding algorithm. But the practical implications of these attacks remain blurry. In contrast, the results obtained so far for a quantum adversary making classical queries only are less impressive.",
+isbn="978-3-030-34578-5"
+}
+
+@article{Tani09,
+author = {Tani, Seiichiro},
+title = {Claw Finding Algorithms Using Quantum Walk},
+year = {2009},
+issue_date = {November, 2009},
+publisher = {Elsevier Science Publishers Ltd.},
+address = {GBR},
+volume = {410},
+number = {50},
+issn = {0304-3975},
+url = {https://doi.org/10.1016/j.tcs.2009.08.030},
+doi = {10.1016/j.tcs.2009.08.030},
+abstract = {The claw finding problem has been studied in terms of query complexity as one of the problems closely connected to cryptography. Given two functions, f and g, with domain sizes N and M(N@?M), respectively, and the same range, the goal of the problem is to find x and y such that f(x)=g(y). This problem has been considered in both quantum and classical settings in terms of query complexity. This paper describes an optimal algorithm that uses quantum walk to solve this problem. Our algorithm can be slightly modified to solve the more general problem of finding a tuple consisting of elements in the two function domains that has a prespecified property. It can also be generalized to find a claw of k functions for any constant integer k>1, where the domain sizes of the functions may be different.},
+journal = {Theor. Comput. Sci.},
+month = nov,
+pages = {5285–5297},
+numpages = {13},
+keywords = {Oracle computation, Quantum computing, Quantum walk, Query complexity}
+}
+
+
+@InProceedings{ANS18,
+author="Aono, Yoshinori
+and Nguyen, Phong Q.
+and Shen, Yixin",
+editor="Peyrin, Thomas
+and Galbraith, Steven",
+title="Quantum Lattice Enumeration and Tweaking Discrete Pruning",
+booktitle="Advances in Cryptology -- ASIACRYPT 2018",
+year="2018",
+publisher="Springer International Publishing",
+address="Cham",
+pages="405--434",
+abstract="Enumeration is a fundamental lattice algorithm. We show how to speed up enumeration on a quantum computer, which affects the security estimates of several lattice-based submissions to NIST: if T is the number of operations of enumeration, our quantum enumeration runs in roughly {\$}{\$}{\backslash}sqrt{\{}T{\}}{\$}{\$}operations. This applies to the two most efficient forms of enumeration known in the extreme pruning setting: cylinder pruning but also discrete pruning introduced at Eurocrypt '17. Our results are based on recent quantum tree algorithms by Montanaro and Ambainis-Kokainis. The discrete pruning case requires a crucial tweak: we modify the preprocessing so that the running time can be rigorously proved to be essentially optimal, which was the main open problem in discrete pruning. We also introduce another tweak to solve the more general problem of finding close lattice vectors.",
+isbn="978-3-030-03326-2"
+}
+
+@INPROCEEDINGS{FDT19,
+  author={H. {Furue} and D. H. {Duong} and T. {Takagi}},
+  booktitle={2019 Seventh International Symposium on Computing and Networking (CANDAR)}, 
+  title={An Efficient MQ-Based Signature in the QROM}, 
+  year={2019},
+  volume={},
+  number={},
+  pages={10-17}
+}
+
+  
+@misc{JZM19,
+    author = {Haodong Jiang and Zhenfeng Zhang and Zhi Ma},
+    title = {On the non-tightness of measurement-based reductions for key encapsulation mechanism in the quantum random oracle model},
+    howpublished = {Cryptology ePrint Archive, Report 2019/494},
+    year = {2019},
+    note = {\url{https://eprint.iacr.org/2019/494}},
+}
+
+
+
+@misc{DS18,
+    author = {Ducas, L and Stehl{\'e}, D.},
+    title = {Assessing the security of lattice-based submissions: the 10 questions that NIST should be asking the community},
+    howpublished = {Website: \url{http://prometheuscrypt.gforge.inria.fr/2018-06-04.assessing-security.html},
+    year = {2018}
+}
+
+@article{LMP15,
+author = {Laarhoven, Thijs and Mosca, Michele and Pol, Joop},
+title = {Finding Shortest Lattice Vectors Faster Using Quantum Search},
+year = {2015},
+issue_date = {December 2015},
+publisher = {Kluwer Academic Publishers},
+address = {USA},
+volume = {77},
+number = {2–3},
+issn = {0925-1022},
+url = {https://doi.org/10.1007/s10623-015-0067-5},
+doi = {10.1007/s10623-015-0067-5},
+abstract = {By applying a quantum search algorithm to various heuristic and provable sieve algorithms from the literature, we obtain improved asymptotic quantum results for solving the shortest vector problem on lattices. With quantum computers we can provably find a shortest vector in time $$2^{1.799n + o(n)}$$21.799n+o(n), improving upon the classical time complexities of $$2^{2.465n + o(n)}$$22.465n+o(n) of Pujol and Stehl\'{e} and the $$2^{2n + o(n)}$$22n+o(n) of Micciancio and Voulgaris, while heuristically we expect to find a shortest vector in time $$2^{0.268n + o(n)}$$20.268n+o(n), improving upon the classical time complexity of $$2^{0.298n + o(n)}$$20.298n+o(n) of Laarhoven and De Weger. These quantum complexities will be an important guide for the selection of parameters for post-quantum cryptosystems based on the hardness of the shortest vector problem.},
+journal = {Des. Codes Cryptography},
+month = dec,
+pages = {375–400},
+numpages = {26},
+keywords = {Sieving, Quantum search, 52C07, Shortest vector problem, 94A60, Lattices, 68W01, 81P68}
+}
+
+
+@inproceedings{KMP+19,
+title = "Quantum Algorithms for the Approximate k-List Problem and their Application to Lattice Sieving",
+keywords = "approximate k-list problem, cryptanalysis, distributed computation, grover's algorithm, lattice sieving, nearest neighbour algorithms, quantum cryptography, shortest vector problem, svp",
+author = "Elena Kirshanova and Erik M{\aa}rtensson and Eamonn Postlethwaite and {Roy Moulik}, Subhayan",
+year = "2019",
+month = nov,
+day = "25",
+doi = "10.1007/978-3-030-34578-5_19",
+isbn = "978-3-030-34577-8",
+series = "Lecture Notes in Computer Science",
+publisher = "Springer",
+pages = "521--551",
+booktitle = "Advances in Cryptology -- ASIACRYPT 2019",
+}
+
+@InProceedings{NS98,
+author="Nguyen, Phong
+and Stern, Jacques",
+editor="Krawczyk, Hugo",
+title="Cryptanalysis of the Ajtai-Dwork cryptosystem",
+booktitle="Advances in Cryptology --- CRYPTO '98",
+year="1998",
+publisher="Springer Berlin Heidelberg",
+address="Berlin, Heidelberg",
+pages="223--242",
+abstract="Recently, Ajtai discovered a fascinating connection between the worst-case complexity and the average-case complexity of some wellknown lattice problems. Later, Ajtai and Dwork proposed a cryptosystem inspired by Ajtai's work, provably secure if a particular lattice problem is difficult in the worst-case. We present a heuristic attack (to recover the private key) against this celebrated cryptosystem. Experiments with this attack suggest that in order to be secure, implementations of the Ajtai-Dwork cryptosystem would require very large keys, making it impractical in a real-life environment. We also adopt a theoretical point of view: we show that there is a converse to the Ajtai-Dwork security result, by reducing the question of distinguishing encryptions of one from encryptions of zero to approximating some lattice problems. In particular, this settles the open question regarding the NP-hardness of the Ajtai-Dwork cryptosystem: from a recent result of Goldreich and Goldwasser, our result shows that breaking the Ajtai-Dwork cryptosystem is not NP-hard, assuming the polynomial-time hierarchy does not collapse.",
+isbn="978-3-540-68462-6"
+}
+
+@inproceedings{AD97,
+author = {Ajtai, Mikl\'{o}s and Dwork, Cynthia},
+title = {A Public-Key Cryptosystem with Worst-Case/Average-Case Equivalence},
+year = {1997},
+isbn = {0897918886},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/258533.258604},
+doi = {10.1145/258533.258604},
+booktitle = {Proceedings of the Twenty-Ninth Annual ACM Symposium on Theory of Computing},
+pages = {284–293},
+numpages = {10},
+location = {El Paso, Texas, USA},
+series = {STOC '97}
+}
+
+
+@article{LPR13,
+author = {Lyubashevsky, Vadim and Peikert, Chris and Regev, Oded},
+title = {On Ideal Lattices and Learning with Errors over Rings},
+year = {2013},
+issue_date = {November 2013},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {60},
+number = {6},
+issn = {0004-5411},
+url = {https://doi.org/10.1145/2535925},
+doi = {10.1145/2535925},
+abstract = {The “learning with errors” (LWE) problem is to distinguish random linear equations, which have been perturbed by a small amount of noise, from truly uniform ones. The problem has been shown to be as hard as worst-case lattice problems, and in recent years it has served as the foundation for a plethora of cryptographic applications. Unfortunately, these applications are rather inefficient due to an inherent quadratic overhead in the use of LWE. A main open question was whether LWE and its applications could be made truly efficient by exploiting extra algebraic structure, as was done for lattice-based hash functions (and related primitives).We resolve this question in the affirmative by introducing an algebraic variant of LWE called ring-LWE, and proving that it too enjoys very strong hardness guarantees. Specifically, we show that the ring-LWE distribution is pseudorandom, assuming that worst-case problems on ideal lattices are hard for polynomial-time quantum algorithms. Applications include the first truly practical lattice-based public-key cryptosystem with an efficient security reduction; moreover, many of the other applications of LWE can be made much more efficient through the use of ring-LWE.},
+journal = {J. ACM},
+month = nov,
+articleno = {43},
+numpages = {35},
+keywords = {Lattice, quantum computation, public key encryption, cryptography, average-case hardness}
+}
+
+@InProceedings{HPS98,
+author="Hoffstein, Jeffrey
+and Pipher, Jill
+and Silverman, Joseph H.",
+editor="Buhler, Joe P.",
+title="NTRU: A ring-based public key cryptosystem",
+booktitle="Algorithmic Number Theory",
+year="1998",
+publisher="Springer Berlin Heidelberg",
+address="Berlin, Heidelberg",
+pages="267--288",
+abstract="We describe NTRU, a new public key cryptosystem. NTRU features reasonably short, easily created keys, high speed, and low memory requirements. NTRU encryption and decryption use a mixing system suggested by polynomial algebra combined with a clustering principle based on elementary probability theory. The security of the NTRU cryptosystem comes from the interaction of the polynomial mixing system with the independence of reduction modulo two relatively prime integers p and q.",
+isbn="978-3-540-69113-6"
+}
+
+
+@article{Mon18,
+ author = {Montanaro, Ashley},
+ title = {Quantum-Walk Speedup of Backtracking Algorithms},
+ year = {2018},
+ pages = {1--24},
+ doi = {10.4086/toc.2018.v014a015},
+ publisher = {Theory of Computing},
+ journal = {Theory of Computing},
+ volume = {14},
+ number = {15},
+ URL = {http://www.theoryofcomputing.org/articles/v014a015},
+}
+
+@InProceedings{Pat95,
+author="Patarin, Jacques",
+editor="Coppersmith, Don",
+title="Cryptanalysis of the Matsumoto and Imai Public Key Scheme of Eurocrypt'88",
+booktitle="Advances in Cryptology --- CRYPT0' 95",
+year="1995",
+publisher="Springer Berlin Heidelberg",
+address="Berlin, Heidelberg",
+pages="248--261",
+abstract="In [1] Matsumoto and Imai have developed a new public key scheme for enciphering or signing. (This scheme is completely different and should not be mistaken with another scheme of Matsumoto and Imai developed in 1983 and broken at Eurocrypt'84).",
+isbn="978-3-540-44750-4"
+}
+
+@InProceedings{Pat96,
+author="Patarin, Jacques",
+editor="Maurer, Ueli",
+title="Hidden Fields Equations (HFE) and Isomorphisms of Polynomials (IP): Two New Families of Asymmetric Algorithms",
+booktitle="Advances in Cryptology --- EUROCRYPT '96",
+year="1996",
+publisher="Springer Berlin Heidelberg",
+address="Berlin, Heidelberg",
+pages="33--48",
+abstract="In [6] T. Matsumoto and H. Imai described a new asymmet- ric algorithm based on multivariate polynomials of degree two over a finite field, which was subsequently broken in [9]. Here we present two new families of Asymmetric Algorithms that so far have resisted all at- tacks, if properly used: Hidden Field Equations (HFE) and Isomorphism of Polynomials (IP). These algorithms can be seen as two candidate ways to repair the Matsumoto-Imai Algorithm. HFE can be used to do sig- natures, encryption or authentication in an asymmetric way, with very short signatures and short encryptions of short messages. IP can be used for signatures and for zero knowledge authentication.",
+isbn="978-3-540-68339-1"
+}
+
+
+@InProceedings{BY18,
+author="Bernstein, Daniel J.
+and Yang, Bo-Yin",
+editor="Lange, Tanja
+and Steinwandt, Rainer",
+title="Asymptotically Faster Quantum Algorithms to Solve Multivariate Quadratic Equations",
+booktitle="Post-Quantum Cryptography",
+year="2018",
+publisher="Springer International Publishing",
+address="Cham",
+pages="487--506",
+abstract="This paper designs and analyzes a quantum algorithm to solve a system of m quadratic equations in n variables over a finite field {\$}{\$}{\{}{\backslash}mathbf {\{}F{\}}{\}}{\_}q{\$}{\$}. In the case {\$}{\$}m=n{\$}{\$}and {\$}{\$}q=2{\$}{\$}, under standard assumptions, the algorithm takes time {\$}{\$}2^{\{}(t+o(1))n{\}}{\$}{\$}on a mesh-connected computer of area {\$}{\$}2^{\{}(a+o(1))n{\}}{\$}{\$}, where {\$}{\$}t{\backslash}approx 0.45743{\$}{\$}and {\$}{\$}a{\backslash}approx 0.01467{\$}{\$}. The area-time product has asymptotic exponent {\$}{\$}t+a{\backslash}approx 0.47210{\$}{\$}.",
+isbn="978-3-319-79063-3"
+}
+
+
+@misc{FHK+17,
+    author = {Jean-Charles Faug\`{e}re and  Kelsey Horan and  Delaram Kahrobaei and  Marc Kaplan and  Elham Kashefi and Ludovic Perret},
+    title = {Fast Quantum Algorithm for Solving Multivariate Quadratic Equations},
+    howpublished = {Cryptology ePrint Archive, Report 2017/1236},
+    year = {2017},
+    note = {\url{https://eprint.iacr.org/2017/1236}},
+}
+
+@InProceedings{MI88,
+author="Matsumoto, Tsutomu
+and Imai, Hideki",
+editor="Barstow, D.
+and Brauer, W.
+and Brinch Hansen, P.
+and Gries, D.
+and Luckham, D.
+and Moler, C.
+and Pnueli, A.
+and Seegm{\"u}ller, G.
+and Stoer, J.
+and Wirth, N.
+and G{\"u}nther, Christoph G.",
+title="Public Quadratic Polynomial-Tuples for Efficient Signature-Verification and Message-Encryption",
+booktitle="Advances in Cryptology --- EUROCRYPT '88",
+year="1988",
+publisher="Springer Berlin Heidelberg",
+address="Berlin, Heidelberg",
+pages="419--453",
+abstract="This paper discusses an asymmetric cryptosystem C* which consists of public transformations of complexity O(m2n3) and secret transformations of complexity O((mn)2(m + logn)), where each complexity is measured in the total number of bit-operations for processing an mn-bit message block. Each public key of C* is an n-tuple of quadratic n-variate polynomials over GF(2m) and can be used for both verifying signatures and encrypting plaintexts. This paper also shows that for C* it is practically infeasible to extract the n-tuple of n-variate polynomials representing the inverse of the corresponding public key.",
+isbn="978-3-540-45961-3"
+}
+
+@article{GV18,
+author = {Galbraith, Steven D. and Vercauteren, Frederik},
+title = {Computational Problems in Supersingular Elliptic Curve Isogenies},
+year = {2018},
+issue_date = {October 2018},
+publisher = {Kluwer Academic Publishers},
+address = {USA},
+volume = {17},
+number = {10},
+issn = {1570-0755},
+url = {https://doi.org/10.1007/s11128-018-2023-6},
+doi = {10.1007/s11128-018-2023-6},
+journal = {Quantum Information Processing},
+month = oct,
+pages = {1–22},
+numpages = {22},
+keywords = {Post-quantum cryptography, Elliptic curve isogeny}
+}
+
+
+@misc{Feo17,
+    title={Mathematics of Isogeny Based Cryptography},
+    author={Luca De Feo},
+    year={2017},
+    eprint={1711.04062},
+    archivePrefix={arXiv},
+    primaryClass={cs.CR}
+}
+
+@InProceedings{GPST16,
+author="Galbraith, Steven D.
+and Petit, Christophe
+and Shani, Barak
+and Ti, Yan Bo",
+editor="Cheon, Jung Hee
+and Takagi, Tsuyoshi",
+title="On the Security of Supersingular Isogeny Cryptosystems",
+booktitle="Advances in Cryptology -- ASIACRYPT 2016",
+year="2016",
+publisher="Springer Berlin Heidelberg",
+address="Berlin, Heidelberg",
+pages="63--91",
+abstract="We study cryptosystems based on supersingular isogenies. This is an active area of research in post-quantum cryptography. Our first contribution is to give a very powerful active attack on the supersingular isogeny encryption scheme. This attack can only be prevented by using a (relatively expensive) countermeasure. Our second contribution is to show that the security of all schemes of this type depends on the difficulty of computing the endomorphism ring of a supersingular elliptic curve. This result gives significant insight into the difficulty of the isogeny problem that underlies the security of these schemes. Our third contribution is to give a reduction that uses partial knowledge of shared keys to determine an entire shared key. This can be used to retrieve the secret key, given information leaked from a side-channel attack on the key exchange protocol. A corollary of this work is the first bit security result for the supersingular isogeny key exchange: Computing any component of the j-invariant is as hard as computing the whole j-invariant.",
+isbn="978-3-662-53887-6"
+}
+
+@InProceedings{ACC+19,
+author="Adj, Gora
+and Cervantes-V{\'a}zquez, Daniel
+and Chi-Dom{\'i}nguez, Jes{\'u}s-Javier
+and Menezes, Alfred
+and Rodr{\'i}guez-Henr{\'i}quez, Francisco",
+editor="Cid, Carlos
+and Jacobson Jr., Michael J.",
+title="On the Cost of Computing Isogenies Between Supersingular Elliptic Curves",
+booktitle="Selected Areas in Cryptography -- SAC 2018",
+year="2019",
+publisher="Springer International Publishing",
+address="Cham",
+pages="322--343",
+abstract="The security of the Jao-De Feo Supersingular Isogeny Diffie-Hellman (SIDH) key agreement scheme is based on the intractability of the Computational Supersingular Isogeny (CSSI) problem---computing {\$}{\$}{\{}{\backslash}mathbb F{\}}{\_}{\{}p^2{\}}{\$}{\$}-rational isogenies of degrees {\$}{\$}2^e{\$}{\$}and {\$}{\$}3^e{\$}{\$}between certain supersingular elliptic curves defined over {\$}{\$}{\{}{\backslash}mathbb F{\}}{\_}{\{}p^2{\}}{\$}{\$}. The classical meet-in-the-middle attack on CSSI has an expected running time of {\$}{\$}O(p^{\{}1/4{\}}){\$}{\$}, but also has {\$}{\$}O(p^{\{}1/4{\}}){\$}{\$}storage requirements. In this paper, we demonstrate that the van Oorschot-Wiener golden collision finding algorithm has a lower cost (but higher running time) for solving CSSI, and thus should be used instead of the meet-in-the-middle attack to assess the security of SIDH against classical attacks. The smaller parameter p brings significantly improved performance for SIDH.",
+isbn="978-3-030-10970-7"
+}
+
+@article{BMvT78,
+author = {Berlekamp, E. and McEliece, R. and van Tilborg, H.},
+title = {On the Inherent Intractability of Certain Coding Problems (Corresp.)},
+year = {2006},
+issue_date = {May 1978},
+publisher = {IEEE Press},
+volume = {24},
+number = {3},
+issn = {0018-9448},
+url = {https://doi.org/10.1109/TIT.1978.1055873},
+doi = {10.1109/TIT.1978.1055873},
+abstract = {MEMBER, IEEE, AND HENK C. A. V~ TILBORG The fact that the general decoding problem for linear codes and the general problem of finding the weights of a linear code are both NP-complete is shown. This strongly suggests, but does not rigorously imply, that no algorithm for either of these problems which runs in polynomial time exists.},
+journal = {IEEE Trans. Inf. Theor.},
+month = sep,
+pages = {384–386},
+numpages = {3}
+}
+
+@ARTICLE{McE78,
+       author = {{McEliece}, R.~J.},
+        title = "{A Public-Key Cryptosystem Based On Algebraic Coding Theory}",
+      journal = {Deep Space Network Progress Report},
+         year = 1978,
+        month = jan,
+       volume = {44},
+        pages = {114-116},
+       adsurl = {https://ui.adsabs.harvard.edu/abs/1978DSNPR..44..114M},
+      adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+
+@article{Has01,
+author = {H\r{a}stad, Johan},
+title = {Some Optimal Inapproximability Results},
+year = {2001},
+issue_date = {July 2001},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {48},
+number = {4},
+issn = {0004-5411},
+url = {https://doi.org/10.1145/502090.502098},
+doi = {10.1145/502090.502098},
+abstract = {We prove optimal, up to an arbitrary ε > 0, inapproximability results for Max-E k-Sat for k ≥ 3, maximizing the number of satisfied linear equations in an over-determined system of linear equations modulo a prime p and Set Splitting. As a consequence of these results we get improved lower bounds for the efficient approximability of many optimization problems studied previously. In particular, for Max-E2-Sat, Max-Cut, Max-di-Cut, and Vertex cover.},
+journal = {J. ACM},
+month = jul,
+pages = {798–859},
+numpages = {62},
+keywords = {NP-hard optimization problems, linear equations, max-sat, probabilistically checkable proofs, Inapproximability}
+}
+
+@InProceedings{BHH+15,
+author="Bernstein, Daniel J.
+and Hopwood, Daira
+and H{\"u}lsing, Andreas
+and Lange, Tanja
+and Niederhagen, Ruben
+and Papachristodoulou, Louiza
+and Schneider, Michael
+and Schwabe, Peter
+and Wilcox-O'Hearn, Zooko",
+editor="Oswald, Elisabeth
+and Fischlin, Marc",
+title="SPHINCS: Practical Stateless Hash-Based Signatures",
+booktitle="Advances in Cryptology -- EUROCRYPT 2015",
+year="2015",
+publisher="Springer Berlin Heidelberg",
+address="Berlin, Heidelberg",
+pages="368--397",
+abstract="This paper introduces a high-security post-quantum stateless hash-based signature scheme that signs hundreds of messages per second on a modern 4-core 3.5GHz Intel CPU. Signatures are 41 KB, public keys are 1 KB, and private keys are 1 KB. The signature scheme is designed to provide long-term {\$}{\$}2^{\{}128{\}}{\$}{\$}security even against attackers equipped with quantum computers. Unlike most hash-based designs, this signature scheme is stateless, allowing it to be a drop-in replacement for current signature schemes.",
+isbn="978-3-662-46800-5"
+}
+
+@techreport{Lam79,
+author = {Lamport, Leslie},
+title = {Constructing Digital Signatures from a One Way Function},
+year = {1979},
+month = {October},
+abstract = {At a coffee house in Berkeley around 1975, Whitfield Diffie described a problem to me that he had been trying to solve: constructing a digital signature for a document. I immediately proposed a solution. Though not very practical--it required perhaps 64 bits of published key to sign a single bit--it was the first digital signature algorithm. Diffie and Hellman mention it in their classic paper:
+
+Whitfield Diffie and Martin E. Hellman. New Directions in Cryptography. IEEE Transactions on Information Theory IT-22, 6 (1976), 644-654.
+(I think it's at the bottom right of page 650.)
+
+In 1978, Michael Rabin published a paper titled Digitalized Signatures containing a more practical scheme for generating digital signatures of documents. (I don't remember what other digital signature algorithms had already been proposed.) However, his solution had some drawbacks that limited its utility. This report describes an improvement to Rabin's algorithm that eliminates those drawbacks.
+
+I'm not sure why I never published this report. However, I think it was because, after writing it, I realized that the algorithm could be fairly easily derived directly from Rabin's algorithm. So, I didn't feel that it added much to what Rabin had done. However, I've been told that this paper is cited in the cryptography literature and is considered significant, so perhaps I was wrong.},
+url = {https://www.microsoft.com/en-us/research/publication/constructing-digital-signatures-one-way-function/},
+edition = {SRI International},
+number = {CSL-98},
+note = {This paper was published by IEEE in the Proceedings of HICSS-43 in January, 2010.},
 }
