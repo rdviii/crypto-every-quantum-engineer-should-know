@@ -9,10 +9,12 @@
 \end{figure}
 
 This paper was inspired in part by a discussion of the performance
-demands made of key generation and rekeying procedures, in the context
-of incorporating QKD as well as taking into consideration Shor's
-algorithm.  In this section, we return to that original topic and
-answer several questions:
+demands made of key generation and rekeying procedures.  In the
+context of quantum information, we want to understand the requirements
+when incorporating QKD into a communication architecture to replace
+Diffie-Hellman key exchange, as well as the impact on rekeying
+requirements as a result of Shor's algorithm.  In this section, we
+return to that original topic and answer several questions:
 
 \begin{enumerate}
 \item What are the technical mechanisms in place for rekeying and
@@ -56,13 +58,13 @@ outdated and some of which are still
 current~\footnote{\url{https://en.wikipedia.org/wiki/IPsec}.}.
 
 Those documents are what are known as RFCs, or Request for Comments
-documents.  They have different levels of authority, ranging from
+documents.  RFCs have different levels of authority, ranging from
 Experimental and Informational to Standard.  Reaching Standard can
 take decades and numerous iterations as the working groups gradually
 converge on what works in the real world, intersecting with what
 people will actually implement and use, but protocols are often de
 facto standards long before reaching that platinum frequent flyer
-status.
+status. \comment{informal}
 
 \subsubsection{IKE and IPsec}
 
@@ -75,20 +77,21 @@ appropriate to start with RFC 4301 (Dec. 2005) (also a proposed
 standard), which is titled, "Security Architecture for the Internet
 Protocol"~\cite{RFC4301}.
 
-IPsec has a couple of modes, but let's stick to what's called tunnel
-mode.  Two boxes, known as gateways, build one or more Security
-Associations (SAs). An SA describes which packets passing between the
-gateways are to be encrypted and how.  Those that are encrypted are
-encrypted in their entirety (packet headers and all), and sent as the
-payload of another IP packet, to be decrypted at the far end.  Tunnel
-mode is most often used to connect together via the Internet two
-networks (e.g., two offices of the same company) that are each
-considered to be relatively secure networks.  The packets between
-computers in one network and those in the other network are encrypted
-only during their transit from gateway to gateway.  Of course, these
-days, much (most?) data is also encrypted by the end hosts, especially
-for the two major applications of web and email, so much of the
-traffic in the tunnel will be double-encrypted.
+\comment{informal} IPsec has a couple of modes, but let's stick to
+what's called tunnel mode.  Two boxes, known as gateways, build one or
+more Security Associations (SAs). An SA describes which packets
+passing between the gateways are to be encrypted and how.  Those that
+are encrypted are encrypted in their entirety (packet headers and
+all), and sent as the payload of another IP packet, to be decrypted at
+the far end.  Tunnel mode is most often used to connect together via
+the Internet two networks (e.g., two offices of the same company) that
+are each considered to be relatively secure networks.  \comment{Add a
+  figure.} The packets between computers in one network and those in
+the other network are encrypted only during their transit from gateway
+to gateway.  Of course, these days, much (most?) data is also
+encrypted by the end hosts, especially for the two major applications
+of web and email, so much of the traffic in the tunnel will be
+double-encrypted.
 
 The first SA created is the IKE SA itself, used only to carry the
 messages that govern the tunnel.  The first exchange of messages
@@ -118,19 +121,19 @@ using the secret, in a fashion that can be verified by the partner.
 the public key methods, but keep in mind the messages containing this
 information are also encrypted; however, as we are just now
 authenticating, it's \emph{possible} that, up to this point, the partner at
-the other end of this connection is not who they claim to be!)
+the other end of this connection is not who they claim to be!)  \ddp{} 
 
 The IKE SA is used to create Child SAs, which carry the actual
 traffic.  The keys used for the Child SAs, therefore, are the obvious
 target for traffic-based attacks, though the real prize is the keys
 for the IKE SA.  I'm having a hard time imagining how to mount an
-effective attack against the IKE SA.
+effective attack against the IKE SA.  \ddp{} 
 
 The key material for the Child SA is generated via a complex mechanism
 involving a new nonce and the PRF previously specified.  The initiator
 of the creation may also, optionally, specify that an entirely new
 Diffie-Hellman exchange be performed.  I'm very unclear on how often
-that option is used in practice.
+that option is used in practice.  \ddp{} 
 
 Each SA, whether IKE or Child, can (and should) have a lifetime.  That
 lifetime can be specified in either seconds or in bytes that have been
@@ -344,8 +347,8 @@ One startling and potentially useful document is RFC7457, "Summarizing
 Known Attacks on Transport Layer Security (TLS) and Datagram TLS
 (DTLS)"~\cite{RFC7457}.  It details a couple of dozen attacks on TLS, most having to do
 with protocol implementation issues such as failing to correctly
-verify all of the information you are given.  Some of them leak
-information or allow a connection to be take over, others allow an
+verify all of the information you are given.  Some of the attacks leak
+information or allow a connection to be take over; others allow an
 attacker to downgrade the security negotiation so that a later attack
 on the cipher has a higher chance of success.
 

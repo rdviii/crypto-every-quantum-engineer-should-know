@@ -756,3 +756,43 @@ url = {https://link.springer.com/chapter/10.1007/3-540-39799-X_41}
   month =	 aug
 }
 
+@article{crawshaw20:vpn,
+author = {Crawshaw, David},
+title = {Everything VPN is New Again},
+year = {2021},
+issue_date = {April 2021},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {64},
+number = {4},
+issn = {0001-0782},
+url = {https://doi.org/10.1145/3434230},
+doi = {10.1145/3434230},
+abstract = {The 24-year-old security model has found a second wind.},
+journal = {Commun. ACM},
+month = mar,
+pages = {130–134},
+numpages = {5}
+}
+
+@article{mueller20:pqc-dnssec,
+author = {M\"{u}ller, Moritz and de Jong, Jins and van Heesch, Maran and Overeinder, Benno and van Rijswijk-Deij, Roland},
+title = {Retrofitting Post-Quantum Cryptography in Internet Protocols: A Case Study of DNSSEC},
+year = {2020},
+issue_date = {October 2020},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {50},
+number = {4},
+issn = {0146-4833},
+url = {https://doi.org/10.1145/3431832.3431838},
+doi = {10.1145/3431832.3431838},
+abstract = {Quantum computing is threatening current cryptography, especially the asymmetric algorithms used in many Internet protocols. More secure algorithms, colloquially referred to as Post-Quantum Cryptography (PQC), are under active development. These new algorithms differ significantly from current ones. They can have larger signatures or keys, and often require more computational power. This means we cannot just replace existing algorithms by PQC alternatives, but need to evaluate if they meet the requirements of the Internet protocols that rely on them.In this paper we provide a case study, analyzing the impact of PQC on the Domain Name System (DNS) and its Security Extensions (DNSSEC). In its main role, DNS translates human-readable domain names to IP addresses and DNSSEC guarantees message integrity and authenticity. DNSSEC is particularly challenging to transition to PQC, since DNSSEC and its underlying transport protocols require small signatures and keys and efficient validation. We evaluate current candidate PQC signature algorithms in the third round of the NIST competition on their suitability for use in DNSSEC. We show that three algorithms, partially, meet DNSSEC's requirements but also show where and how we would still need to adapt DNSSEC. Thus, our research lays the foundation for making DNSSEC, and protocols with similar constraints ready for PQC.},
+journal = {SIGCOMM Comput. Commun. Rev.},
+month = oct,
+pages = {49–57},
+numpages = {9},
+keywords = {DNS, post-quantum cryptography, security},
+comment = {PQC, recommended by koluke}
+}
+

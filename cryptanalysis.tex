@@ -190,7 +190,7 @@ mean that the encryption process is lossy, making it impossible to
 reliably decrypt that ciphertext back to both original blocks?  As
 will will see in Sec.~\ref{sec:limitations}, more information is
 involved in both the encryption and decryption than just that specific
-block and the key when using \emph{cipher block chaining} (CBC mode)/
+block and the key when using \emph{cipher block chaining} (CBC mode).
 
 In CBC mode, the information gained on the occurence of a collusion is
 the XOR of two plaintext blocks.  If block numbers $i$ and $j$ have
@@ -209,8 +209,8 @@ is above 39\%, which arises in the limit as the expression
 $1-1/e^{1/2}$.  (See the appendix of these notes for some example
 calculations.)  Sec. 2.2 of Bhargavan and Leurent has a compact
 description of the commonly-quoted square root limit, as well as
-describing why and how much to be conservative relative to that
-value~\cite{bhargavan2016practical}~\footnote{\url{https://sweet32.info/}.}
+a description of why and how much to be conservative relative to that
+value~\cite{bhargavan2016practical}~\footnote{\url{https://sweet32.info/}.}.
 
 A 39\% chance of disclosing some information will generally be
 considered to be an unacceptably large probability, leaving us with
@@ -321,7 +321,7 @@ on that guess, we can narrow down the set of subkeys for the
 next-to-last round, rinse and repeat.  It's still a computationally
 intensive, tedious process, but much less than brute force.  Roughly,
 the probability of getting the ciphertext pairs we need is
-proportional to $1/p_D$, where $p_D$ is the differential probability
+proportional to $1/p_D$, \comment{? should be a small number, not a large one -- inverted?} where $p_D$ is the differential probability
 in the table we are looking for, which may be quite small.  (This
 seems to me that keeping a history of things you've already tried
 would increase the probability of finding a pair you like, so I'm

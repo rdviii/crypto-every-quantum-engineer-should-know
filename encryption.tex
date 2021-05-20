@@ -50,7 +50,7 @@ beautiful, Alice, tell me about Wednesday,'' using Alice's public key,
 and Alice again replies, ``Wednesday it will rain,'' then the parties
 have confirmed confirm their identities as Bob and Alice -- assuming,
 of course, that they trust that the key $\langle n,e\rangle$ truly
-belongs to the appropriate party, and that it hasn't leaked out
+belongs to the appropriate party, and that $d$ hasn't leaked out
 somehow!
 
 As the publication of $n$ makes clear, RSA is vulnerable to advances
@@ -125,7 +125,7 @@ data to be decrypted by someone holding the appropriate key.  A good
 cipher, however, will provide few clues to an attacker.  A single
 bit's difference in either the key or the original plaintext should
 result in about half of the ciphertext bits being flipped, so that
-being "close" offers no guidance on a next step.
+being ``close'' offers no guidance on a next step.
 
 Thus, a symmetric key system's security is often linked to its key
 size; with $k$ key bits, it should require, on average, $2^{k-1}$

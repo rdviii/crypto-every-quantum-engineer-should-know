@@ -30,7 +30,7 @@ for any (unlimited time and space) TM $\mathcal{G}$ that outputs a candidate of 
 	\Pr[ \mathcal{G}(ct) = m ] = \Pr [\mathcal{G}'() = m ].
 \end{equation}
 %
-Here, the probability is over a fixed distribution of plaintext $m$ and key $k$, and $ct = Enc(k,ct)$.
+Here, the probability is over a fixed distribution of plaintext $m$ and key $k$, and $ct = Enc(k,ct)$.  \comment{Is that right?  $ct$ seems to be on both sides of the equation?}
 The equivalence of probabilities means that $\mathcal{G}$ needs not to use $ct$ to recover $m$, thus, $ct$ does not contain any information about $m$ intuitively.
 
 Shannon proved that the information-theoretic security 
@@ -68,6 +68,7 @@ With these oracles, the security against chosen plaintext attack (CPA) \cite{GM8
 and chosen ciphertext attack (CCA) \cite{NY90,DDN91} are typically 
 formulated by that any attacker cannot reveal any useful information in a short time from the output of oracles even if one can choose inputs to the oracles; see textbooks \cite{Gol06book,Gol09book} for example.
 
+\comment{Lots of acronyms here.}
 Under the classical world, the attacker, usually called as ``adversary,'' is regarded as a PPTM.
 Also, it is assumed to access to the oracles in a classical way,
 i.e., it gets a bit sequence on each input bit sequence deterministically.
