@@ -106,7 +106,7 @@ to quantum computers, hence attract a lot of attention. The workhorse
 symmetric block ciphers for bulk encryption are actually much more
 complex mathematically, and hence harder to understand, but ultimately
 can be executed efficiently on modern microprocessors and dedicated
-chips.
+chips. \comment{Someone on the intertubes disputed my claim of ``efficiently'', who was that?}
 
 A block cipher takes the data to be encrypted, and breaks it into
 fixed-size chunks called blocks.  If the last block isn't full, it is
@@ -119,7 +119,7 @@ same size.
 
 Ideally, the output block (the ciphertext) will look completely
 random: about 50\% zeroes and 50\% ones, regardless of input, and with
-no detectable pattern.  That is, its entropy will be very high.  Of
+no detectable pattern.  That is, its \emph{entropy} will be very high.  Of
 course, it cannot be completely random, as it must be possible for the
 data to be decrypted by someone holding the appropriate key.  A good
 cipher, however, will provide few clues to an attacker.  A single
@@ -130,7 +130,7 @@ being ``close'' offers no guidance on a next step.
 Thus, a symmetric key system's security is often linked to its key
 size; with $k$ key bits, it should require, on average, $2^{k-1}$
 trial decryptions to find the key and to be able to decrypt the
-message.  We will discuss this further when we get to cryptanalysis.
+message.  We will discuss this further when we get to cryptanalysis (Sec.~\ref{sec:cryptan}).
 
 Many encryption algorithms have been designed over the years, but two
 in particular are too important to ignore, so we will examine them:
@@ -161,6 +161,7 @@ However, in a block cipher, not only does the key size matter, the
 block size also matters, as we'll see below.  For DES, that block size
 is only 64 bits.
 
+\comment{This isn't very clear yet.}
 DES operates in sixteen rounds, each of which uses a 48-bit subkey
 generated from the original 56-bit key using a key scheduling
 algorithm.  In each round, half of the block is tweaked and half
@@ -197,7 +198,7 @@ is:
     \item select a subset of 48 bits (a fixed operation according to
       the schedule)
     \end{enumerate}
-  \item XOR subkey $i$ with the left half of the block
+  \item XOR subkey $i$ with the left half of the block \comment{the half block is 32 bits, so how do you XOR in 48 bits?}
   \item split the left half into eight 6-bit pieces
   \item push each 6-bit piece through a $6\rightarrow 4$ S-box
   \item permute and recombine the eight 4-bit pieces (a fixed operation)
@@ -244,7 +245,7 @@ for sensitive information. \comment{cite}
 
 AES, the Advanced Encryption Standard, has replaced DES.  It is a type of block cipher known as a \emph{substitution-permutation} cipher.  AES uses a block size of 128 bits, and a key size of 128, 192 or 256 bits. The key size affects the number of rounds of substitution-permutation, requiring 10, 12 or 14, respectively.
 
-AES began life in 1997 when NIST announced a competition for a successor to DES, due to the problems with DES described earlier and later. Two Belgian cryptographers, Vincent Rijmen and Joan Daemen, submitted a proposal they dubbed Rijndael, which ultimately beat out fourteen other serious competitors to become, with some modifications, the Advanced Encryption Standard, published as the standard in 2001.
+AES began life in 1997 when NIST announced a competition for a successor to DES, due to the problems with DES described earlier and later. Two Belgian cryptographers, Vincent Rijmen and Joan Daemen, submitted a proposal they dubbed Rijndael, which ultimately beat out fourteen other serious competitors to become, with some modifications, the Advanced Encryption Standard, published as the standard in 2001 \comment{cite}.
 
 A substitution-permutation network alternates substituting new bits
 for old ones with permuting (rearranging) the bits, conducted over a
@@ -342,6 +343,8 @@ but attacks can be parallelized.  Nevertheless, it's the most commonly
 used mode.
 
 \subsection{Other Tasks}
+
+\comment{This subsection is now in the wrong place, and may not be necessary at all.}
 
 \comment{Crypto also used for passwords; signatures; integrity hashes (both
   signed ans unsigned); spread spectrum for secrecy, difficulty of

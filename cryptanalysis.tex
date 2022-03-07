@@ -27,7 +27,7 @@ attacks (such as measuring the power consumed during encryption) and
 attacks on infrastructure, people, etc.  (Some of these other attacks
 are known as "black bag", or burglary, attacks, and some of which are
 "rubber hose" attacks, extracting information from humans by coercion
-or torture).  David Kahn referred to these latter attacks as
+or torture.  David Kahn referred to these latter attacks as
 "practical cryptanalysis" in his classic book, \emph{The
   Codebreakers}.)
 
@@ -188,7 +188,7 @@ The occurence of collisions may seem counterintuitive: if two
 different plaintext blocks have the same ciphertext, wouldn't that
 mean that the encryption process is lossy, making it impossible to
 reliably decrypt that ciphertext back to both original blocks?  As
-will will see in Sec.~\ref{sec:limitations}, more information is
+will will see in Sec.~\ref{sec:limitations} \comment{and mentioned earlier}, more information is
 involved in both the encryption and decryption than just that specific
 block and the key when using \emph{cipher block chaining} (CBC mode).
 
@@ -206,7 +206,7 @@ If the block size is $n$ bits, there are $N = 2^n$ possible
 ciphertexts, and if the number of blocks encrypted is the square root
 of that number, $2^{n/2}$, the probability of at least one collision
 is above 39\%, which arises in the limit as the expression
-$1-1/e^{1/2}$.  (See the appendix of these notes for some example
+$1-1/\sqrt{e}$.  (See the appendix of these notes for some example
 calculations.)  Sec. 2.2 of Bhargavan and Leurent has a compact
 description of the commonly-quoted square root limit, as well as
 a description of why and how much to be conservative relative to that
@@ -220,7 +220,7 @@ the birthday attack to be less than (for example) one in a billion.
 
 Given $D = 2^d$ ciphertext blocks, then the expected number of
 collisions is approximately $2^{2d-n-1}$.  For our one-in-a-billion
-probability, using $log_2(10^9) \approx 30$, we need to set up our
+probability, using $\log_2(10^9) \approx 30$, we need to set up our
 session lifetime such that $2d-n-1 < -30$, or $d < (n-29)/2$.
 
 Since DES has only a 64-bit block, we should set $d \le 17$.  That's a
