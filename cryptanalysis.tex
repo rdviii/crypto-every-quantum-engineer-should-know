@@ -31,25 +31,25 @@ or torture.  David Kahn referred to these latter attacks as
 "practical cryptanalysis" in his classic book, \emph{The
   Codebreakers}.)
 
-The older one of the two is differential cryptanalysis, apparently
-discovered indepedently at least three times, publicly by Biham and
-Shamir in the late 1980s, in the mid-70s by IBM (where the goal of
-defending against the technique drove DES design decisions), and
-earlier by NSA.
-\url{https://en.wikipedia.org/wiki/Differential_cryptanalysis}
-The second is linear crypanalysis, discovered by Mitsuru Matsui in
-1990~\cite{matsui1993linear}.
+The older one of the two techniques we will examine is
+\emph{differential cryptanalysis}, apparently discovered indepedently
+at least three times: publicly by Biham and Shamir in the late 1980s,
+in the mid-70s by IBM (where the goal of defending against the
+technique drove DES design decisions), and earlier by the NSA.
+\url{https://en.wikipedia.org/wiki/Differential_cryptanalysis} The
+second technique we will examine is \emph{linear crypanalysis},
+discovered by Mitsuru Matsui in 1990~\cite{matsui1993linear}.
 \url{https://en.wikipedia.org/wiki/Linear_cryptanalysis}
 
-\aono{}
+\aonolook{}
 (Other techniques that I know nothing about include integral,
 algebraic, and biclique.)
 
 Before talking about those two in any detail, there's a more
 straightforward technique that leaks information about the plaintext,
-if not the key itself: the birthday paradox.  But before we get into
-the cryptanalysis itself, let's look a little bit at how the designers
-built defenses into the block ciphers.
+if not the key itself: the \emph{birthday paradox}.  But before we get
+into the cryptanalysis itself, let's look a little bit at how the
+designers built defenses into the block ciphers.
 
 \subsection{Playing Defense Using Math}
 \label{sec:defense}
@@ -85,14 +85,15 @@ that show up in our data sequence.
 
 Note that this definition of entropy does not take into account any
 long-range structure; it is purely based on the overall probability of
-the appearance of a given set of symbols.  Thus, to this function, the
-strings 0101...01 and 000...01...111 have a bit-level entropy just as
-high as a string composed of exactly 50/50 randomly chosen 0s and 1s,
-although by applying a little intelligence we can easily reconstruct
-the former but not the latter (at least, not exactly).  Many lossless
-data compression programs operate on stateful \emph{sequences} of data
-to predict the next symbol.  For example, the common Unix utilities
-gzip and compress use the Lempel-Ziv
+the appearance of a given set of symbols.  To a human, the strings
+0101...01 (alternating zeroes and ones) and 000...01...111 (a long
+string of zeroes followed by a long string of ones) show a lot of
+structure, but to to the bit-level entropy function their entropy is
+just as high as a string composed of exactly 50/50 randomly chosen 0s
+and 1s.
+Many lossless data compression programs operate on stateful
+\emph{sequences} of data to predict the next symbol.  For example, the
+common Unix utilities gzip and compress use the Lempel-Ziv
 algorithm~\cite{compression:Ziv78}, which builds a dictionary of
 sequences as it goes, so that repetitive data and long runs are
 compressed effectively; this is especially good at sequences such as
@@ -148,7 +149,7 @@ refers to rearranging or spreading out the bits in the message so that
 any redundancy in the plaintext is spread out over the ciphertext.
 \end{quote}
 
-\aono{} In DES, confusion is achieved by the nonlinearity of the
+\aonolook{} In DES, confusion is achieved by the nonlinearity of the
 S-boxes.  Diffusion is achieved by the shuffling of the bits between
 S-box operations, coupled with the fact that the S-boxes use multiple
 bits in an operation.
@@ -268,7 +269,7 @@ serious than the birthday attack.
 The book says, ``An interesting feature of the new attack is that it
 can be applied with the same complexity and success probability even
 if the key is frequently changed and thus the collected ciphertexts
-are derived from many different keys.''  \aono{} That's pretty alarming.  This
+are derived from many different keys.''  \aonolook{} That's pretty alarming.  This
 appears in a paragraph discussing chosen plaintext, so it may be
 restricted to that case.  I infer from this that rather than needing
 the cumulative accretion of information, each trial is independent.
@@ -326,7 +327,7 @@ in the table we are looking for, which may be quite small.  (This
 seems to me that keeping a history of things you've already tried
 would increase the probability of finding a pair you like, so I'm
 still puzzled by the assertion above that this works even if the key
-is being changed frequently.) \aono{}
+is being changed frequently.) \aonolook{}
 
 Ultimately, this attack is considered practical against ordinary DES.
 Biham and Shamir estimated (p. 8, p. 61) that DES and DES-like
@@ -341,7 +342,7 @@ obsolete due to the birthday paradox attack above.  AES is stronger
 against DC, so this attack is of less help against
 properly-implemented, modern systems.
 
-\aono{}
+\aonolook{}
 
 \subsection{Linear Cryptanalysis}
 
@@ -369,7 +370,7 @@ $L = P_1 + P_3 + C_2 + C_4$
 combination has a bias if the probability of $L$ being 0 is noticeably
 different from 50\%.
 
-Such a combination is a \emph{linear} combination of bits.  It is known (\aono{by whom?}) that if the S-boxes in our cipher are fully linear, then the
+Such a combination is a \emph{linear} combination of bits.  It is known (\aonolook{by whom?}) that if the S-boxes in our cipher are fully linear, then the
 cipher can be easily broken.  Therefore, designers always use
 nonlinear S-boxes, but some bias such as this may be discoverable.
 
@@ -379,7 +380,7 @@ used in the last round of the cipher, rinse and repeat.  The trick is
 to find the right relationships showing a detectable bias, as was done
 with differential analysis.  This is done by examining the math of the
 S-boxes in detail; as far as I can tell, this phase of the operation
-is done by very smart humans. \aono{}
+is done by very smart humans. \aonolook{}
 
 If the attacker can find a combination with a bias of $\epsilon$, then
 $1/\epsilon^2$ plaintext-ciphertext pairs are required to find some bits
@@ -400,7 +401,7 @@ or the plaintext, but substantially reduces the work needed to find
 the full key by guiding a search, rather than just testing keys at
 random.
 
-\aono{} Linear cryptanalysis is considered to be a very general
+\aonolook{} Linear cryptanalysis is considered to be a very general
 technique, but there do not appear to have been extensive attempts to
 apply it to AES.  Indeed, AES (which was developed in the 1990s from
 the proposed cipher known as Rijndael) was developed specifically with
@@ -428,7 +429,7 @@ they are pretty predictable.  Thus, it's reasonable to consider
 attacks on TLS to be known-plaintext attacks, and in fact there are
 cases where we can create chosen-plaintext attacks.
 
-\aono{can you come up with a better example of how chosen-plaintext works?}
+\aonolook{can you come up with a better example of how chosen-plaintext works?}
 Consider, for example, the connection between your laptop and your
 email server, whether Gmail or your organization's server.  Assume
 that I, an attacker, can send you email and can observe your encrypted

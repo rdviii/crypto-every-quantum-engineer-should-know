@@ -47,6 +47,9 @@ Arch., 2019:854, 2019. IEEE Transactions on Quantum Engineering, vol.
 
 \comment{https://csrc.nist.gov/publications/detail/journal-article/2021/development-of-the-advanced-encryption-standard}
 
+https://eprint.iacr.org/2021/1637
+By Hilarie Orman, who was our program manager from ARPA for the Netstation project back in the mid-90s.
+
 Those who study the fields of quantum computing and quantum
 communication quickly become familiar with Shor's algorithm for
 factoring large numbers and calculating discrete
@@ -68,7 +71,8 @@ classical communications and cryptography communities, and help them
 to ask the right research questions, such as:
 
 \begin{itemize}
-\item What QKD key generation rate is appropriate for
+\item What QKD key generation rate (measured in both steady-state rate
+  and latency to begin a connection) is appropriate for
   quantum-protected activities such as:
   \begin{itemize}
   \item e-commerce, especially web browsing; and
@@ -119,7 +123,7 @@ What this document is \emph{not}:
 \item a full tutorial on cryptography.
 \end{itemize}
 
-\subsection{Encrypted Communications}
+\subsection{Security and Encrypted Communications}
 
 \begin{figure}
   {\color{Magenta} Add a figure with basic messages and actors.}
@@ -129,14 +133,41 @@ What this document is \emph{not}:
   \label{fig:encrypted-comm}
 \end{figure}
 
-An encrypted conversation involves, at the macro level, three phases:
+Before we dive into encryption, it is useful to be aware that computer
+and communications security people do not think of encryption itself
+as an end goal, but rather as a tool used in service of achieving three
+goals:
+
+\begin{itemize}
+\item {\bf integrity:} the condition that the data has not been
+  modified or tampered with by an adversary
+\item {\bf confidentiality or privacy:} the data hasn't been disclosed to anyone unauthorized
+\item {\bf availability:} access to data (or a computational or
+  communication service) cannot be denied by an attacker
+\end{itemize}
+
+Encryption helps with all three of those goals, but does not directly
+achieve any of them without substantial infrastructure around the
+encryption itself.  Achieving these goals is the subject of intensive
+research and engineering.  To give a feel for the relative importance
+of cryptography, a canonical textbook devotes about 10\% of its length
+to cryptography~\cite{bishop2002art}.
+
+For the purposes of this paper, we will focus on encryption, with the
+working assumption of a two-party exchange of data across an otherwise
+unsecured network.  In this paper, we will study only mathematical
+attacks on cryptography, not \emph{side channel} attacks such as
+observing the time or energy used for encryption or other weaknesses
+of the systems themselves.  An encrypted conversation involves, at the
+macro level, three phases:
 
 \begin{enumerate}
-\item Authentication: proving that you are who you say you are;
-\item Key generation: creating the keys used for bulk data encryption,
+\item {\bf Authentication:} proving that you are who you say you are;
+\item {\bf Key generation:} creating the keys used for bulk data encryption,
   possibly including regeneration of keys mid-connection
   (\emph{rekeying}); and
-\item Encryption/sending/decryption of the user's valuable bulk data.
+\item {\bf Encryption/sending/decryption:} secure exchange of the
+  user's valuable bulk data.
 \end{enumerate}
 
 That's a bit of an oversimplification, as we'll see below when we talk
@@ -153,6 +184,8 @@ Internet protocols.  Consequently, some parts of this document
 (annotated where appropriate) are derived from direct conversation
 with the principals.
 
+\rdv{Dives a little too directly into rekeying here.  Needs more on
+  e.g. latency first.}
 There are two fundamental reasons for periodic rekeying:
 
 \begin{enumerate}
@@ -181,36 +214,44 @@ broader field tasked with ensuring the confidentiality, integrity and
 availability of data, computing and communication
 resources~\cite{bishop2002art}.
 
-There are two major kinds of cryptography: symmetric key and
-asymmetric key, also known as public key.  Due to the high costs of
-computation for public key, bulk data encryption is done using
-symmetric key.  Symmetric encryption comes in two kinds, block ciphers
-and stream ciphers.  These days pretty much everything seems to be
-block, but I'm not sure why.  \aono{}
+There are two major kinds of cryptography: {\bf symmetric key
+  cryptography} and asymmetric key, also known as {\bf public key
+  cryptography}.  Due to the high costs of computation for public key,
+bulk data encryption is done using symmetric key.  Symmetric
+encryption comes in two kinds, block ciphers and stream ciphers.
+These days pretty much everything seems to be block, but I'm not sure
+why.  \aonolook{}
 
-Some additional terminology:
+For clarity, several terms are applied to data:
 
 \begin{itemize}
 \item {\bf cleartext:} data that isn't encrypted; generally, data for
   which encryption is unnecessary or not planned
 \item {\bf plaintext:} the original, unencrypted message
 \item {\bf ciphertext:} the encrypted message
-\item {\bf integrity:} the condition that the data has not been
-  modified or tampered with by an adversary
-\item {\bf confidentiality or privacy:} the data hasn't been disclosed to anyone unauthorized
-\item {\bf availability:} access to data (or a computational or
-  communication service) cannot be denied by an attacker
-\item {\bf session keys:} the keys used for one communication session
-\item {\bf forward secrecy:} keeping your data secret in the future, esp. by
-  building a cryptosystem that doesn't reuse keys
-\item {\bf rekeying:} changing the keys used in the middle of a session
-\item {\bf subkeys:} keys used for a portion of an encryption process, derived
-  from a subset of the bits of the session key
-\item {\bf cryptoperiod:} the time that a specific key is authorized for use
 \end{itemize}
 
-Attacks on encrypted communications generally fall into one of three
-categories:
+Several important terms are used when discussing the keys and their
+management:
+
+\begin{itemize}
+\item {\bf forward secrecy:} keeping your data secret in the future, esp. by
+  building a cryptosystem that doesn't reuse keys
+\item {\bf cryptoperiod:} the time that a specific key is authorized for use
+\item {\bf session keys:} the keys used for one communication session
+\item {\bf subkeys:} keys used for a portion of an encryption process, derived
+  from a subset of the bits of the session key
+\item {\bf rekeying:} changing the keys used in the middle of a session
+\item {\bf public key:} the half of a public/private key pair that is
+  used by the sender, and which can be published to the world at
+  large
+\item {\bf private key:} the half of a public/private key pair that is
+  kept secret by the receiver, used to decrypt a message encrypted
+  with the public key
+\end{itemize}
+
+Mathematical attacks on encrypted communications
+generally fall into one of three categories:
 
 \begin{itemize}
 \item {\bf unknown plaintext:} this is the most basic form of the
@@ -218,7 +259,8 @@ categories:
   of the original input, it is impossible to work the encryption
   forward to test key candidates.  Second, when trying decryption
   using a candidate key, how can the attacker recognize when they have
-  found the message (and hence the key)?  Failure to decrypt properly
+  found the message (and hence the key)?  \rdv{connection btw
+    sentences here is clunky} Failure to decrypt properly
   will leave only unintelligible, random data, while success will
   produce words from the dictionary or other recognizable text, or
   more generally, data with low \emph{entropy} (Sec.~\ref{sec:defense}).
@@ -247,7 +289,7 @@ We also need these definitions:
   ``white hat'' or ``red team'' researchers to crack the system.
 \end{itemize}
 
-\aono{}
+\aonolook{}
 And three mathematical definitions I know for algebra on the real
 numbers, but I'm a little fuzzy on in the bitwise, cryptographic
 context:

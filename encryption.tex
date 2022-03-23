@@ -58,14 +58,25 @@ in factoring larger integers, hence interest from intelligence
 agencies and security researchers was immediate when Shor's algorithm
 was announced.
 
-Current EU recommendations are for 3072-bit RSA keys, recently (2018)
-upgraded from 2048, for "near-term protection" (up to ten years).
-They recommend an extraordinary 15360 bits for "long-term protection"
-(thirty to fifty years). [Cloudflare, Keylength.com, Ecrypt, Lenstra]
+Current EU recommendations are to use 3072-bit RSA keys, recently (2018)
+upgraded from a recommendation to use 2048-bit keys, for ``near-term
+protection'' (up to ten years).  The EU recommends an extraordinary 15360
+bits for ``long-term protection'' (thirty to fifty
+years). [Cloudflare, Keylength.com, Ecrypt, Lenstra]
+
+Just as RSA is vulnerable to the development of an efficient factoring
+algorithm, D-H is vulnerable to the development of an efficient method
+for finding discrete logarithms.  With $A$, $B$ and $g$ readily
+available to the attacker, she can recover either $a$ or $b$ and
+easily recreate the secret $s$.
 
 Finding prime numbers large enough to be used in RSA also requires a
 substantial amount of computation~\footnote{See
-  \url{https://en.wikipedia.org/wiki/Primality_test}.}.
+  \url{https://en.wikipedia.org/wiki/Primality_test}.}.  Moreover, the
+prime numbers need to be chosen randomly to be secure, and various
+important implementations have been known to have vulnerabilities,
+including some inserted intentionally~\footnote{See
+  \url{https://en.wikipedia.org/wiki/Random_number_generator_attack}.}.
 
 [called ECRYPT-CSA 2018, via Shigeya]
 
@@ -173,10 +184,10 @@ expanding the 32 bits into 48 by replicating half of the bits, XORing
 with the 48-bit subkey, then dividing it into 6-bit chunks and pushing
 each chunk through one of eight substitution boxes, or S boxes.  Each
 S box turns 6 bits into 4, using a lookup table defined as part of the
-algorithm (that is, this operation is not key-dependent).  \aono{} The S boxes
+algorithm (that is, this operation is not key-dependent).  \aonolook{} The S boxes
 are nonlinear (but not affine), which is the source of the true
 security of DES; if the S boxes were linear, breaking DES would be
-easy (or so I am told).
+easy \rdv{or so I am told}.
 
 Decrypting DES is exactly the same operation as encrypting, except
 that the subkeys are used in reverse order.
@@ -334,13 +345,13 @@ two input blocks were the same.  This fact leaks information to a
 sophisticated attacker, and is considered unacceptable.
 
 One answer to this is to make the encryption slightly less
-deterministic by XORing in the ciphertext of the \emph{previous} block into
-the current one before performing the encryption.  This is cipher
-block chaining (CBC) mode, the standard mode of operation.  (There are
-at least two more modes that I know nothing about.)  CBC has the
+deterministic by XORing in the ciphertext of the \emph{previous} block
+into the current one before performing the encryption.  This is cipher
+block chaining (CBC) mode, the standard mode of operation.  \rdv{There
+  are at least two more modes that I know nothing about.}  CBC has the
 undesirable side effect of requiring encryption to be done serially,
-but attacks can be parallelized.  Nevertheless, it's the most commonly
-used mode.
+while attacks can be parallelized, giving a small advantage to an
+attacker.  Nevertheless, it's the most commonly used mode.
 
 \subsection{Other Tasks}
 
