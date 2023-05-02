@@ -1,0 +1,1840 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2019.4.25)  16 JUN 2022 12:02
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**what-every-quant-should-know-about-crypto
+(./what-every-quant-should-know-about-crypto.tex
+LaTeX2e <2018-04-01> patch level 2
+Babel <3.18> and hyphenation patterns for 84 language(s) loaded.
+(/usr/local/texlive/2018/texmf-dist/tex/latex/revtex/revtex4-1.cls
+Document Class: revtex4-1 2010/07/25/20:33:00 4.1r (http://publish.aps.org/revt
+ex4/ for documentation)
+ Copyright (c) 2009 The American Physical Society.
+ mailto:revtex@aps.org
+ Licensed under the LPPL:
+http://www.ctan.org/tex-archive/macros/latex/base/lppl.txt
+ Arthur Ogawa <arthur_ogawa at sbcglobal dot net>
+ Based on work by David Carlisle <david at dcarlisle.demon.co.uk>.
+ltxutil[2010/07/25/20:33:00 4.1r utilities package (portions licensed from W. E
+. Baxter web at superscript.com)]
+LaTeX Info: Redefining \@centercr on input line 308.
+Class revtex4-1 Info: Repairing broken LaTeX eqnarray on input line 358.
+\eqncolsep=\skip41
+Class revtex4-1 Info: Repairing hyperref-unfriendly LaTeX definition of \mpfoot
+note on input line 433.
+Class revtex4-1 Info: Repairing broken LateX \@sect on input line 755.
+\intertabularlinepenalty=\count80
+\@tbpen=\count81
+\@arstrutbox@hline=\box26
+Class revtex4-1 Info: Repairing broken LaTeX \@xbitor on input line 1786.
+Class revtex4-1 Info: Making \typeout \long on input line 2046.
+ltxfront[2010/07/25/20:33:00 4.1r frontmatter package (AO,DPC)]
+\c@affil=\count82
+\c@collab=\count83
+\absbox=\box27
+ltxgrid[2010/07/25/20:33:00 4.1r page grid package (portions licensed from W. E
+. Baxter web at superscript.com)]
+\c@linecount=\count84
+\output@latex=\toks14
+\box@size@1=\box28
+\box@size@2=\box29
+\@protection@box=\box30
+\@topmark@saved=\toks15
+\footins@saved=\box31
+\footins@recovered=\box32
+\column@recovered=\box33
+\pagesofar=\box34
+\footsofar=\box35
+\pagegrid@col=\count85
+Class revtex4-1 Info: Overriding \@vspace, \@vspacer, \@no@pgbk, \@newline, and
+ \\  on input line 5578.
+\c@part=\count86
+\c@section=\count87
+\c@subsection=\count88
+\c@subsubsection=\count89
+\c@paragraph=\count90
+\c@subparagraph=\count91
+\abovecaptionskip=\skip42
+\belowcaptionskip=\skip43
+\c@figure=\count92
+\fbox@1=\box36
+\c@table=\count93
+\fbox@2=\box37
+\c@video=\count94
+\fbox@4=\box38
+\@bibdataout=\write3
+\widetext@top=\box39
+\widetext@bot=\box40
+Class revtex4-1 Info: Selecting society aip on input line 7542.
+(/usr/local/texlive/2018/texmf-dist/tex/latex/revtex/aip4-1.rtx
+File: aip4-1.rtx 2010/07/25 4.1r AIP substyle for REVTeX
+Class revtex4-1 Info: RevTeX society AIP selected on input line 67.
+)
+Class revtex4-1 Info: Selecting journal jmp on input line 7544.
+
+Using journal substyle jmp.
+Class revtex4-1 Info: Reading file aps10pt4-1.rtx on input line 7547.
+(/usr/local/texlive/2018/texmf-dist/tex/latex/revtex/aps10pt4-1.rtx
+File: aps10pt4-1 2010/07/25/20:33:00 4.1r (http://publish.aps.org/revtex4/ for 
+documentation)
+Class revtex4-1 Info: RevTeX pointsize 10pt selected on input line 30.
+)
+Class revtex4-1 Info: Overriding 10pt on input line 7547.
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/textcase/textcase.sty
+Package: textcase 2004/10/07 v0.07 Text only upper/lower case changing (DPC)
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\@emptytoks=\toks16
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2017/09/02 v2.17a AMS math features
+\@mathmargin=\skip44
+
+For additional information on amsmath, use the `?' option.
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01 AMS text
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks17
+\ex@=\dimen102
+)
+LaTeX Info: Redefining \text on input line 28.
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen103
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2016/03/08 v2.02 operator names
+)
+\inf@bad=\count95
+LaTeX Info: Redefining \frac on input line 213.
+\uproot@=\count96
+\leftroot@=\count97
+LaTeX Info: Redefining \overline on input line 375.
+\classnum@=\count98
+\DOTSCASE@=\count99
+LaTeX Info: Redefining \ldots on input line 472.
+LaTeX Info: Redefining \dots on input line 475.
+LaTeX Info: Redefining \cdots on input line 596.
+\Mathstrutbox@=\box41
+\strutbox@=\box42
+\big@size=\dimen104
+LaTeX Font Info:    Redeclaring font encoding OML on input line 712.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 713.
+\macc@depth=\count100
+\c@MaxMatrixCols=\count101
+\dotsspace@=\muskip10
+\c@parentequation=\count102
+\dspbrk@lvl=\count103
+\tag@help=\toks18
+\row@=\count104
+\column@=\count105
+\maxfields@=\count106
+\andhelp@=\toks19
+\eqnshift@=\dimen105
+\alignsep@=\dimen106
+\tagshift@=\dimen107
+\tagwidth@=\dimen108
+\totwidth@=\dimen109
+\lineht@=\dimen110
+\@envbody=\toks20
+\multlinegap=\skip45
+\multlinetaggap=\skip46
+\mathdisplay@stack=\toks21
+LaTeX Info: Redefining \[ on input line 2817.
+LaTeX Info: Redefining \] on input line 2818.
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip11
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/natbib/natbib.sty
+Package: natbib 2010/09/13 8.31b (PWD, AO)
+\bibhang=\skip47
+\bibsep=\skip48
+LaTeX Info: Redefining \cite on input line 694.
+\c@NAT@ctr=\count107
+)
+Class revtex4-1 Info: Repairing natbib's \BibitemShut on input line 7549.
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/revtex/revsymb4-1.sty
+Package: revsymb4-1 2010/07/25/20:33:00 4.1r (http://publish.aps.org/revtex4/ f
+or documentation)
+LaTeX Info: Redefining \frak on input line 95.
+LaTeX Info: Redefining \Bbb on input line 111.
+LaTeX Info: Redefining \REV@mathfrak on input line 119.
+))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics/color.sty
+Package: color 2016/07/10 v1.1e Standard LaTeX Color (DPC)
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package color Info: Driver file: pdftex.def on input line 147.
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics/dvipsnam.def
+File: dvipsnam.def 2016/06/17 v3.0m Driver-dependent file (DPC,SPQR)
+))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks22
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2017/06/25 v1.2c Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 99.
+)
+\Gin@req@height=\dimen111
+\Gin@req@width=\dimen112
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/dcolumn.sty
+Package: dcolumn 2014/10/28 v1.06 decimal alignment package (DPC)
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/array.sty
+Package: array 2018/04/07 v2.4g Tabular extension package (FMi)
+\col@sep=\dimen113
+\ar@mcellbox=\box43
+\extrarowheight=\dimen114
+\NC@list=\toks23
+\extratabsurround=\skip49
+\backup@length=\skip50
+\ar@cellbox=\box44
+))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/bm.sty
+Package: bm 2017/01/16 v1.2c Bold Symbol Support (DPC/FMi)
+\symboldoperators=\mathgroup6
+\symboldletters=\mathgroup7
+\symboldsymbols=\mathgroup8
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 141.
+LaTeX Info: Redefining \bm on input line 207.
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/subfig/subfig.sty
+Package: subfig 2005/06/28 ver: 1.3 subfig package
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2016/05/22 v1.7-166 caption3 kernel (AR)
+Package caption3 Info: TeX engine: e-TeX on input line 67.
+\captionmargin=\dimen115
+\captionmargin@=\dimen116
+\captionwidth=\dimen117
+\caption@tempdima=\dimen118
+\caption@indent=\dimen119
+\caption@parindent=\dimen120
+\caption@hangindent=\dimen121
+Package caption Info: Unknown document class (or package),
+(caption)             standard defaults will be used.
+)
+\c@KVtest=\count108
+\sf@farskip=\skip51
+\sf@captopadj=\dimen122
+\sf@capskip=\skip52
+\sf@nearskip=\skip53
+\c@subfigure=\count109
+\c@subfigure@save=\count110
+\c@lofdepth=\count111
+\c@subtable=\count112
+\c@subtable@save=\count113
+\c@lotdepth=\count114
+\sf@top=\skip54
+\sf@bottom=\skip55
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2018/02/06 v6.86b Hypertext links for LaTeX
+
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+Package: hobsub-hyperref 2016/05/16 v1.14 Bundle oberdiek, subset hyperref (HO)
+
+
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty
+Package: hobsub-generic 2016/05/16 v1.14 Bundle oberdiek, subset generic (HO)
+Package: hobsub 2016/05/16 v1.14 Construct package bundles (HO)
+Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
+Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
+Package: ifluatex 2016/05/16 v1.4 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+Package: ifvtex 2016/05/16 v1.6 Detect VTeX and its facilities (HO)
+Package ifvtex Info: VTeX not detected.
+Package: intcalc 2016/05/16 v1.2 Expandable calculations with integers (HO)
+Package: ifpdf 2017/03/15 v3.2 Provides the ifpdf switch
+Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
+Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
+Package: pdftexcmds 2018/01/30 v0.27 Utility functions of pdfTeX for LuaTeX (HO
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+Package: pdfescape 2016/05/16 v1.14 Implements pdfTeX's escape features (HO)
+Package: bigintcalc 2016/05/16 v1.4 Expandable calculations on big integers (HO
+)
+Package: bitset 2016/05/16 v1.2 Handle bit-vector datatype (HO)
+Package: uniquecounter 2016/05/16 v1.3 Provide unlimited unique counter (HO)
+)
+Package hobsub Info: Skipping package `hobsub' (already loaded).
+Package: letltxmacro 2016/05/16 v1.5 Let assignment for LaTeX macros (HO)
+Package: hopatch 2016/05/16 v1.3 Wrapper for package hooks (HO)
+Package: xcolor-patch 2016/05/16 xcolor patch
+Package: atveryend 2016/05/16 v1.9 Hooks at the very end of document (HO)
+Package: atbegshi 2016/06/09 v1.18 At begin shipout hook (HO)
+Package: refcount 2016/05/16 v3.5 Data extraction from label references (HO)
+Package: hycolor 2016/05/16 v1.8 Color options for hyperref/bookmark (HO)
+)
+(/usr/local/texlive/2018/texmf-dist/tex/generic/ifxetex/ifxetex.sty
+Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/auxhook.sty
+Package: auxhook 2016/05/16 v1.4 Hooks for auxiliary files (HO)
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
+)
+\@linkdim=\dimen123
+\Hy@linkcounter=\count115
+\Hy@pagecounter=\count116
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2018/02/06 v6.86b Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
+)
+\Hy@SavedSpaceFactor=\count117
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/latexconfig/hyperref.cfg
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
+)
+Package hyperref Info: Hyper figures OFF on input line 4509.
+Package hyperref Info: Link nesting OFF on input line 4514.
+Package hyperref Info: Hyper index ON on input line 4517.
+Package hyperref Info: Plain pages OFF on input line 4524.
+Package hyperref Info: Backreferencing OFF on input line 4529.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4762.
+LaTeX Info: Redefining \href on input line 5026.
+\c@Hy@tempcnt=\count118
+LaTeX Info: Redefining \url on input line 5115.
+\XeTeXLinkMargin=\dimen124
+\Fld@menulength=\count119
+\Field@Width=\dimen125
+\Fld@charsize=\dimen126
+Package hyperref Info: Hyper figures OFF on input line 6369.
+Package hyperref Info: Link nesting OFF on input line 6374.
+Package hyperref Info: Hyper index ON on input line 6377.
+Package hyperref Info: backreferencing OFF on input line 6384.
+Package hyperref Info: Link coloring OFF on input line 6389.
+Package hyperref Info: Link coloring with OCG OFF on input line 6394.
+Package hyperref Info: PDF/A mode OFF on input line 6399.
+LaTeX Info: Redefining \ref on input line 6439.
+LaTeX Info: Redefining \pageref on input line 6443.
+\Hy@abspage=\count120
+\c@Item=\count121
+\c@Hfootnote=\count122
+)
+Package hyperref Info: Driver (autodetected): hpdftex.
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2018/02/06 v6.86b Hyperref driver for pdfTeX
+\Fld@listcount=\count123
+\c@bookmark@seq@number=\count124
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
+Package: rerunfilecheck 2016/05/16 v1.8 Rerun checks for auxiliary files (HO)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+82.
+)
+\Hy@SectionHShift=\skip56
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/algorithm2e/algorithm2e.sty
+Package: algorithm2e 2017/07/18 v5.2 algorithms environments
+\c@AlgoLine=\count125
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+)
+\algocf@hangindent=\skip57
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/ifoddpage/ifoddpage.sty
+Package: ifoddpage 2016/04/23 v1.1 Conditionals for odd/even page detection
+\c@checkoddpage=\count126
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/xspace.sty
+Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/relsize/relsize.sty
+Package: relsize 2013/03/29 ver 4.1
+)
+\skiptotal=\skip58
+\skiplinenumber=\skip59
+\skiprule=\skip60
+\skiphlne=\skip61
+\skiptext=\skip62
+\skiplength=\skip63
+\algomargin=\skip64
+\skipalgocfslide=\skip65
+\algowidth=\dimen127
+\inoutsize=\dimen128
+\inoutindent=\dimen129
+\interspacetitleruled=\dimen130
+\interspacealgoruled=\dimen131
+\interspacetitleboxruled=\dimen132
+\algocf@ruledwidth=\skip66
+\algocf@inoutbox=\box45
+\algocf@inputbox=\box46
+\AlCapSkip=\skip67
+\AlCapHSkip=\skip68
+\algoskipindent=\skip69
+\algocf@nlbox=\box47
+\algocf@hangingbox=\box48
+\algocf@untilbox=\box49
+\algocf@skipuntil=\skip70
+\algocf@capbox=\box50
+\algocf@lcaptionbox=\skip71
+\algoheightruledefault=\skip72
+\algoheightrule=\skip73
+\algotitleheightruledefault=\skip74
+\algotitleheightrule=\skip75
+\c@algocfline=\count127
+\c@algocfproc=\count128
+\c@algocf=\count129
+\algocf@algoframe=\box51
+\algocf@algobox=\box52
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/times.sty
+Package: times 2005/04/12 PSNFSS-v9.2a (SPQR) 
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count130
+\lst@gtempboxa=\box53
+\lst@token=\toks24
+\lst@length=\count131
+\lst@currlwidth=\dimen133
+\lst@column=\count132
+\lst@pos=\count133
+\lst@lostspace=\dimen134
+\lst@width=\dimen135
+\lst@newlines=\count134
+\lst@lineno=\count135
+\lst@maxwidth=\dimen136
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
+\c@lstnumber=\count136
+\lst@skipnumbers=\count137
+\lst@framebox=\box54
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2015/06/04 1.6 listings configuration
+))
+Package: listings 2015/06/04 1.6 (Carsten Heinz)
+Class revtex4-1 Info: Unrecognized array package. Please update this document c
+lass! (Proceeding with fingers crossed.) on input line 201.
+Class revtex4-1 Info: Robustifying \LaTeX's \boldmath command on input line 201
+.
+Class revtex4-1 Info: cite was not loaded (OK!) on input line 201.
+Class revtex4-1 Info: mcite was not loaded (OK!) on input line 201.
+Class revtex4-1 Info: multicol was not loaded (OK!) on input line 201.
+
+(./what-every-quant-should-know-about-crypto.aux)
+\openout1 = `what-every-quant-should-know-about-crypto.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 201.
+LaTeX Font Info:    ... okay on input line 201.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 201.
+LaTeX Font Info:    ... okay on input line 201.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 201.
+LaTeX Font Info:    ... okay on input line 201.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 201.
+LaTeX Font Info:    ... okay on input line 201.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 201.
+LaTeX Font Info:    ... okay on input line 201.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 201.
+LaTeX Font Info:    ... okay on input line 201.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 201.
+LaTeX Font Info:    ... okay on input line 201.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 201.
+
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/ot1ptm.fd
+File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
+)
+(/usr/local/texlive/2018/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count138
+\scratchdimen=\dimen137
+\scratchbox=\box55
+\nofMPsegments=\count139
+\nofMParguments=\count140
+\everyMPshowfont=\toks25
+\MPscratchCnt=\count141
+\MPscratchDim=\dimen138
+\MPnumerator=\count142
+\makeMPintoPDFobject=\count143
+\everyMPtoPDFconversion=\toks26
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/grfext.sty
+Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
+)
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+38.
+Package grfext Info: Graphics extension search list:
+(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 456.
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: subfig package v1.3 is loaded.
+Package caption Info: End \AtBeginDocument code.
+\AtBeginShipoutBox=\box56
+Package hyperref Info: Link coloring OFF on input line 201.
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/nameref.sty
+Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
+
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
+Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
+)
+\c@section@level=\count144
+)
+LaTeX Info: Redefining \ref on input line 201.
+LaTeX Info: Redefining \pageref on input line 201.
+LaTeX Info: Redefining \nameref on input line 201.
+
+(./what-every-quant-should-know-about-crypto.out)
+(./what-every-quant-should-know-about-crypto.out)
+\@outlinefile=\write4
+\openout4 = `what-every-quant-should-know-about-crypto.out'.
+
+\c@lstlisting=\count145
+Class revtex4-1 Info: Taking \maketitle back from hyperref on input line 201.
+\openout3 = `what-every-quant-should-know-about-cryptoNotes.bib'.
+
+LaTeX Font Info:    Try loading font information for OT1+phv on input line 249.
+
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/ot1phv.fd
+File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
+)
+LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <14.4> not available
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 249.
+LaTeX Font Info:    Try loading font information for U+msa on input line 249.
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 249.
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <9> not available
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 251.
+
+(./what-every-quant-should-know-about-crypto.toc
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 6.
+ [1{/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}])
+\tf@toc=\write5
+\openout5 = `what-every-quant-should-know-about-crypto.toc'.
+
+ (./intro.tex
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 39.
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/ot1pcr.fd
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+)
+LaTeX Font Info:    Font shape `OT1/pcr/m/it' in size <9> not available
+(Font)              Font shape `OT1/pcr/m/sl' tried instead on input line 39.
+
+Underfull \hbox (badness 10000) in paragraph at lines 39--40
+[]$\OMS/cmsy/m/n/10 )$[]$\OT1/pcr/m/sl/9 https : / / www . theregister . com / 
+2021 / 09 / 01 /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 43--44
+[]$\OMS/cmsy/m/n/10 )$[]$\OT1/pcr/m/sl/9 https : / / datatracker . ietf . org /
+ doc /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 45--46
+[]$\OMS/cmsy/m/n/10 )$\OT1/ptm/m/it/9 Barak$[]$ and his thread on com-plex-ity 
+and PKE
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 45--46
+[]$\OT1/pcr/m/sl/9 https : / / twitter . com / boazbaraktcs / status /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 47--48
+[]$\OMS/cmsy/m/n/10 )$\OT1/ptm/m/it/9 https://csrc.nist.gov/publications/detail
+/journal-
+ []
+
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 73.
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/omsptm.fd
+File: omsptm.fd 
+)
+LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 73.
+
+Underfull \hbox (badness 5133) in paragraph at lines 78--79
+ []\OT1/ptm/m/n/10 intra-organization network-to-network con-nec-
+ []
+
+[2]
+LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <10> not available
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 187.
+ [3]) (./encryption.tex [4] [5]
+LaTeX Font Info:    Font shape `OT1/phv/bx/it' in size <9> not available
+(Font)              Font shape `OT1/phv/b/it' tried instead on input line 153.
+LaTeX Font Info:    Font shape `OT1/phv/b/it' in size <9> not available
+(Font)              Font shape `OT1/phv/b/sl' tried instead on input line 153.
+
+Underfull \hbox (badness 1342) in paragraph at lines 167--174
+\OT1/ptm/m/n/10 the U.S. were lim-ited to us-ing 40 mean-ing-ful key bits
+ []
+
+[6]) (./cryptanalysis.tex [7]
+Underfull \hbox (badness 10000) in paragraph at lines 13--20
+[][]$\OT1/pcr/m/n/10 https : / / en . wikipedia . org / wiki / Advanced _
+ []
+
+[8] [9] [10] [11]
+Underfull \hbox (badness 10000) in paragraph at lines 490--495
+\OT1/pcr/m/n/10 com / chapter / 10 . 1007 / 3-[]540-[]44448-[]3 _ 42$[]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 490--495
+[]$\OT1/pcr/m/n/10 http : / / cseweb . ucsd . edu / []mihir / papers /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 500--510
+[]\OT1/ptm/m/n/10 Bellare et al, A con-crete se-cu-rity treat-ment
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 500--510
+\OT1/ptm/m/n/10 of sym-met-ric en-cryp-tion: anal-y-sis of the DES
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 500--510
+\OT1/ptm/m/n/10 modes of op-er-a-tion ab-stract from STOC 1997
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 500--510
+\OT1/ptm/m/n/10 https://ieeexplore.ieee.org/abstract/document/646128
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 500--510
+\OT1/ptm/m/n/10 full pa-per at []$\OT1/pcr/m/n/10 http : / / citeseerx . ist . 
+psu . edu /
+ []
+
+
+Underfull \hbox (badness 1721) in paragraph at lines 500--510
+\OT1/pcr/m/n/10 rep1 & type = pdf$[] \OT1/ptm/m/n/10 Fo-cuses on DES, which was
+ in the
+ []
+
+) (./comm-standards.tex [12]
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 118.
+
+
+Package natbib Warning: Citation `dss' on page 13 undefined on input line 118.
+
+[13]
+Underfull \hbox (badness 10000) in paragraph at lines 233--234
+[]$\OMS/cmsy/m/n/10 )$\OT1/ptm/m/it/9 Xu-Ma-Zhang-Lo-Pan: https://arxiv.org/abs
+/1903.09051
+ []
+
+[14]
+Underfull \hbox (badness 3601) in paragraph at lines 356--366
+[]\OT1/ptm/m/n/10 One at-tack this RFC points out is []$\OT1/pcr/m/n/10 http : 
+/ / www .
+ []
+
+
+Underfull \hbox (badness 1895) in paragraph at lines 356--366
+\OT1/pcr/m/n/10 openssl . org / []bodo / tls-[]cbc . txt$[]\OT1/ptm/m/n/10 , wh
+ich (among
+ []
+
+) (./q-attacks.tex [15]
+Underfull \hbox (badness 1314) in paragraph at lines 54--60
+\OT1/ptm/m/n/10 al-go-rithm to el-lip-tic curve. I like the pa-per, ex-cept I
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 71--75
+\OT1/pcr/m/n/10 com / chapter / 10 . 1007 / 978-[]3-[]319-[]59879-[]6 _ 20$[]
+ []
+
+
+Underfull \hbox (badness 7012) in paragraph at lines 98--102
+[]\OT1/ptm/m/n/10 It turns out peo-ple have ad-dressed that ques-tion:
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 98--102
+[]$\OT1/pcr/m/n/10 https : / / arxiv . org / abs / 1510 . 05836$[] []$https :
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 98--102
+\OT1/pcr/m/n/10 / / link . springer . com / article / 10 . 1007 /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 98--102
+\OT1/pcr/m/n/10 s11128-[]015-[]0983-[]3$[] []$https : / / link . springer .
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 103--108
+[]\OT1/ptm/m/n/10 One new one I hadn't seen be-fore: Bern-stein,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 103--108
+\OT1/ptm/m/n/10 Bi-asse, Mosca on low-resource quan-tum fac-tor-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 103--108
+\OT1/ptm/m/n/10 ing, us-ing Grover's al-go-rithm and NFS: []$\OT1/pcr/m/n/10 ht
+tps :
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 103--108
+\OT1/pcr/m/n/10 / / research . tue . nl / en / publications /
+ []
+
+
+Overfull \hbox (8.5pt too wide) in paragraph at lines 103--108
+\OT1/pcr/m/n/10 a-[]low-[]resource-[]quantum-[]factoring-[]algorithm$[]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 103--108
+[]$\OT1/pcr/m/n/10 https : / / cr . yp . to / papers /
+ []
+
+) (./post-q.tex [16]
+Overfull \hbox (10.0pt too wide) in paragraph at lines 18--20
+[][]
+ []
+
+
+Package natbib Warning: Citation `GolEnc2' on page 17 undefined on input line 4
+1.
+
+
+Underfull \hbox (badness 1688) in paragraph at lines 44--46
+[]$\OMS/cmsy/m/n/10 )$\OT1/ptm/m/n/10 Aono-san, the part I want to move ends he
+re. []
+ []
+
+
+Underfull \hbox (badness 1571) in paragraph at lines 82--89
+[]\OT1/ptm/m/n/10 The other sit-u-a-tion is both ad-ver-sary and ac-cess are
+ []
+
+[17]
+Underfull \hbox (badness 1755) in paragraph at lines 150--155
+[]\OT1/ptm/m/n/10 Schemes based on Ring-LWE problem$[]$ and NTRU
+ []
+
+[18]
+Underfull \hbox (badness 2790) in paragraph at lines 246--250
+[]\OT1/ptm/m/n/10 There is enough in-ter-est in this that the Wikipedia
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 246--250
+\OT1/ptm/m/n/10 pages are es-sen-tially ex-ten-sive cat-a-logs: []$\OT1/pcr/m/n
+/10 https :
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 246--250
+\OT1/pcr/m/n/10 / / en . wikipedia . org / wiki / Post-[]quantum _
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 246--250
+\OT1/pcr/m/n/10 cryptography$[] []$https : / / en . wikipedia .
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 246--250
+\OT1/pcr/m/n/10 org / wiki / Post-[]Quantum _ Cryptography _
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 251--253
+[]\OT1/ptm/m/n/10 An official-looking site: []$\OT1/pcr/m/n/10 https : / / csrc
+ . nist .
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 251--253
+\OT1/pcr/m/n/10 gov / projects / post-[]quantum-[]cryptography /
+ []
+
+
+Overfull \hbox (1.5pt too wide) in paragraph at lines 251--253
+\OT1/pcr/m/n/10 post-[]quantum-[]cryptography-[]standardization$[] 
+ []
+
+
+Underfull \hbox (badness 6396) in paragraph at lines 254--256
+[]\OT1/ptm/m/n/10 One re-cent blog post-ing of some use: []$\OT1/pcr/m/n/10 htt
+ps :
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 254--256
+\OT1/pcr/m/n/10 / / blog . trailofbits . com / 2018 / 10 / 22 /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 257--263
+[]\OT1/ptm/m/n/10 A very re-cent blog post-ing on teach-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 257--263
+\OT1/ptm/m/n/10 ing crypto in the post-quantum crypto age:
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 257--263
+[]$\OT1/pcr/m/n/10 https : / / news . ncsu . edu / 2019 / 06 /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 257--263
+\OT1/pcr/m/n/10 teaching-[]next-[]generation-[]cryptosystems/$[]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 264--266
+[]\OT1/ptm/m/n/10 A sur-vey from a decade ago: []$\OT1/pcr/m/n/10 https :
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 264--266
+\OT1/pcr/m/n/10 / / www . nist . gov / publications /
+ []
+
+
+Overfull \hbox (50.5pt too wide) in paragraph at lines 264--266
+\OT1/pcr/m/n/10 quantum-[]resistant-[]public-[]key-[]cryptography-[]survey ?
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 271--273
+[]\OT1/ptm/m/n/10 Transition doc from IETF, still in draft:
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 271--273
+[]$\OT1/pcr/m/n/10 https : / / datatracker . ietf . org / doc /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 276--277
+[][]$\OT1/pcr/m/n/10 https : / / arstechnica .
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 276--277
+\OT1/pcr/m/n/10 com / gadgets / 2020 / 07 /
+ []
+
+
+Overfull \hbox (178.0pt too wide) in paragraph at lines 276--277
+\OT1/pcr/m/n/10 ibm-[]completes-[]successful-[]field-[]trials-[]on-[]fully-[]ho
+momorphic-[]encryption/$[] 
+ []
+
+) (./policy.tex)
+Underfull \hbox (badness 10000) in paragraph at lines 16--267
+[]$\OMS/cmsy/m/n/10 )$[]$\OT1/pcr/m/sl/9 https : / / carnegieendowment . org / 
+2019 / 09 / 10 /
+ []
+
+
+Overfull \hbox (53.99966pt too wide) in paragraph at lines 16--267
+\OT1/pcr/m/sl/9 moving-[]encryption-[]policy-[]conversation-[]forward-[]pub-[]7
+9573$[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 16--267
+
+ []
+
+(./what-every-quant-should-know-about-crypto.bbl
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 67.
+
+Underfull \hbox (badness 1137) in paragraph at lines 71--76
+ []\OT1/ptm/m/n/8 D. Craw-shaw, ``Ev-ery-thing vpn is new again,'' []Com-mun. A
+CM \OT1/ptm/b/n/8 64\OT1/ptm/m/n/8 ,
+ []
+
+
+Underfull \hbox (badness 3713) in paragraph at lines 80--85
+ []\OT1/ptm/m/n/8 B. Barak, C.-N. Chou,  and X. Gao, ``Spoof-ing Lin-ear Cross-
+
+ []
+
+
+Underfull \hbox (badness 5970) in paragraph at lines 80--85
+ \OT1/ptm/m/n/8 Entropy Bench-mark-ing in Shal-low Quan-tum Cir-cuits,''  (2020
+),
+ []
+
+[19]
+Underfull \hbox (badness 6348) in paragraph at lines 176--182
+ []\OT1/ptm/m/n/8 V. Scarani, H. Bechmann-Pasquinucci, N. J. Cerf, M. Du[]sek,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 324--327
+ []\OT1/ptm/m/n/8 See []$\OT1/pcr/m/n/8 https : / / en . wikipedia . org / wiki
+ / Random _ number _
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 421--424
+ [][]$\OT1/pcr/m/n/8 https : / / en . wikipedia . org / wiki / Confusion _ and 
+_
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 480--481
+ [][]$\OT1/pcr/m/n/8 https : / / danielmiessler . com / study / birthday _
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 519--521
+ [][]$\OT1/pcr/m/n/8 https : / / mailarchive . ietf . org / arch / msg / ipsec 
+/
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 524--526
+ [][]$\OT1/pcr/m/n/8 https : / / mailarchive . ietf . org / arch / msg / ipsec 
+/
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 529--531
+ [][]$\OT1/pcr/m/n/8 https : / / mailarchive . ietf . org / arch / msg / ipsec 
+/
+ []
+
+LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <8> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 577.
+[20]
+Underfull \hbox (badness 10000) in paragraph at lines 693--695
+ [][]$\OT1/pcr/m/n/8 https : / / bugzilla . mozilla . org / show _ bug . cgi ? 
+id =
+ []
+
+
+Underfull \hbox (badness 1072) in paragraph at lines 778--786
+ \OT1/ptm/m/n/8 e-men-tary arith-metic op-er-a-tions,'' Phys. Rev. A \OT1/ptm/b
+/n/8 54\OT1/ptm/m/n/8 , 147--153 (1996),
+ []
+
+
+Underfull \hbox (badness 2951) in paragraph at lines 963--970
+ []\OT1/ptm/m/n/8 National In-sti-tute of Stan-dards and Tech-nol-ogy (NIST), `
+`Sub-mis-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 963--970
+ \OT1/ptm/m/n/8 sion re-quire-ments and eval-u-a-tion cri-te-ria for the post-q
+uantum
+ []
+
+
+Underfull \hbox (badness 2409) in paragraph at lines 963--970
+ \OT1/ptm/m/n/8 cryp-tog-ra-phy stan-dard-iza-tion pro-cess,'' Web-site: []$\OT
+1/pcr/m/n/8 https : / / csrc .
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 963--970
+ \OT1/pcr/m/n/8 nist . gov / projects / post-[]quantum-[]cryptography /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 963--970
+ \OT1/pcr/m/n/8 post-[]quantum-[]cryptography-[]standardization /
+ []
+
+
+Overfull \hbox (5.00015pt too wide) in paragraph at lines 963--970
+ \OT1/pcr/m/n/8 evaluation-[]criteria / security-[](evaluation-[]criteria)$[]
+ []
+
+
+Underfull \hbox (badness 2088) in paragraph at lines 1087--1094
+ []\OT1/ptm/m/n/8 M. Aj-tai and C. Dwork, ``A public-key cryp-tosys-tem with wo
+rst-
+ []
+
+[21]
+Underfull \hbox (badness 2245) in paragraph at lines 1311--1328
+ \OT1/ptm/m/n/8 P. Brinch Hansen, D. Gries, D. Luck-ham, C. Moler, A. Pnueli,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1354--1362
+ \OT1/pcr/m/n/8 nist . gov / Projects / post-[]quantum-[]cryptography /
+ []
+
+
+Underfull \hbox (badness 1127) in paragraph at lines 1404--1409
+ []\OT1/ptm/m/n/8 L. D. Feo, ``Math-e-mat-ics of isogeny based cryp-tog-ra-phy,
+''  (2017),
+ []
+
+
+Underfull \hbox (badness 6608) in paragraph at lines 1465--1470
+ []\OT1/ptm/m/n/8 National In-sti-tute of Stan-dards and Tech-nol-ogy (NIST), `
+`Sha-3
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1465--1470
+ \OT1/ptm/m/n/8 stan-dard: Permutation-based hash and extendable-output func-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1465--1470
+ \OT1/ptm/m/n/8 tions,'' Web-site: []$\OT1/pcr/m/n/8 https : / / www . nist . g
+ov / publications /
+ []
+
+
+Overfull \hbox (99.20021pt too wide) in paragraph at lines 1465--1470
+ \OT1/pcr/m/n/8 sha-[]3-[]standard-[]permutation-[]based-[]hash-[]and-[]extenda
+ble-[]output-[]functions$[]
+ []
+
+) (./temporary.tex
+Underfull \hbox (badness 10000) in paragraph at lines 5--13
+[][]$\OT1/pcr/m/n/10 https : / / en . wikipedia . org / wiki /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 5--13
+\OT1/pcr/m/n/10 Internet _ Security _ Association _ and _
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 5--13
+\OT1/pcr/m/n/10 Key _ Management _ Protocol # Implementation$[]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 5--13
+[]$\OT1/pcr/m/n/10 https : / / en . wikipedia . org / wiki / Internet _
+ []
+
+
+Underfull \hbox (badness 1270) in paragraph at lines 5--13
+\OT1/pcr/m/n/10 Key _ Exchange$[] []$https : / / tools . ietf . org / html /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 5--13
+\OT1/pcr/m/n/10 rfc7296(IKEv2)$[] []$https : / / en . wikipedia . org /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 5--13
+\OT1/pcr/m/n/10 wiki / IPsec$[] []$https : / / trac . ietf . org / trac /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 5--13
+\OT1/pcr/m/n/10 sec / wiki(SecurityArea)$[] []$https : / / tools .
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 5--13
+\OT1/pcr/m/n/10 ietf . org / html / rfc2407(ddp)$[] []$https : / / en .
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 5--13
+\OT1/pcr/m/n/10 wikipedia . org / wiki / Block _ cipher _ mode _ of _
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 5--13
+\OT1/pcr/m/n/10 operation # Cipher _ Block _ Chaining _ (CBC)$[]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 5--13
+[]$\OT1/pcr/m/n/10 https : / / tools . ietf . org / html / rfc3602$[]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 16--21
+[]\OT1/ptm/m/n/10 ISAKMP: []$\OT1/pcr/m/n/10 https : / / en . wikipedia . org /
+ wiki /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 16--21
+\OT1/pcr/m/n/10 Internet _ Security _ Association _ and _ Key _
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 16--21
+\OT1/pcr/m/n/10 Management _ Protocol$[] []$http : / / www . racoon2 .
+ []
+
+
+Underfull \hbox (badness 1270) in paragraph at lines 16--21
+\OT1/pcr/m/n/10 wide . ad . jp / w/$[] []$http : / / www . kame . net / racoon/
+$[]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 25--28
+[]\OT1/ptm/m/n/10 NIST key length rec-om-men-da-tions: []$\OT1/pcr/m/n/10 https
+ :
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 25--28
+\OT1/pcr/m/n/10 / / www . keylength . com / en / 4/$[] []$https : / / www .
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 29--32
+[]\OT1/ptm/m/n/10 Lenstra, Ver-heul, Se-lect-ing Cryp-to-graphic Key
+ []
+
+
+Underfull \hbox (badness 6412) in paragraph at lines 29--32
+\OT1/ptm/m/n/10 Sizes, J. Cryp-tol-ogy (2001),. 14:255-293 []$\OT1/pcr/m/n/10 h
+ttps :
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 29--32
+\OT1/pcr/m/n/10 / / infoscience . epfl . ch / record / 164526 /
+ []
+
+
+Underfull \hbox (badness 4492) in paragraph at lines 33--35
+\OT1/ptm/m/n/10 ing Group []$\OT1/pcr/m/n/10 https : / / datatracker . ietf . o
+rg / wg /
+ []
+
+
+Underfull \hbox (badness 1048) in paragraph at lines 36--41
+\OT1/pcr/m/n/10 ietf . org / arch / browse / ipsec/$[] \OT1/ptm/m/n/10 Search-i
+ng that for
+ []
+
+[22]
+Underfull \hbox (badness 10000) in paragraph at lines 45--49
+[][]$\OT1/pcr/m/n/10 https : / / en . wikipedia . org / wiki / Advanced _
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 45--49
+\OT1/pcr/m/n/10 Encryption _ Standard$[] []$https : / / brilliant .
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 45--49
+\OT1/pcr/m/n/10 org / wiki / rsa-[]encryption/$[] []$https : / / en .
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 45--49
+\OT1/pcr/m/n/10 wikipedia . org / wiki / RSA _ (cryptosystem)$[]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 45--49
+[]$\OT1/pcr/m/n/10 https : / / en . wikipedia . org / wiki / Forward _
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 52--59
+[]\OT1/ptm/m/n/10 Schneier, Ap-plied Cryp-tog-ra-phy []$\OT1/pcr/m/n/10 https :
+ / / www .
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 52--59
+\OT1/pcr/m/n/10 schneier . com / books / applied _ cryptography/$[]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 52--59
+\OT1/ptm/m/n/10 Schneier, Fer-gu-son, Kohno, Cryp-tog-ra-phy En-gi-neer-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 52--59
+\OT1/ptm/m/n/10 ing []$\OT1/pcr/m/n/10 https : / / www . schneier . com / books
+ /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 52--59
+\OT1/pcr/m/n/10 cryptography _ engineering/$[] \OT1/ptm/m/n/10 Menezes, van
+ []
+
+
+Underfull \hbox (badness 4378) in paragraph at lines 52--59
+\OT1/ptm/m/n/10 Oorschot, Van-stone, Hand-book of Ap-plied Cryp-tog-ra-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 62--68
+[][]$\OT1/pcr/m/n/10 https : / / en . wikipedia . org / wiki /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 62--68
+\OT1/pcr/m/n/10 Differential _ cryptanalysis$[] []$https : / / en .
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 62--68
+\OT1/pcr/m/n/10 wikipedia . org / wiki / Linear _ cryptanalysis$[]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 62--68
+[]$\OT1/pcr/m/n/10 https : / / www . cs . rit . edu / []ib / Classes /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 62--68
+\OT1/pcr/m/n/10 CS482-[]705 _ Winter10-[]11 / Slides / crypto _
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 62--68
+\OT1/pcr/m/n/10 lc . pdf$[] []$http : / / www . engr . mun . ca / []howard /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 62--68
+\OT1/pcr/m/n/10 Research / Papers / ldc _ tutorial . html$[] []$http :
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 62--68
+\OT1/pcr/m/n/10 / / www . ciphersbyritter . com / RES / LINANA . HTM$[]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 71--94
+[][]$\OT1/pcr/m/n/10 https : / / www . cryptomathic .
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 71--94
+\OT1/pcr/m/n/10 com / news-[]events / blog /
+ []
+
+
+Overfull \hbox (39.5pt too wide) in paragraph at lines 71--94
+\OT1/pcr/m/n/10 exploring-[]the-[]lifecycle-[]of-[]a-[]cryptographic-[]key-[]$[
+]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 71--94
+[]$\OT1/pcr/m/n/10 https : / / searchsecurity . techtarget .
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 71--94
+\OT1/pcr/m/n/10 com / definition / cryptoperiod$[] []$https :
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 71--94
+\OT1/pcr/m/n/10 / / www . keylength . com / en / 4/$[] []$https : / /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 71--94
+\OT1/pcr/m/n/10 arxiv . org / abs / quant-[]ph / 0306078$[] []$https :
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 71--94
+\OT1/pcr/m/n/10 / / royalsocietypublishing . org / doi / 10 .
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 71--94
+\OT1/pcr/m/n/10 1098 / rspa . 2004 . 1372$[] []$https : / / www . physics .
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 71--94
+\OT1/pcr/m/n/10 utoronto . ca / research / quantum-[]optics /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 71--94
+\OT1/pcr/m/n/10 cqiqc _ events / jean-[]christian-[]boileau-[]tba$[]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 71--94
+[]$\OT1/pcr/m/n/10 https : / / learningnetwork . cisco . com /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 71--94
+\OT1/pcr/m/n/10 thread / 25765$[] []$http : / / cseweb . ucsd . edu /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 71--94
+[]\OT1/pcr/m/n/10 mihir/$[] []$http : / / mathworld . wolfram .
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 71--94
+\OT1/pcr/m/n/10 com / BirthdayAttack . html$[] []$https : / /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 71--94
+[]$\OT1/pcr/m/n/10 https : / / www . sciencedirect . com / topics /
+ []
+
+
+Underfull \hbox (badness 8170) in paragraph at lines 71--94
+\OT1/pcr/m/n/10 computer-[]science / birthday-[]attack$[] \OT1/ptm/m/n/10 (a co
+l-lec-
+ []
+
+
+Underfull \hbox (badness 1147) in paragraph at lines 71--94
+\OT1/ptm/m/n/10 birth-day at-tack; some are rel-e-vant here, oth-ers less so)
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 71--94
+[]$\OT1/pcr/m/n/10 https : / / www . keylength . com / en / compare/$[]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 71--94
+[]$\OT1/pcr/m/n/10 https : / / infoscience . epfl . ch / record /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 71--94
+\OT1/pcr/m/n/10 164526 / files / NPDF-[]22 . pdf$[] \OT1/ptm/m/n/10 (Lenstra) [
+]$\OT1/pcr/m/n/10 https :
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 71--94
+\OT1/pcr/m/n/10 / / mailarchive . ietf . org / arch / msg / ipsec /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 71--94
+\OT1/pcr/m/n/10 org / wiki / Key _ size$[] \OT1/ptm/m/n/10 (not very well writ-
+ten)
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 71--94
+\OT1/pcr/m/n/10 com / why-[]are-[]some-[]keys-[]small/$[] \OT1/ptm/m/n/10 (good
+ ar-ti-cle)
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 71--94
+[]$\OT1/pcr/m/n/10 https : / / www . ecrypt . eu . org / csa / documents /
+ []
+
+
+Underfull \hbox (badness 3333) in paragraph at lines 71--94
+\OT1/ptm/m/n/10 da-tions, 574 ref-er-ences) []$\OT1/pcr/m/n/10 https : / / link
+ . springer .
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 71--94
+\OT1/pcr/m/n/10 com / chapter / 10 . 1007 / 3-[]540-[]44448-[]3 _ 42$[] \OT1/pt
+m/m/n/10 (Ab-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 95--102
+[][]$\OT1/pcr/m/n/10 https : / / eprint . iacr . org / 2012 / 623$[] \OT1/ptm/m
+/n/10 Cryp-
+ []
+
+
+Underfull \hbox (badness 1122) in paragraph at lines 95--102
+\OT1/ptm/m/n/10 tol-ogy eprint by David Mc-Grew, dis-cussed in mes-sages
+ []
+
+
+Underfull \hbox (badness 4084) in paragraph at lines 95--102
+\OT1/ptm/m/n/10 such as []$\OT1/pcr/m/n/10 https : / / mailarchive . ietf . org
+ / arch /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 95--102
+\OT1/pcr/m/n/10 msg / ipsec / 7V6ry4le7eU3v283uF5D3Y9lCsU$[] \OT1/ptm/m/n/10 an
+d
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 95--102
+[]$\OT1/pcr/m/n/10 https : / / mailarchive . ietf . org / arch / msg /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 105--111
+[][]$\OT1/pcr/m/n/10 http : / / www . cryptolaw . org / cls2 . htm$[]
+ []
+
+
+Underfull \hbox (badness 6493) in paragraph at lines 105--111
+\OT1/ptm/m/n/10 (country-by-country crypto ex-port sta-tus as of 2013)
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 105--111
+[]$\OT1/pcr/m/n/10 https : / / en . wikipedia . org / wiki / 40-[]bit _
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 114--119
+[][]$\OT1/pcr/m/n/10 https : / / driveinsider . com /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 114--119
+\OT1/pcr/m/n/10 the-[]quantum-[]attack-[]on-[]bitcoin/$[]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 114--119
+[]$\OT1/pcr/m/n/10 https : / / www . bitcoinmarketjournal .
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 114--119
+\OT1/pcr/m/n/10 com / how-[]many-[]people-[]use-[]bitcoin/$[]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 114--119
+[]$\OT1/pcr/m/n/10 https : / / arxiv . org / abs / 1710 . 10377$[]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 114--119
+[]$\OT1/pcr/m/n/10 https : / / cointelegraph . com / news /
+ []
+
+
+Overfull \hbox (81.0pt too wide) in paragraph at lines 114--119
+\OT1/pcr/m/n/10 quantum-[]computing-[]vs-[]blockchain-[]impact-[]on-[]cryptogra
+phy$[]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 122--130
+[][]$\OT1/pcr/m/n/10 https : / / ieeexplore . ieee . org / xpl /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 122--130
+\OT1/pcr/m/n/10 mostRecentIssue . jsp ? punumber = 5208$[] \OT1/ptm/m/n/10 (38t
+h
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 122--130
+\OT1/ptm/m/n/10 FOCS) []$\OT1/pcr/m/n/10 https : / / cloud . google . com / sec
+urity /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 122--130
+\OT1/pcr/m/n/10 encryption-[]at-[]rest / default-[]encryption/$[]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 122--130
+\OT1/ptm/m/n/10 (de-scribes some of Google's cur-rent prac-tices and
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 122--130
+\OT1/ptm/m/n/10 planned up-grades wrt en-cryp-tion) []$\OT1/pcr/m/n/10 https : 
+/ / info .
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 122--130
+\OT1/pcr/m/n/10 townsendsecurity . com / km-[]trends$[] []$https :
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 122--130
+\OT1/pcr/m/n/10 / / en . wikipedia . org / wiki / Key _ management$[]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 131--134
+[]\OT1/ptm/m/n/10 U.S. pres-i-den-tial can-di-date An-drew Yang has a
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 131--134
+\OT1/ptm/m/n/10 pol-icy on quan-tum com-put-ing and en-cryp-tion stan-
+ []
+
+
+Underfull \hbox (badness 2951) in paragraph at lines 131--134
+\OT1/ptm/m/n/10 dards! []$\OT1/pcr/m/n/10 https : / / www . yang2020 . com / po
+licies /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 135--137
+[][]$\OT1/pcr/m/n/10 https : / / blogs . technet . microsoft .
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 135--137
+\OT1/pcr/m/n/10 com / secguide / 2014 / 04 / 07 /
+ []
+
+
+Overfull \hbox (21.0pt too wide) in paragraph at lines 135--137
+\OT1/pcr/m/n/10 why-[]were-[]not-[]recommending-[]fips-[]mode-[]anymore/$[]
+ []
+
+) [23] (./blockchain.tex
+Underfull \hbox (badness 5331) in paragraph at lines 13--17
+[][]$\OT1/pcr/m/n/10 https : / / www . bitcoinmarketjournal . com / how-[]many-
+[]people-[]use-[]bitcoin/$[] \OT1/ptm/m/n/10 found via []$\OT1/pcr/m/n/10 https
+ : / /
+ []
+
+) (./unsorted-notes.tex
+Underfull \hbox (badness 10000) in paragraph at lines 10--14
+[]\OT1/ptm/m/n/10 Bell: Shen ... Nam, Scarani, Ku-rit-seifer []$\OT1/pcr/m/n/10
+ https : / / journals . aps . org / prl / abstract / 10 . 1103 /
+ []
+
+
+Overfull \hbox (4.50781pt too wide) in paragraph at lines 26--28
+[]\OT1/ptm/m/n/10 EV = Ex-tended Val-i-da-tion Cer-tifi-cate []$\OT1/pcr/m/n/10
+ gigazine . net / news / 20190813-[]extended-[]validation-[]certificate/$[] 
+ []
+
+
+Underfull \hbox (badness 5091) in paragraph at lines 34--38
+[]\OT1/ptm/m/n/10 cocori's post-quantum crypto Python. New ver-sion: []$\OT1/pc
+r/m/n/10 https : / / colab . research . google . com / drive /
+ []
+
+
+Overfull \hbox (126.0pt too wide) in paragraph at lines 62--62
+[]\OT1/pcr/m/n/10 Two quick comments on (https://rdvlivefromtokyo.blogspot.com/
+2019/11/21-playing-defense-211-entropy.html):[] 
+ []
+
+
+Overfull \hbox (582.0pt too wide) in paragraph at lines 62--62
+[]\OT1/pcr/m/n/10 1. Kolmogorov complexity is uncomputable (https://web.archive
+.org/web/20190326105001/ http://www.nearly42.org/vdisk/articles/Program-size_Co
+mplexity_Computes_the_Halting_Problem.pdf)[] 
+ []
+
+[24]
+Underfull \hbox (badness 1077) in paragraph at lines 73--75
+[]\OT1/ptm/m/n/10 possible (el-lip-tic?) curve vul-ner-a-bil-ity: []$\OT1/pcr/m
+/n/10 https : / / news . ycombinator . com / item ? id = 22048619 & fbclid =
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 93--95
+[]\OT1/ptm/m/n/10 87% of web traf-fic was en-crypted, as of Jan. 2019: []$\OT1/
+pcr/m/n/10 https : / / duo . com / decipher /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 99--104
+\OT1/pcr/m/n/10 fortinet . com / content / dam / fortinet / assets / threat-[]r
+eports / threat-[]report-[]q3-[]2018 . pdf$[]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 173--175
+[][]$\OT1/pcr/m/n/10 https : / / twitter . com / trimstray / status / 126298597
+8618281986$[] \OT1/ptm/m/n/10 Eth-i-cal hack-ing plat-form-s/-train-
+ []
+
+[25]
+Underfull \hbox (badness 8132) in paragraph at lines 176--185
+\OT1/pcr/m/n/10 / / domgo . at$[] []$http : / / pwnable . tw$[] []$http : / / t
+ryhackme . com$[] []$http : / / ctfchallenge . co . uk$[] []$http : / /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 232--235
+[]\OT1/ptm/m/n/10 NSA Mil-i-tary Crypt-anal-y-sis: []$\OT1/pcr/m/n/10 https : /
+ / www . nsa . gov / news-[]features / declassified-[]documents /
+ []
+
+
+Underfull \hbox (badness 1320) in paragraph at lines 250--254
+[]\OT1/ptm/m/n/10 SHA-1 is a Sham-bles: []$\OT1/pcr/m/n/10 https : / / eprint .
+ iacr . org / 2020 / 014 . pdf$[] []$https : / / sha-[]mbles . github . io/$[]
+ []
+
+
+Overfull \hbox (373.0pt too wide) in paragraph at lines 295--296
+[][]$\OT1/pcr/m/n/10 https : / / news . yahoo . com / exclusive-[]russia-[]carr
+ied-[]out-[]a-[]stunning-[]breach-[]of-[]fbi-[]communications-[]system-[]escala
+ting-[]the-[]spy-[]game-[]on-[]us-[]soil-[]090024212 .
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 308--319
+[][]$\OT1/pcr/m/n/10 https : / / twitter . com / susurrusus / status / 11421964
+96739291137 ? s = 19$[] \OT1/ptm/m/n/10 and sub-stan-tial follow-
+ []
+
+
+Underfull \hbox (badness 2245) in paragraph at lines 308--319
+\OT1/ptm/m/n/10 on con-ver-sa-tion, start-ing in part from some mis-guided post
+-quantum cryp-tocur-rency: []$\OT1/pcr/m/n/10 https : / / twitter . com /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 308--319
+\OT1/pcr/m/n/10 mochimocrypto / status / 1175134812862058496$[] []$https : / / 
+twitter . com / mochimocrypto / status /
+ []
+
+
+Underfull \hbox (badness 1303) in paragraph at lines 308--319
+\OT1/pcr/m/n/10 1175891543233708032$[] \OT1/ptm/m/n/10 based on WOTS+. What are
+ WOTS+ and XMSS? I as-sume DSA is dig-i-tal sig-na-ture
+ []
+
+
+Underfull \hbox (badness 2237) in paragraph at lines 308--319
+\OT1/ptm/m/n/10 al-go-rithm. []$\OT1/pcr/m/n/10 https : / / twitter . com / moc
+himocrypto / status / 1175135848259624960$[] \OT1/ptm/m/n/10 replied to by Bier
+-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 308--319
+\OT1/ptm/m/n/10 cuk []$\OT1/pcr/m/n/10 https : / / twitter . com / MJBiercuk / 
+status / 1175394127841615872$[] []$https : / / twitter . com /
+ []
+
+[26]
+Underfull \hbox (badness 10000) in paragraph at lines 320--323
+[][]$\OT1/pcr/m/n/10 https : / / blog . cloudflare . com / towards-[]post-[]qua
+ntum-[]cryptography-[]in-[]tls /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 320--323
+\OT1/pcr/m/n/10 amp / ? _ _twitter _ impression = true$[] []$https : / / medium
+ . com / altcoin-[]magazine /
+ []
+
+
+Overfull \hbox (96.5pt too wide) in paragraph at lines 320--323
+\OT1/pcr/m/n/10 quantum-[]resistant-[]blockchain-[]and-[]cryptocurrency-[]the-[
+]full-[]analysis-[]in-[]seven-[]parts-[]part-[]6-[]769973d3decf$[]
+ []
+
+
+Overfull \hbox (139.62975pt too wide) in paragraph at lines 346--348
+[]\OT1/ptm/m/n/10 PQC: []$\OT1/pcr/m/n/10 https : / / www . scientificamerican 
+. com / article / new-[]encryption-[]system-[]protects-[]data-[]from-[]quantum-
+[]computers/$[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 369--374
+[]\OT1/ptm/m/n/10 Scott Aaron-son, cer-ti-fied RNG []$\OT1/pcr/m/n/10 https : /
+ / arxiv . org / abs / 1612 . 05903$[] \OT1/ptm/m/n/10 also Ma-hadev, Vazi-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 369--374
+\OT1/ptm/m/n/10 rani, Vidick []$\OT1/pcr/m/n/10 https : / / arxiv . org / abs /
+ 1804 . 00640$[] []$https : / / www . quantamagazine . org /
+ []
+
+) (./code-examples.tex
+(/usr/local/texlive/2018/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2015/06/04 1.6 listings language file
+) [27]
+(/usr/local/texlive/2018/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2015/06/04 1.6 listings language file
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2015/06/04 1.6 listings language file
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2015/06/04 1.6 listings language file
+)
+Underfull \hbox (badness 10000) in paragraph at lines 80--82
+[]\OT1/ptm/m/n/10 BB84 in Qiskit: []$\OT1/pcr/m/n/10 https : / / github . com /
+ qiskit-[]community / may4 _ challenge _ exercises / blob /
+ []
+
+) (./performance.tex [28] [29]
+Overfull \hbox (12.0pt too wide) in paragraph at lines 284--284
+[]\OT1/pcr/m/n/10 Doing camellia-256 cbc for 3s on 256 size blocks: ^@1897179 c
+amellia-256 cbc's in 2.99s[] 
+ []
+
+[30] [31]
+Overfull \hbox (18.0pt too wide) in paragraph at lines 284--284
+[]\OT1/pcr/m/n/10 options:bn(64,64) rc4(ptr,int) des(idx,cisc,16,int) aes(parti
+al) idea(int) blowfish(idx)[] 
+ []
+
+
+Overfull \hbox (4356.0pt too wide) in paragraph at lines 284--284
+[]\OT1/pcr/m/n/10 compiler: x86_64-apple-darwin13.4.0-clang -D_FORTIFY_SOURCE=2
+ -mmacosx-version-min=10.9 -march=core2 -mtune=haswell -mssse3 -ftree-vectorize
+ -fPIC -fPIE -fstack-protector-strong -O2 -pipe -I/Users/rdv/miniconda3/include
+ -fdebug-prefix-map=/opt/concourse/worker/volumes/live/bd542585-3c4a-4331-50c6-
+ca5f117e0b9d/volume/openssl_1522162661576/work=/usr/local/src/conda/openssl-1.0
+.2o -fdebug-prefix-map=/Users/rdv/miniconda3=/usr/local/src/conda-prefix -I. -I
+.. -I../include  -fPIC -fno-common -DOPENSSL_PIC -DOPENSSL_THREADS -D_REENTRANT
+ -DDSO_DLFCN -DHAVE_DLFCN_H -arch x86_64 -O3 -DL_ENDIAN -Wall -DOPENSSL_IA32_SS
+E2 -DOPENSSL_BN_ASM_MONT -DOPENSSL_BN_ASM_MONT5 -DOPENSSL_BN_ASM_GF2m -DSHA1_AS
+M -DSHA256_ASM -DSHA512_ASM -DMD5_ASM -DAES_ASM -DVPAES_ASM -DBSAES_ASM -DWHIRL
+POOL_ASM -DGHASH_ASM -DECP_NISTZ256_ASM[] 
+ []
+
+[32])
+
+Package natbib Warning: There were undefined citations.
+
+[33]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 304.
+ (./what-every-quant-should-know-about-crypto.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 304.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 304.
+Package rerunfilecheck Info: File `what-every-quant-should-know-about-crypto.ou
+t' has not changed.
+(rerunfilecheck)             Checksum: 2227EC6C26286AA8AD84C38C617AE7EA;4377.
+ ) 
+Here is how much of TeX's memory you used:
+ 14656 strings out of 492649
+ 216763 string characters out of 6129622
+ 547450 words of memory out of 5000000
+ 17985 multiletter control sequences out of 15000+600000
+ 49697 words of font info for 106 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 40i,10n,56p,875b,3051s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
+exlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/te
+xlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/tex
+live/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texli
+ve/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive
+/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive
+/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2
+018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2018
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2018/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2018/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2018/texm
+f-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2018/texmf-dist/f
+onts/type1/urw/courier/ucrro8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/ty
+pe1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw
+/helvetic/uhvbo8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/helve
+tic/uhvr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmb8a
+.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr
+/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on what-every-quant-should-know-about-crypto.pdf (33 pages, 4031
+76 bytes).
+PDF statistics:
+ 1481 PDF objects out of 1728 (max. 8388607)
+ 1411 compressed objects within 15 object streams
+ 323 named destinations out of 1000 (max. 500000)
+ 497 words of extra memory for PDF output out of 10000 (max. 10000000)
+

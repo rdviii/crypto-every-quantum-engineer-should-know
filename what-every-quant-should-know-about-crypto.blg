@@ -1,0 +1,90 @@
+This is BibTeX, Version 0.99d (TeX Live 2018)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: what-every-quant-should-know-about-crypto.aux
+The style file: aipnum4-1.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated field_info (elt_size=4) to 10180 items from 5000.
+Database file #1: what-every-quant-should-know-about-cryptoNotes.bib
+Database file #2: rdv.bib
+Database file #3: refsaono.bib
+Repeated entry---line 3108 of file refsaono.bib
+ : @inproceedings{BR93
+ :                    ,
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 3309 of file refsaono.bib
+ :  booktitle = "
+ :               信学技報",
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 3478 of file refsaono.bib
+ : 
+ : @article{LMP15,
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Warning--I didn't find a database entry for "dss"
+Warning--I didn't find a database entry for "GolEnc2"
+Warning--I didn't find a database entry for ""
+control{REVTEX41Control}, control.key{N/A}, control.author{N/A}, control.editor{N/A}, control.title{N/A}, control.pages{N/A}, control.year{N/A}, control.eprint{N/A}, 
+control{aip41Control}, control.key{N/A}, control.author{N/A}, control.editor{N/A}, control.title{0}, control.pages{1}, control.year{N/A}, control.eprint{N/A}, 
+Warning--jnrlst (dependency: not reversed) set 1
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+merlin.mbs aipnum4-1.bst 2010-07-25 4.21a (PWD, AO, DPC) hacked
+Control: key (0) 
+Control: author (8) initials jnrlst
+Control: editor formatted (1) identically to author
+Control: production of article title (0) allowed
+Control: page (1) range
+Control: year (1) truncated
+Control: production of eprint (0) enabled
+Warning--empty note in heys:tutorial
+Warning--empty year in DS18
+Warning--empty author in Duc17
+Warning--empty year in SIKEweb
+Warning--missing institution in Lam79
+You've used 137 entries,
+            5918 wiz_defined-function locations,
+            2560 strings with 43097 characters,
+and the built_in function-call counts, 141049 in all, are:
+= -- 9341
+> -- 4126
+< -- 755
++ -- 1316
+- -- 1029
+* -- 21975
+:= -- 14309
+add.period$ -- 244
+call.type$ -- 137
+change.case$ -- 693
+chr.to.int$ -- 161
+cite$ -- 146
+duplicate$ -- 13050
+empty$ -- 10385
+format.name$ -- 2129
+if$ -- 27696
+int.to.chr$ -- 3
+int.to.str$ -- 144
+missing$ -- 1600
+newline$ -- 457
+num.names$ -- 376
+pop$ -- 4919
+preamble$ -- 1
+purify$ -- 655
+quote$ -- 0
+skip$ -- 4647
+stack$ -- 0
+substring$ -- 4026
+swap$ -- 12632
+text.length$ -- 464
+text.prefix$ -- 0
+top$ -- 10
+type$ -- 1911
+warning$ -- 6
+while$ -- 547
+width$ -- 0
+write$ -- 1159
+(There were 3 error messages)

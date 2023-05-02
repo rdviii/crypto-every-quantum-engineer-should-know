@@ -1,0 +1,10 @@
+At a conference in Berlin in June, I was asked, paraphrasing, about
+why we change the cryptographic keys used during long communication
+sessions, and how often they _ought_ to be changed.  I waved my hands
+a little bit, but I wasn't completely satisfied with my own answer.
+It turned out to be a good opportunity for me to dig into a little
+background I'd been meaning to go through.  It also proved to be a
+*remarkably* hard question to answer from googling up pages, including
+cryptography research papers and the _extensive_ mailing list archives
+from development of key Internet protocols.  I fell down a pretty
+serious rabbit hole here, and haven't found my way out yet.

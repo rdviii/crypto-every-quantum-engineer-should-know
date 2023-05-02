@@ -1,0 +1,15 @@
+
+@techreport{RFC4301,
+  author = {S. Kent and K. Seo},
+  title = {Security Architecture for the Internet Protocol},
+  howpublished = {Internet Requests for Comments},
+  type = {RFC},
+  number = {4301},
+  year = {2005},
+  month = {December},
+  issn = {2070-1721},
+  publisher = {RFC Editor},
+  institution = {RFC Editor},
+  url = {http://www.rfc-editor.org/rfc/rfc4301.txt},
+  note = {\url{http://www.rfc-editor.org/rfc/rfc4301.txt}},
+}

@@ -1,0 +1,26 @@
+At a conference in Berlin in June, I was asked, paraphrasing, about
+why we change the cryptographic keys used during long communication
+sessions, and how often they _ought_ to be changed.  I waved my hands
+a little bit, but I wasn't completely satisfied with my own answer.
+It turned out to be a good opportunity for me to dig into a little
+background I'd been meaning to go through.  It also proved to be a
+*remarkably* hard question to answer from googling up pages, including
+cryptography research papers and the _extensive_ mailing list archives
+from development of key Internet protocols.  I fell down a pretty
+serious rabbit hole here, and haven't found my way out yet.
+
+What I have wound up with is about 25 pages of notes on classical
+cryptography, and I have decided to turn them into something that will
+benefit the quantum community at large.  I'm tentatively titling it,
+"What Every Quantum Researcher and Engineer Should Know about
+Classical Cryptography", in homage to Goldberg's classic paper on
+floating point arithmetic.
+
+The target audience for this is primarily quantum computing
+researchers who are familiar with Shor's algorithm, Grover's algorithm
+and QKD, since those are among the first things you learn, but who
+have only a very rough idea of what it means to actually encrypt data
+and to use encryption in a real-world setting.
+
+I'll be posting the notes gradually over the next few weeks here on
+this blog, and I hope you will comment and help me improve them.

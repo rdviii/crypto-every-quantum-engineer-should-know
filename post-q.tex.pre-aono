@@ -1,0 +1,62 @@
+\section{Post-quantum cryptography}
+
+\outlinecomment{somebody besides me should write this.  Moriai-san?
+  Aono-san?}
+
+\comment{Jon Dowling (RIP)'s opinions here were strong.  He believed that
+  post-quantum crypto is fundamentally impossible, that all of the
+  interesting asymmetric problems useful for authentication and key
+  generation will ultimately fall to quantum algorithms.}
+
+\comment{Aono: lattice crypto is very attractive because a) it reduces to
+shortest vector or other problems, and b) implementation is easy,
+basically a matrix times a vector~\cite{regev09:jacm}.}
+
+\comment{learning w/ errors As + e = t mod q
+candidate for post-quantum crypto}
+
+\comment{(n.b.: cocori created a ipynb, but misunderstood the size of the
+matrix necessary)}
+
+
+Post-quantum cryptography is the attempt to find a public key
+cryptosystem that is resistant to quantum computing, Shor's algorithm
+in particular.
+
+There is enough interest in this that the Wikipedia pages are
+essentially extensive catalogs:
+\url{https://en.wikipedia.org/wiki/Post-quantum_cryptography}
+\url{https://en.wikipedia.org/wiki/Post-Quantum_Cryptography_Standardization}
+
+An official-looking site:
+\url{https://csrc.nist.gov/projects/post-quantum-cryptography/post-quantum-cryptography-standardization}
+
+One recent blog posting of some use:
+\url{https://blog.trailofbits.com/2018/10/22/a-guide-to-post-quantum-cryptography/}
+
+A very recent blog posting on teaching crypto in the post-quantum
+crypto age:
+\url{https://news.ncsu.edu/2019/06/teaching-next-generation-cryptosystems/}
+which builds on a conference presentation on the course they created:
+\url{https://dl.acm.org/citation.cfm?id=3317994}
+which goes into a lot of detail on crypto hardware.
+
+A survey from a decade ago:
+\url{https://www.nist.gov/publications/quantum-resistant-public-key-cryptography-survey?pub_id=901595}
+
+Also in 2009, there was a book, which I'm sure is almost entirely
+outdated by now:
+\url{https://www.springer.com/jp/book/9783540887010}
+
+Transition doc from IETF, still in draft:
+\url{https://datatracker.ietf.org/doc/draft-hoffman-c2pq/}
+
+\url{https://eprint.iacr.org/2017/847.pdf}
+
+\url{https://arstechnica.com/gadgets/2020/07/ibm-completes-successful-field-trials-on-fully-homomorphic-encryption/}
+
+\subsection{Notes \& References}
+
+To be filled in eventually, mostly by moving the existing parts of
+this section into this subsection!
+

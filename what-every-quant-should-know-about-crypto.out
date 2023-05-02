@@ -1,0 +1,62 @@
+\BOOKMARK [0][-]{section*.2}{What Every Quantum Researcher and Engineer Should Know about Classical Cryptography}{}% 2
+\BOOKMARK [1][-]{section*.1}{Abstract}{section*.2}% 1
+\BOOKMARK [1][-]{section*.3}{Contents}{section*.2}% 3
+\BOOKMARK [1][-]{section*.4}{Introduction}{section*.2}% 4
+\BOOKMARK [2][-]{section*.5}{Security and Encrypted Communications}{section*.4}% 5
+\BOOKMARK [2][-]{section*.6}{Concepts and Terminology}{section*.4}% 6
+\BOOKMARK [1][-]{section*.7}{Encryption}{section*.2}% 7
+\BOOKMARK [2][-]{section*.8}{Authentication}{section*.7}% 8
+\BOOKMARK [2][-]{section*.9}{Key generation}{section*.7}% 9
+\BOOKMARK [2][-]{section*.10}{Bulk data encryption}{section*.7}% 10
+\BOOKMARK [3][-]{section*.11}{DES \(the Data Encryption Standard\)}{section*.10}% 11
+\BOOKMARK [3][-]{section*.12}{AES \(the Advanced Encryption Standard\)}{section*.10}% 12
+\BOOKMARK [3][-]{section*.13}{Limitations of Block Ciphers}{section*.10}% 13
+\BOOKMARK [2][-]{section*.14}{Other Tasks}{section*.7}% 14
+\BOOKMARK [2][-]{section*.15}{Notes \046 References}{section*.7}% 15
+\BOOKMARK [1][-]{section*.16}{Cryptanalysis}{section*.2}% 16
+\BOOKMARK [2][-]{section*.17}{Playing Defense Using Math}{section*.16}% 17
+\BOOKMARK [3][-]{section*.18}{Entropy}{section*.17}% 18
+\BOOKMARK [3][-]{section*.19}{Diffusion, Confusion and the Avalanche Effect}{section*.17}% 19
+\BOOKMARK [2][-]{section*.20}{The Birthday Paradox}{section*.16}% 20
+\BOOKMARK [2][-]{section*.21}{Differential Cryptanalysis}{section*.16}% 21
+\BOOKMARK [2][-]{section*.22}{Linear Cryptanalysis}{section*.16}% 22
+\BOOKMARK [2][-]{section*.23}{Known and chosen plaintexts in real systems}{section*.16}% 23
+\BOOKMARK [2][-]{section*.24}{Notes \046 References}{section*.16}% 24
+\BOOKMARK [1][-]{section*.25}{Standards for Encrypted Communication}{section*.2}% 25
+\BOOKMARK [2][-]{section*.26}{IPsec and the IETF}{section*.25}% 26
+\BOOKMARK [3][-]{section*.27}{Background on IPsec, IETF and RFCs}{section*.26}% 27
+\BOOKMARK [3][-]{section*.28}{IKE and IPsec}{section*.26}% 28
+\BOOKMARK [3][-]{section*.29}{Digging into the Cryptanalysis of IPsec}{section*.26}% 29
+\BOOKMARK [3][-]{section*.30}{IPsec, Quantum Computing and QKD}{section*.26}% 30
+\BOOKMARK [2][-]{section*.31}{TLS/SSL and cryptography}{section*.25}% 31
+\BOOKMARK [3][-]{section*.32}{TLS Records and Basic Limits}{section*.31}% 32
+\BOOKMARK [3][-]{section*.33}{Keying and Rekeying}{section*.31}% 33
+\BOOKMARK [3][-]{section*.34}{Other Attacks on TLS}{section*.31}% 34
+\BOOKMARK [3][-]{section*.35}{TLS and QKD}{section*.31}% 35
+\BOOKMARK [2][-]{section*.36}{Other Internet Security Protocols}{section*.25}% 36
+\BOOKMARK [2][-]{section*.37}{WiFi}{section*.25}% 37
+\BOOKMARK [2][-]{section*.38}{Cellular Phones}{section*.25}% 38
+\BOOKMARK [2][-]{section*.39}{Notes \046 References}{section*.25}% 39
+\BOOKMARK [1][-]{section*.40}{Attacking classical cryptography using quantum computers}{section*.2}% 40
+\BOOKMARK [2][-]{section*.41}{Shor 'Nuff}{section*.40}% 41
+\BOOKMARK [2][-]{section*.42}{Grover's amplifier}{section*.40}% 42
+\BOOKMARK [2][-]{section*.43}{Notes \046 References}{section*.40}% 43
+\BOOKMARK [1][-]{section*.44}{Post-quantum cryptography}{section*.2}% 44
+\BOOKMARK [2][-]{section*.45}{Cryptanalyses and Base Problems}{section*.44}% 45
+\BOOKMARK [2][-]{section*.46}{Representative Candidates}{section*.44}% 46
+\BOOKMARK [2][-]{section*.47}{rdv's notes}{section*.44}% 47
+\BOOKMARK [2][-]{section*.48}{Notes \046 References}{section*.44}% 48
+\BOOKMARK [1][-]{section*.49}{Policy and Conclusions}{section*.2}% 49
+\BOOKMARK [1][-]{section*.50}{Acknowledgments}{section*.2}% 50
+\BOOKMARK [1][-]{section*.51}{References}{section*.2}% 51
+\BOOKMARK [2][-]{section*.52}{Not yet cited}{section*.51}% 52
+\BOOKMARK [1][-]{section*.53}{Bitcoin and Quantum Computers}{section*.2}% 53
+\BOOKMARK [1][-]{section*.54}{Unsorted Notes}{section*.2}% 54
+\BOOKMARK [2][-]{section*.55}{A Twitter Exchange}{section*.54}% 55
+\BOOKMARK [2][-]{section*.56}{From ddp}{section*.54}% 56
+\BOOKMARK [2][-]{section*.57}{More Unsorted Stuff}{section*.54}% 57
+\BOOKMARK [1][-]{section*.58}{Simple Coding Examples}{section*.2}% 58
+\BOOKMARK [2][-]{section*.59}{Entropy}{section*.58}% 59
+\BOOKMARK [2][-]{section*.60}{Birthday Paradox/Collision Probability}{section*.58}% 60
+\BOOKMARK [2][-]{section*.61}{QKD}{section*.58}% 61
+\BOOKMARK [1][-]{section*.62}{Performance Testing}{section*.2}% 62

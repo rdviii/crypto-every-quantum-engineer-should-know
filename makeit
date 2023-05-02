@@ -1,0 +1,6 @@
+pdflatex what-every-quant-should-know-about-crypto
+bibtex what-every-quant-should-know-about-crypto
+sleep 3
+pdflatex what-every-quant-should-know-about-crypto
+sleep 3
+pdflatex what-every-quant-should-know-about-crypto

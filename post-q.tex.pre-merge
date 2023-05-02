@@ -1,0 +1,159 @@
+
+\clearpage 
+
+\section{Post-quantum cryptography}
+
+\subsection{Motivation of post-quantum cryptography}
+
+Since Shor's groundbreaking work, 
+it has been known that a reasonable size quantum circuit can be used as 
+an efficient oracle to solve a wide class of hidden subgroup problem,
+which is an important generic problem that captures 
+the integer factoring problem (ILP) \aono{IFP?} and the discrete logarithm problem (DLP). 
+As a direct consequence, developed quantum computers will make 
+the most famous public-key cryptography such as RSA and DSA worthless. \aono{DSA reference?}
+
+As the countermeasure, the cryptographers have been developing 
+new cryptographic schemes which they call ``post-quantum cryptography''
+or ``quantum-resilient cryptography.'' 
+It is widely believed that revealing secret information encrypted by a scheme is an intractable task even we have a large size of classical and quantum computers.
+
+\aono{could we move this to Sec.~\ref{sec:defense}?}
+
+The resilience of cryptography to the computers can be explained in the following way.
+The mathematical notion of security has been formulated by Shannon's discussion on the symmetric cryptography in \cite{Sha49}. \aono{can you fix reference, adding aono.bib or somehow?}
+He defined the symmetric cryptography has the perfect security (information-theoretic security) if the eavesdropper that gets ciphertext will gain no information about the plaintext.
+This security notion can be described as the equivalent condition that 
+uses Turing machines (TM):
+for any (unlimited time and space) TM $\mathcal{G}$ that outputs a candidate of plaintext from a given ciphertext, there exists a TM $\mathcal{G}'$ with no input that satisfies
+%
+\begin{equation}
+	\label{eqn:ITalg}
+	\Pr[ \mathcal{G}(ct) = m ] = \Pr [\mathcal{G}'() = m ].
+\end{equation}
+%
+Here, the probability is over a fixed distribution of plaintext $m$ and key $k$, and $ct = Enc(k,ct)$.
+The equivalence of probabilities means that $\mathcal{G}$ needs not to use $ct$ to recover $m$, thus, $ct$ does not contain any information about $m$ intuitively.
+
+Shannon proved that the information-theoretic security 
+requires that the sender and receiver have to share 
+the secret key longer than the message itself.
+The source of such unwieldiness is from the tightness of perfect security that requires the eavesdropper can get no information, or it allows unlimited power to the Turing machines.
+It is easy to see any public-key cryptography does not satisfy
+the perfect security \cite[Sect. 5.5.2]{GolEnc2}, \aono{can you fix this, e.g. by adding aono.bib?}
+and the followers tried to relax the notion.
+
+\aono{part I want to move ends here.}
+
+One of the relaxed notion, which is commonly referred as the semantic security against classical computers is obtained by relaxing TM in (\ref{eqn:ITalg}) to a probabilistic polynomial TM (PPTM) and by some modifications \cite{...}, and security against quantum computes is obtained via a similar way.
+
+\subsection{Classification of Post-quantum cryptographes by the base problems}
+
+As we explained above, each security notions are defined over each cryptographic system, i.e., developers have to prove their cryptographic scheme has some property of security after the scheme proposing.
+However, the rigid proof is difficult since we have to consider all types of algorithms (albeit they are limited with a polynomial) to show to have a  security notion of the scheme.
+
+To solve the difficulty, a reduction technique has been used.
+
+ - TBW
+ 
+ - Classification of schemes by the base problems (lattice, code, multivariate, isogeny, etc.)
+
+\subsection{Competition in NIST/CACR}
+
+
+\subsection{Applications?}
+
+ - Homomorphic encryption?
+
+%・暗号屋は量子計算機がすぐにでもできると仮定している
+
+%・しかし他の分野では？
+
+
+\if0
+
+if there exists a (classical) algorithm A that can break
+a proposed cryptographic scheme (i.e., the algorithm A makes the scheme not IND-CPA et al.),
+there also exists an algorithm B that solves a hard problem (factoring, DLP, shortest vector, etc.) efficiently.
+It means that breaking the cryptographic scheme is harder than solving the hard problem, and the proof guarantees
+the security of the scheme against attackers.
+Also, estimating the hardness of solving the hard problem provides us a lower bound of the hardness of breaking the cryptographic scheme.
+This is the motivation of security estimation and why we want to solve hard problems by using computers.
+
+5. To discuss the security notions in quantum, it replaces the polynomial TM by the polynomial QTM  (of course, after the replacement, some modifications are necessary.)
+With the same argument, estimating the quantum hardness of hard problems is also necessary.
+
+6. Post-quantum cryptography is a class of cryptographic algorithms that are secure against both classical and quantum computers.
+That is, the scheme must have a security reduction from the scheme to a hard problem that is thought to be not easy to solve by both classical and quantum computers.
+
+7. The phrase "secure against quantum computers" is used by the crypto people to mean "the success probability of breaking the scheme by using
+a polynomial-size quantum circuit is exponentially low."
+Thus, they didn't consider any other type of quantum computers or other analog-type computers.
+
+8. introduce representative post-quantum cryptos.
+
+9. Applications?
+
+\fi
+
+
+\outlinecomment{somebody besides me should write this.  Moriai-san?
+  Aono-san?}
+
+\comment{Jon Dowling (RIP)'s opinions here were strong.  He believed that
+  post-quantum crypto is fundamentally impossible, that all of the
+  interesting asymmetric problems useful for authentication and key
+  generation will ultimately fall to quantum algorithms.}
+
+\comment{Aono: lattice crypto is very attractive because a) it reduces to
+shortest vector or other problems, and b) implementation is easy,
+basically a matrix times a vector~\cite{regev09:jacm}.}
+
+\comment{learning w/ errors As + e = t mod q
+candidate for post-quantum crypto}
+
+\comment{(n.b.: cocori created a ipynb, but misunderstood the size of the
+matrix necessary)}
+
+
+Post-quantum cryptography is the attempt to find a public key
+cryptosystem that is resistant to quantum computing, Shor's algorithm
+in particular.
+
+There is enough interest in this that the Wikipedia pages are
+essentially extensive catalogs:
+\url{https://en.wikipedia.org/wiki/Post-quantum_cryptography}
+\url{https://en.wikipedia.org/wiki/Post-Quantum_Cryptography_Standardization}
+
+An official-looking site:
+\url{https://csrc.nist.gov/projects/post-quantum-cryptography/post-quantum-cryptography-standardization}
+
+One recent blog posting of some use:
+\url{https://blog.trailofbits.com/2018/10/22/a-guide-to-post-quantum-cryptography/}
+
+A very recent blog posting on teaching crypto in the post-quantum
+crypto age:
+\url{https://news.ncsu.edu/2019/06/teaching-next-generation-cryptosystems/}
+which builds on a conference presentation on the course they created:
+\url{https://dl.acm.org/citation.cfm?id=3317994}
+which goes into a lot of detail on crypto hardware.
+
+A survey from a decade ago:
+\url{https://www.nist.gov/publications/quantum-resistant-public-key-cryptography-survey?pub_id=901595}
+
+Also in 2009, there was a book, which I'm sure is almost entirely
+outdated by now:
+\url{https://www.springer.com/jp/book/9783540887010}
+
+Transition doc from IETF, still in draft:
+\url{https://datatracker.ietf.org/doc/draft-hoffman-c2pq/}
+
+\url{https://eprint.iacr.org/2017/847.pdf}
+
+\url{https://arstechnica.com/gadgets/2020/07/ibm-completes-successful-field-trials-on-fully-homomorphic-encryption/}
+
+\subsection{Notes \& References}
+
+To be filled in eventually, mostly by moving the existing parts of
+this section into this subsection!
+

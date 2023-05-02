@@ -1,0 +1,211 @@
+\section{Introduction}
+
+\outlinecomment{Comments on the structure/outline are in blue.}
+
+\comment{Comments on what to write and other notes to myself are in
+  forest green.}
+
+\outlinecomment{Document status: Second, still drafty draft.  Nothing
+  really on post-quantum crypto, not enough on bitcoin, not enough on
+  quantum attacks in symmetric crypto.  It'll have to do.}
+\outlinecomment{At the moment, there are zero figures in this
+  document, which absolutely must be remedied.}
+
+Those who study the fields of quantum computing and quantum
+communication quickly become familiar with Shor's algorithm for
+factoring large numbers and calculating discrete
+logarithms~\cite{shor:siam-factor}, and with quantum key
+distribution~\cite{bennett:bb84,PhysRevLett.68.557,ekert1991qcb,PhysRevLett.108.130503,xu2015measurement,Vazirani:2019:FDI:3321370.3310974,RevModPhys.81.1301,PhysRevLett.85.441}.
+These two independent discoveries both impact classical cryptography,
+one by making it more vulnerable, the other by making it stronger --
+in theory.
+
+However, the direct, organized study of cryptography often ends there,
+despite the importance of cryptography as a driving force in funding
+and potential deployment of quantum technology.  The target audience
+for this is primarily quantum computing researchers who are familiar
+with Shor's algorithm, Grover's algorithm and QKD, since those are
+among the first things you learn, but who have only a very rough idea
+of what it means to actually encrypt data and to use encryption in a
+real-world setting.  This document will help to orient such readers so
+that they can communicate effectively with the classical
+communications and cryptography communities, and help them to ask the
+right research questions, such as:
+
+\begin{itemize}
+\item What QKD key generation rate is appropriate for
+  quantum-protected activities such as:
+  \begin{itemize}
+  \item e-commerce, especially web browsing; and
+  \item intra-organization network-to-network connection?
+  \end{itemize}
+  Especially, under what performance conditions will existing mechanisms
+  be replaced effectively one-for-one, and under what conditions will new
+  capabilities be enabled?
+\item When will quantum computers be able to effectively attack:
+  \begin{itemize}
+  \item the generation of cryptographic keys used for communications;
+  \item bulk data encryption itself;
+  \item digital signatures and hashes; and
+  \item blockchain?
+  \end{itemize}
+\item What mathematical techniques commonly used in cryptography might
+  be adaptable to use in new quantum-based attacks?
+\item What is the response of the classical cryptographic and Internet
+  protocol and operations communities to the potential development of
+  quantum computers?
+\end{itemize}
+
+Addressing all of these questions in depth in a single document is
+impossible, but to help quantum researchers and engineers effectively
+answer these questions in concrete ways that help guide their own
+work, this document introduces four key areas of modern cryptographic
+practice and associated historical background:
+
+\begin{enumerate}
+\item the mathematics of encryption, including how math can be used to
+  attack encryption;
+\item how encryption is incorporated into complete communication
+  systems;
+\item how those systems are used to achieve the ``CIA'' goals of
+  confidentiality, integrity and availability; and
+\item how cryptography influences and is influenced by policy, both
+  corporate/organizational and governmental.
+\end{enumerate}
+
+What this document is \emph{not}:
+
+\begin{itemize}
+\item a survey or tutorial on either QKD or Shor's algorithm;
+\item a full survey of the massive amounts of clever research done in
+  quantum security algorithms
+  (e.g.,~\cite{PhysRevA.100.052326,buhrman14:_posit_based_quant_crypt,ben-or2005fast,crepeau:_secur_multi_party_qc});
+\item a survey of techniques for certifying the quantumness of states~\cite{eisert2019cert}; or
+\item a full tutorial on cryptography.
+\end{itemize}
+
+\subsection{Encrypted Communications}
+
+An encrypted conversation involves, at the macro level, three phases:
+
+\begin{enumerate}
+\item Authentication: proving that you are who you say you are;
+\item Key generation: creating the keys used for bulk data encryption,
+  possibly including regeneration of keys mid-connection
+  (\emph{rekeying}); and
+\item Encryption/sending/decryption of the user's valuable bulk data.
+\end{enumerate}
+
+That's a bit of an oversimplification, as we'll see below when we talk
+about IPsec (Sec.~\ref{sec:ipsec}), but good enough for now.
+
+Rekeying, the changing of the cryptographic keys used during long
+communication sessions mentioned above, raises the question: how often
+\emph{should} keys be changed?~\footnote{This question, in fact,
+  prompted the development of this entire document.}  This question
+proved to be \emph{remarkably} hard to answer from basic Internet
+searches, including reading cryptography research papers and the
+\emph{extensive} mailing list archives from development of key
+Internet protocols.  Consequently, some parts of this document
+(annotated where appropriate) are derived from direct conversation
+with the principals.
+
+There are two fundamental reasons for periodic rekeying:
+
+\begin{enumerate}
+\item Having a long string of data encrypted with the same key increases
+the probability of an attacker being able to find the key.
+\item As a practical matter, reducing the amount of data that is exposed
+in the event that a key is broken is good stewardship of your data.
+\end{enumerate}
+
+So changing the key ``often'' makes it both harder and less valuable
+for an attacker to find a key.  That's the tl;dr.  Turning it into
+concrete, numeric recommendations is hard, but it looks like rekeying
+every half hour is pretty good, if your key generation rate isn't high
+enough to do full one-time pad.
+
+\subsection{Concepts and Terminology}
+
+\emph{Cryptography} is the science of secrets, and has a history going
+back several thousand years~\cite{kahn1996codebreakers,singh1999code}.
+Modern practice with digital communications effectively began in the
+1970s~\cite{schneier96:_applied_crypto,menezes1996handbook}.
+\emph{Computer security} often involves cryptography, but is a far
+broader field tasked with ensuring the confidentiality, integrity and
+availability of data, computing and communication
+resources~\cite{bishop2002art}.
+
+You probably all know that there are two major kinds of cryptography
+-- symmetric key and asymmetric key, also known as public key.  Due to
+the high costs of computation for public key, bulk data encryption is
+done using symmetric key.  Symmetric encryption comes in two kinds,
+block ciphers and stream ciphers.  These days pretty much everything
+seems to be block, but I'm not sure why.
+
+Some additional terminology:
+
+\begin{itemize}
+\item cleartext: data that isn't encrypted and isn't really intended to be
+  (sometimes confused with the below, even by me)
+\item plaintext: the original, unencrypted message
+\item ciphertext: the encrypted message
+\item integrity: the data hasn't been tampered with
+\item confidentiality or privacy: the data hasn't been disclosed to anyone unauthorized
+\item session keys: the keys used for one communication session
+\item forward secrecy: keeping your data secret in the future, esp. by
+  building a cryptosystem that doesn't reuse keys
+\item rekeying: changing the keys used in the middle of a session
+\item subkeys: keys used for a portion of an encryption process, derived
+  from a subset of the bits of the session key
+\item cryptoperiod: the time that a specific key is authorized for use
+\end{itemize}
+
+Attacks on encrypted communications generally fall into one of three
+categories:
+
+\begin{itemize}
+\item unknown plaintext: the hardest problem; how do you recognize when
+  you've found the message?  With many but not all systems, failure
+  will leave only unintelligible, random data, while success will
+  produce words from the dictionary or other recognizable text.
+\item known plaintext: when an attacker knows what the plaintext
+  corresponding to a particular ciphertext is, and attempts to find
+  the key; not uncommon given the regularity of communications such as
+  web browsing or email
+\item chosen plaintext: when the attacker can control the text to be
+  encrypted, but obviously not the key; rarer than known plaintext,
+  but can happen with small devices that a person may "own" but not
+  always completely control, or if the attacker partially controls
+  some subset of resources, such as a related web server, or has
+  compromised one or more hosts behind an encryption gateway
+\end{itemize}
+
+We also need these definitions:
+
+\begin{itemize}
+\item brute force/exhaustive search: checking every possible key, which of
+  course is $2^n$ for an $n$-bit key, resulting in an expected hit time of
+  half that number of trials; if you have a method that will find a
+  key in substantially less than $2^{n-1}$ trials, you have "broken" the
+  cipher, even if your attack isn't necessarily practical in the short
+  run.
+\item pentesting (penetration testing)
+\end{itemize}
+
+And three mathematical definitions I know for algebra on the real
+numbers, but I'm a little fuzzy on in the bitwise, cryptographic
+context:
+
+\begin{itemize}
+\item linear function: I think in this context, $f(x,y)$ is a linear
+  function of some bits if it involves only a linear addition of
+  the inputs, and $f(0,0) = 0$ (origin is preserved).  Multiplication
+  (AND) is disallowed?  Importantly, $f(x_1 + x_2) = f(x_1) + f(x_2)$.
+\item affine function: same as a linear function, but an offset is
+  allowed, such that $f(0,0) = 1$ (origin isn't necessarily preserved)
+  (equivalent to a translation in a real space $R^n$).
+\item nonlinear function: A nonlinear function is one in which $f(x+y) \ne f(x) + f(y)$ for some values $x$ and $y$. An affine function is one type of nonlinear function. I'm definitely fuzzy here...multiplication and
+  arbitrary mappings are allowed?
+\end{itemize}
+
